@@ -368,6 +368,7 @@ int main( int argc, char **argv )
 
 		game->Tick( elapsedTime );
 		// event loop
+		
 		SDL_Event event;
 		while (SDL_PollEvent( &event )) 
 		{
@@ -377,15 +378,23 @@ int main( int argc, char **argv )
 				exitapp = 1;
 				break;
 			case SDL_KEYDOWN:
+				/*
+				NOTE: This is where the keys are registered, just like according to Lazy Foo's tutorial
+				*/
 				if (event.key.keysym.sym == SDLK_ESCAPE) 
 				{
 					exitapp = 1;
 					// find other keys here: http://sdl.beuc.net/sdl.wiki/SDLKey
 				}
+				//if (event.key.keysym.sym == SDLK_o)
+					//printf("you've pressed the O key \n");
+				//cout << event.key.keysym.scancode;
 				game->KeyDown( event.key.keysym.scancode );
 				break;
 			case SDL_KEYUP:
 				game->KeyUp( event.key.keysym.scancode );
+
+				//printf("this goes to the console window.\n");
 				break;
 			case SDL_MOUSEMOTION:
 				game->MouseMove( event.motion.xrel, event.motion.yrel );

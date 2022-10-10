@@ -8,6 +8,9 @@
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source files\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -17,10 +20,25 @@
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header files\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
       <UniqueIdentifier>{bf32dd6e-4be7-4889-8ac6-49e7ee163c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{5641e0cf-0c72-4dfe-8000-ab779c5044bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{80f2aa73-783d-4ef2-ac4d-88f991db3a0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\GameObject">
+      <UniqueIdentifier>{5e087a93-810d-452d-b953-e8307ba7cd94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GameObject">
+      <UniqueIdentifier>{effbbd23-67e3-456a-afd1-8e39e7a0d5a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,9 @@
 #include "game.h"
 #include "surface.h"
-#include <cstdio> //printf
+#include "GameObject.h"
+using namespace std;
+
+GameObject* player;
 
 namespace Tmpl8
 {
@@ -9,7 +12,7 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 	void Game::Init()
 	{
-		
+		player->Init();
 	}
 	
 	// -----------------------------------------------------------
@@ -23,10 +26,27 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 
 
-	Sprite theSprite(new Surface("assets/ball.png"), 1);
+	//Sprite theSprite(new Surface("assets/ball.png"), 1);
 	void Game::Tick(float deltaTime)
 	{
-		screen->Clear(0);
-		theSprite.Draw(screen, 0, 0);
+		Draw(screen);
+		player->Tick(deltaTime);
 	}
+
+	void Game::Draw(Surface* screen)
+	{
+		screen->Clear(0);
+		player->Draw(screen);
+	}
+
+	
+	void Game::KeyDown(int key) //NOTE: Do not forget the "Game::" prefix, otherwise functions don't works
+	{
+		printf("%i %i", key, SDL_SCANCODE_O);
+		if (key == SDL_SCANCODE_O)
+		{
+			printf("you've pressed the O key \n");
+		}
+	}
+	
 };
