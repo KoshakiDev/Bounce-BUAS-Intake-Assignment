@@ -7,6 +7,8 @@ You are a dodgeball which can turn into a rock and a balloon. Dodgeballs bounce.
 
 ## References
 
+I have experience coding and making games (with a preexisting game engine), but I do not have experience creating without one purely on Visual Studio. Therefore, I used online tutorials to get myself started.
+
 [BUAS Visual Studio Community 2019 Game Template](https://www.3dgep.com/cppfast-track-1-getting-started)
 
 [Lazy Foo's SDL Tutorials](http://lazyfoo.net/SDL_tutorials/)
