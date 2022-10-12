@@ -4,9 +4,9 @@
 /*
 NOTE: This code was borrowed from Snow Wars
 
-We can also include rotation, scale, etc, but is that needed?
+Transform contains the 2D position vector and the rotation in radians.
+Every other object in the game #includes this header.
 
-This is essentially our Node2D?
 */
 
 class Transform

@@ -227,6 +227,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CircleCollider.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vec.h" />
   </ItemGroup>

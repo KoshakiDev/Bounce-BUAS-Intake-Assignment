@@ -14,6 +14,9 @@
     <ClCompile Include="CircleCollider.cpp">
       <Filter>Source files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source files\Tile\BaseTile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -34,6 +37,9 @@
     </ClInclude>
     <ClInclude Include="CircleCollider.h">
       <Filter>Header files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header files\Tile\BaseTile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -58,8 +64,47 @@
     <Filter Include="Source files\Components">
       <UniqueIdentifier>{27a58352-f35d-411b-a959-67e7ae62ff40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Entity">
+    <Filter Include="Source files\KinematicBody2D">
       <UniqueIdentifier>{115b1cdc-acf7-4bb6-8dd9-028050e10153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Tile">
+      <UniqueIdentifier>{c99c51e8-881c-4c97-a5a1-dfbd29251117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Tile\BaseTile">
+      <UniqueIdentifier>{e4ad8d1a-ec33-4380-a7ad-46a149f26630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Tile\Spike">
+      <UniqueIdentifier>{f77ee675-0db0-4796-a83c-4e63fe376812}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Tile\Ground">
+      <UniqueIdentifier>{59e28e1a-5424-48ee-b10b-ffe3f4e6a5ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Tile\Booster">
+      <UniqueIdentifier>{65e84784-08b6-4e5e-9431-e20076216a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Tile\FinishLine">
+      <UniqueIdentifier>{d7c612d3-8432-431a-8290-513e476a3cf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\KinematicBody2D">
+      <UniqueIdentifier>{2134286c-5930-4511-a2a6-7a07017a7b20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Tile">
+      <UniqueIdentifier>{40136024-5323-45f7-bab9-fb0f3b296c1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Tile\BaseTile">
+      <UniqueIdentifier>{8543a7ea-6ee3-4171-a770-78340e660da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Tile\Ground">
+      <UniqueIdentifier>{1266f01e-fd27-444d-949d-475318e3bdde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Tile\Booster">
+      <UniqueIdentifier>{a629745a-3937-460b-9128-a37527c0b5bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Tile\FinishLine">
+      <UniqueIdentifier>{a9fcf868-bf1a-4e57-bb67-7e2eb6d5598a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Tile\Spike">
+      <UniqueIdentifier>{a087f38c-5d81-4977-b289-064370f9fb83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

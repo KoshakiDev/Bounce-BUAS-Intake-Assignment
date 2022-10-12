@@ -1,13 +1,14 @@
 #include "game.h"
 #include "surface.h"
-#include "Vec.h"
 #include "Transform.h"
-#include "CircleCollider.h"
 
 using namespace std;
 using namespace Tmpl8;
 
+/*
+GameObject is the base class for Tile and KinematicBody. It has a 2D position (Transform) in form of a vector.
 
+*/
 
 class GameObject {
 	public:
@@ -16,10 +17,10 @@ class GameObject {
 			m_transform = Transform(position);
 		};
 		~GameObject();
-		void Tick(float deltaTime);
-		void Draw(Surface* screen);
-		void Input(int key);
+		virtual void Tick(float deltaTime);
+		virtual void Draw(Surface* screen);
+		virtual void Input(int key);
 	protected:
 		Transform m_transform;
-		vec2 m_velocity = vec2();
+		//vec2 m_velocity = vec2();
 };
