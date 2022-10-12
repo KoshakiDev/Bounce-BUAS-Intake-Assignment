@@ -1,28 +1,34 @@
 #include "GameObject.h"
+#include "surface.h"
+
+
+using namespace Tmpl8;
+
 
 Sprite theSprite(new Surface("assets/ball.png"), 1);
 
-GameObject::GameObject() 
-{
-	Init();
-}
-
-void GameObject::Init() 
-{
-	GameObject::xpos = 0;
-	GameObject::ypos = 0;
-
-	//xpos = 0;
-	//ypos = 0;
-	//Sprite sprite(new Surface("assets/ball.png"), 1);
-}
 
 void GameObject::Tick(float deltaTime)
 {
-	printf("%i", GameObject::xpos);
+	printf("%f %f \n", m_transform.GetPosition().x, m_transform.GetPosition().y);
 }
 
 void GameObject::Draw(Surface* screen)
 {
-	theSprite.Draw(screen, 0, 0);
+	theSprite.Draw(screen, m_transform.GetPosition().x, m_transform.GetPosition().y);
+}
+
+void GameObject::Input(int key)
+{
+	//printf("%i %i", key, SDL_SCANCODE_O);
+	/**/
+	if (key == SDL_SCANCODE_D)
+	{
+		m_transform.GetPosition() += vec2(1, 0);
+	}
+	if (key == SDL_SCANCODE_A)
+	{
+		m_transform.GetPosition() += vec2(-1, 0);
+	}
+	/**/
 }

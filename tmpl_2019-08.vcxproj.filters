@@ -11,6 +11,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source files\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>Source files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -22,6 +25,15 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec.h">
+      <Filter>Header files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Header files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleCollider.h">
+      <Filter>Header files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +51,15 @@
     </Filter>
     <Filter Include="Header files\GameObject">
       <UniqueIdentifier>{effbbd23-67e3-456a-afd1-8e39e7a0d5a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Components">
+      <UniqueIdentifier>{8eb79223-2cd5-4589-95ea-b5d3ab29f00b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Components">
+      <UniqueIdentifier>{27a58352-f35d-411b-a959-67e7ae62ff40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Entity">
+      <UniqueIdentifier>{115b1cdc-acf7-4bb6-8dd9-028050e10153}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

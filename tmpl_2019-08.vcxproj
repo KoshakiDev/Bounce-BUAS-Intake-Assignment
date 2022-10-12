@@ -222,16 +222,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="Vec.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt" />

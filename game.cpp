@@ -1,18 +1,20 @@
 #include "game.h"
 #include "surface.h"
 #include "GameObject.h"
+#include "Transform.h"
 using namespace std;
 
-GameObject* player;
 
 namespace Tmpl8
 {
+	GameObject* player;
+
 	// -----------------------------------------------------------
 	// Initialize the application
 	// -----------------------------------------------------------
 	void Game::Init()
 	{
-		player->Init();
+		player = new GameObject(vec2(0, 0));
 	}
 	
 	// -----------------------------------------------------------
@@ -30,6 +32,7 @@ namespace Tmpl8
 	void Game::Tick(float deltaTime)
 	{
 		Draw(screen);
+		//printf("%i", player->xpos);
 		player->Tick(deltaTime);
 	}
 
@@ -42,11 +45,8 @@ namespace Tmpl8
 	
 	void Game::KeyDown(int key) //NOTE: Do not forget the "Game::" prefix, otherwise functions don't works
 	{
-		printf("%i %i", key, SDL_SCANCODE_O);
-		if (key == SDL_SCANCODE_O)
-		{
-			printf("you've pressed the O key \n");
-		}
+		player->Input(key);
+		
 	}
 	
 };
