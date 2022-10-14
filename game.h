@@ -20,12 +20,19 @@ public:
 	
 	void MouseUp( int button ) { /* implement if you want to detect mouse button presses */ }
 	void MouseDown( int button ) { /* implement if you want to detect mouse button presses */ }
-	void MouseMove( int x, int y ) { /* implement if you want to detect mouse movement */ }
+	void MouseMove(int x, int y) 
+	{ 
+		mousex = x;
+		mousey = y;
+		//printf("%i %i", x, y); /* implement if you want to detect mouse movement */ 
+	}
 	void KeyUp(int key) {}
 	void KeyDown(int key);
 	
 private:
 	Surface* screen;
+	int mousex, mousey;
+
 };
 
 }; // namespace Tmpl8

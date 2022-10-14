@@ -1,7 +1,7 @@
 #include <math.h>
 #include "CircleCollider.h"
 
-bool CircleCollider::IsColliding(CircleCollider* other)
+bool CircleCollider::IsCircleColliding(CircleCollider* other)
 {
 	float distanceX = other->GetTransform()->GetPosition().x - GetTransform()->GetPosition().x;
 	float distanceY = other->GetTransform()->GetPosition().y - GetTransform()->GetPosition().y;

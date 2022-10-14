@@ -225,6 +225,7 @@
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="RectCollider.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="RectCollider.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="Tile.h" />

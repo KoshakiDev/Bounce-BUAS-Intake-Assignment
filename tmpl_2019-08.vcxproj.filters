@@ -11,11 +11,14 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source files\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="CircleCollider.cpp">
-      <Filter>Source files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Source files\Tile\BaseTile</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>Source files\Components\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="RectCollider.cpp">
+      <Filter>Source files\Components\Colliders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -35,11 +38,14 @@
     <ClInclude Include="Transform.h">
       <Filter>Header files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="CircleCollider.h">
-      <Filter>Header files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Header files\Tile\BaseTile</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleCollider.h">
+      <Filter>Header files\Components\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="RectCollider.h">
+      <Filter>Header files\Components\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +111,12 @@
     </Filter>
     <Filter Include="Header files\Tile\Spike">
       <UniqueIdentifier>{a087f38c-5d81-4977-b289-064370f9fb83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Components\Colliders">
+      <UniqueIdentifier>{e86f2cbd-29f4-4d1c-a958-12529b409045}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Components\Colliders">
+      <UniqueIdentifier>{361716ff-ceaf-4ff9-b4cf-370f4176846a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
