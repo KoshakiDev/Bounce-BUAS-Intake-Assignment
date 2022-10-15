@@ -1,16 +1,15 @@
 #pragma once
 #include "Transform.h"
-//#include "RectCollider.h" //NOTE: This line may bug because of circular referencing, RectColider has ref to CircleCollider
 #include <iostream>
 
 /*
 NOTE: This was borrowed from Snow Wars
 This is used by the player kinematic body.
-The circle collider's transform is not located in its "center", it is located on its top left corner.
+
+The circle has a "transform" which is located in the top left corner
+The circle also has a "true center" which is located in the circle's center
+
 This is because of the way Surface was built.
-The "center" used 
-
-
 */
 
 class CircleCollider
@@ -33,9 +32,6 @@ public:
 	inline float GetRadius() { return m_radius; }
 
 	bool IsCircleColliding(CircleCollider* other);
-
-	//bool IsRectColliding(RectCollider* other);
-	//NOTE: Create IsCollidingWithRect
 
 private:
 	Transform* m_transform = nullptr;

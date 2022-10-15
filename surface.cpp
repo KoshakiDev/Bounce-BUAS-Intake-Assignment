@@ -189,6 +189,38 @@ void Surface::Plot( int x, int y, Pixel c )
 	if ((x >= 0) && (y >= 0) && (x < m_Width) && (y < m_Height)) m_Buffer[x + y * m_Pitch] = c;
 }
 
+void Surface::ApproximateCircle(int x1, int y1, int radius, Pixel c)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		int a = 0;
+		int b = 0;
+		if (i == 0)
+		{
+			a = 0;
+			b = 1;
+		}
+		if (i == 1)
+		{
+			a = 1;
+			b = 0;
+		}
+		if (i == 2)
+		{
+			a = 0;
+			b = -1;
+		}
+		if (i == 3)
+		{
+			a = -1;
+			b = 0;
+		}
+		int x2 = x1 + a * radius;
+		int y2 = y1 + b * radius;
+		Line(x1, y1, x2, y2, c);
+	}
+}
+
 void Surface::Box( int x1, int y1, int x2, int y2, Pixel c )
 {
 	Line( (float)x1, (float)y1, (float)x2, (float)y1, c );

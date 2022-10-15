@@ -8,9 +8,6 @@
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source files\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Source files\Tile\BaseTile</Filter>
     </ClCompile>
@@ -19,6 +16,12 @@
     </ClCompile>
     <ClCompile Include="RectCollider.cpp">
       <Filter>Source files\Components\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="KinematicBody.cpp">
+      <Filter>Source files\KinematicBody2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source files\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +49,12 @@
     </ClInclude>
     <ClInclude Include="RectCollider.h">
       <Filter>Header files\Components\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="KinematicBody.h">
+      <Filter>Header files\KinematicBody2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header files\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +126,15 @@
     </Filter>
     <Filter Include="Source files\Components\Colliders">
       <UniqueIdentifier>{361716ff-ceaf-4ff9-b4cf-370f4176846a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Player">
+      <UniqueIdentifier>{227681c8-9c7e-48cc-942a-4f3376006454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Platform">
+      <UniqueIdentifier>{9a6728f0-0592-4b1f-97b0-75ed8de38caf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Player">
+      <UniqueIdentifier>{cbd91f5b-b6cd-4bb7-b6ed-a88fd3d8c9c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

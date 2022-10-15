@@ -24,13 +24,9 @@ public:
 
 	RectCollider(float width, float height, Transform* transform)
 	{
-		//m_radius = radius;
 		m_width = width;
 		m_height = height;
-		//m_transform->Transform(position);
-
 		m_transform = transform;
-		//m_transform->Translate(position); //may have errors due to m_transform being null
 	}
 
 	inline Transform* GetTransform() { return m_transform; }
@@ -67,10 +63,7 @@ public:
 
 private:
 	Transform* m_transform = nullptr;
-
-	//float m_radius = 1;
 	float m_width = 0;
 	float m_height = 0;
-
 };
 

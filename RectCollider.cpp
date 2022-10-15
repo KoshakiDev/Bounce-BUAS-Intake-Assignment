@@ -1,5 +1,5 @@
 #include <math.h>
-#include "RectCollider.h" //POSSIBLE SELF-REF
+#include "RectCollider.h"
 using namespace std;
 
 
@@ -16,15 +16,9 @@ bool RectCollider::IsCircleColliding(CircleCollider* other)
 
 	vec2 distance = other->GetTrueCenter()->GetPosition() - pointOnRect;
 
-	//float distanceX = other->GetTransform()->GetPosition().x - pointOnRect.x;
-	//float distanceY = other->GetTransform()->GetPosition().y - pointOnRect.y;
-	
-	//float radiusSquared = m_radius + other->m_radius;
-	
-	printf("R Position: %f, %f \n", pointOnRect.x, pointOnRect.y);
-
-	printf("O Position: %f, %f \n", other->GetTrueCenter()->GetPosition().x, other->GetTrueCenter()->GetPosition().y);
-	printf("Distance: %f, Radius %f \n", distance.length(), other->GetRadius());
+	//printf("R Position: %f, %f \n", pointOnRect.x, pointOnRect.y);
+	//printf("O Position: %f, %f \n", other->GetTrueCenter()->GetPosition().x, other->GetTrueCenter()->GetPosition().y);
+	//printf("Distance: %f, Radius %f \n", distance.length(), other->GetRadius());
 
 	if (distance.length() < other->GetRadius())
 		return true;

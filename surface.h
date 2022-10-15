@@ -62,6 +62,7 @@ public:
 	void CopyTo( Surface* a_Dst, int a_X, int a_Y );
 	void BlendCopyTo( Surface* a_Dst, int a_X, int a_Y );
 	void ScaleColor( unsigned int a_Scale );
+	void ApproximateCircle( int x1, int y1, int radius, Pixel color);
 	void Box( int x1, int y1, int x2, int y2, Pixel color );
 	void Bar( int x1, int y1, int x2, int y2, Pixel color );
 	void Resize( Surface* a_Orig );

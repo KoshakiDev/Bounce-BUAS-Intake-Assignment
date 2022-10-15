@@ -1,17 +1,18 @@
-/*
 #include "Tile.h"
 
 void Tile::Tick(float deltaTime)
 {
 
 }
-void Tile::Tick(float deltaTime)
-{
-	printf("%f %f \n", m_transform.GetPosition().x, m_transform.GetPosition().y);
-}
 
 void Tile::Draw(Surface* screen)
 {
-	//theSprite.Draw(screen, m_transform.GetPosition().x, m_transform.GetPosition().y);
+	screen->Box(
+		m_rect_collider.GetTopLeftCorner().x, 
+		m_rect_collider.GetTopLeftCorner().y, 
+		m_rect_collider.GetBottomRightCorner().x, 
+		m_rect_collider.GetBottomRightCorner().y, 
+		255 * 255 * 255
+	);
 }
 /**/

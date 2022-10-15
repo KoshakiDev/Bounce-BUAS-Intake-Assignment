@@ -4,31 +4,29 @@
 #include "Transform.h"
 
 #include "RectCollider.h"
+#include "Player.h"
+#include "Tile.h"
 using namespace std;
 
 
 namespace Tmpl8
 {
-	//GameObject* player;
+	Player* player;
+	Tile* tile1;
+	Tile* tile2;
 
-	GameObject* rect_1;
-	GameObject* circle_2;
-
-	GameObject* rect_3;
 
 	// -----------------------------------------------------------
 	// Initialize the application
 	// -----------------------------------------------------------
 	void Game::Init()
 	{
-		//player = new GameObject(vec2(0, 0));
-		rect_1 = new GameObject((vec2(500, 500)));
-		circle_2 = new GameObject((vec2(250, 250)));
-		rect_1->setRect(32 * 5, 32 * 6);
-		circle_2->setRadius(32 * 3);
-		rect_3 = new GameObject((vec2(500, 500)));
-		rect_3->setRect(32 * 5, 32 * 6);
-		
+		player = new Player(vec2(400, 400));
+		player->setRadius(32);
+		tile1 = new Tile(vec2(500, 400));
+		tile1->setRect(32, 32);
+		tile2 = new Tile(vec2(200, 400));
+		tile2->setRect(32, 32);
 	}
 	
 	// -----------------------------------------------------------
@@ -46,41 +44,31 @@ namespace Tmpl8
 	void Game::Tick(float deltaTime)
 	{
 		Draw(screen);
-		rect_1->Tick(deltaTime);
-		rect_3->Tick(deltaTime);
-		circle_2->Tick(deltaTime);
-		rect_1->GetTransform()->SetTransform(vec2(Game::mousex, Game::mousey));
-		//printf("Mouse position: %i %i \n", Game::mousex, Game::mousey);
+		player->Tick(deltaTime);
+		tile1->Tick(deltaTime);
+		tile2->Tick(deltaTime);
+		if (tile1->GetRectCollider()->IsCircleColliding(player->GetCircleCollider()) || tile2->GetRectCollider()->IsCircleColliding(player->GetCircleCollider()))
+		{
+			vec2 velocity = player->GetVelocity();
+			velocity = -velocity * 0.9;
+			player->SetVelocity(velocity);
+		}
+			
 
-		//printf("Rect1 position: %f %f \n", rect_1->GetTransform()->GetPosition().x, rect_1->GetTransform()->GetPosition().y);
-
-		if (rect_1->GetRectCollider()->IsCircleColliding(circle_2->GetCircleCollider()))
-			printf("Rectangle 1 collides with Circle 2 \n");
-		else
-			printf("Rectangle 1 NOT collides with Circle 2 \n");
-		/*
-		if(rect_1->GetRectCollider()->IsRectColliding(rect_3->GetRectCollider()))
-			printf("Rectangle 1 collides with Rect 3 \n");
-		else
-			printf("Rectangle 1 NOT collides with Rect 3 \n");
-		/**/
-		//printf("%i", player->xpos);
-		//player->Tick(deltaTime);
 	}
 
 	void Game::Draw(Surface* screen)
 	{
 		screen->Clear(0);
-		rect_1->Draw(screen);
-		circle_2->Draw(screen);
-		rect_3->Draw(screen);
-		//player->Draw(screen);
+		player->Draw(screen);
+		tile1->Draw(screen);
+		tile2->Draw(screen);
 	}
 
 	
 	void Game::KeyDown(int key) //NOTE: Do not forget the "Game::" prefix, otherwise functions don't works
 	{
-		//player->Input(key);	
+		player->Input(key);	
 	}
 	
 };
