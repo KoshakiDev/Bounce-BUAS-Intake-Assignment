@@ -12,21 +12,39 @@ using namespace std;
 namespace Tmpl8
 {
 	Player* player;
-	Tile* tile1;
-	Tile* tile2;
-
+	Tile* tiles [4];
 
 	// -----------------------------------------------------------
 	// Initialize the application
 	// -----------------------------------------------------------
 	void Game::Init()
 	{
-		player = new Player(vec2(350, 400));
-		player->setRadius(32);
-		tile1 = new Tile(vec2(500, 400));
-		tile1->setRect(32, 32);
-		tile2 = new Tile(vec2(200, 400));
-		tile2->setRect(32, 32);
+		player = new Player(vec2(120, 120));
+		player->setRadius(8);
+		
+		for (int i = 0; i < 4; i++)
+		{
+			if (i == 0)
+			{
+				tiles[i] = new Tile(vec2(32, 32));
+				tiles[i]->setRect(32, 32 * 8);
+			}
+			if (i == 1)
+			{
+				tiles[i] = new Tile(vec2(32, 32));
+				tiles[i]->setRect(32 * 8, 32);
+			}
+			if (i == 2)
+			{
+				tiles[i] = new Tile(vec2(32 * 8, 32));
+				tiles[i]->setRect(32, 32 * 8);
+			}
+			if (i == 3)
+			{
+				tiles[i] = new Tile(vec2(32, 32 * 8));
+				tiles[i]->setRect(32 * 8, 32);
+			}
+		}
 	}
 	
 	// -----------------------------------------------------------
@@ -45,24 +63,23 @@ namespace Tmpl8
 	{
 		Draw(screen);
 		player->Tick(deltaTime);
-		tile1->Tick(deltaTime);
-		tile2->Tick(deltaTime);
-		if (tile1->GetRectCollider()->IsCircleColliding(player->GetCircleCollider()) || tile2->GetRectCollider()->IsCircleColliding(player->GetCircleCollider()))
+		for (int i = 0; i < 4; i++)
 		{
-			vec2 velocity = player->GetVelocity();
-			velocity = -velocity * 0.9;
-			player->SetVelocity(velocity);
+			if (tiles[i]->GetRectCollider()->IsCircleColliding(player->GetCircleCollider()))
+			{
+				player->ChangeTrajectory(tiles[i]->GetRectCollider()->GetDistanceFromCircle(player->GetCircleCollider()));
+			}
 		}
-			
-
 	}
 
 	void Game::Draw(Surface* screen)
 	{
 		screen->Clear(0);
 		player->Draw(screen);
-		tile1->Draw(screen);
-		tile2->Draw(screen);
+		for (int i = 0; i < 4; i++)
+		{
+			tiles[i]->Draw(screen);
+		}
 	}
 
 	

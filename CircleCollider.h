@@ -26,7 +26,6 @@ public:
 
 	inline Transform* GetTransform() { return m_transform; }
 	
-	
 	inline float GetRadius() { return m_radius; }
 
 	bool IsCircleColliding(CircleCollider* other);

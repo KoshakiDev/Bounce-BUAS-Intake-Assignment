@@ -2,8 +2,7 @@
 #include "RectCollider.h"
 using namespace std;
 
-
-bool RectCollider::IsCircleColliding(CircleCollider* other)
+vec2 RectCollider::GetDistanceFromCircle(CircleCollider* other)
 {
 	vec2 topLeft = GetTopLeftCorner();
 	vec2 topRight = GetTopRightCorner();
@@ -15,7 +14,12 @@ bool RectCollider::IsCircleColliding(CircleCollider* other)
 	);
 
 	vec2 distance = other->GetTransform()->GetPosition() + vec2(other->GetRadius(), other->GetRadius()) - pointOnRect;
+	return distance;
+}
 
+bool RectCollider::IsCircleColliding(CircleCollider* other)
+{
+	vec2 distance = GetDistanceFromCircle(other);
 	//printf("R Position: %f, %f \n", pointOnRect.x, pointOnRect.y);
 	//printf("O Position: %f, %f \n", other->GetTrueCenter()->GetPosition().x, other->GetTrueCenter()->GetPosition().y);
 	//printf("Distance: %f, Radius %f \n", distance.length(), other->GetRadius());

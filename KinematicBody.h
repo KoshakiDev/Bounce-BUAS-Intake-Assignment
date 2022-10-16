@@ -16,6 +16,8 @@ public:
 	virtual void Draw(Surface* screen) {}
 	virtual void Input(int key) {}
 
+	void ChangeTrajectory(vec2 collision_direction);
+
 	vec2 GetVelocity() { return velocity; }
 	vec2 GetAcceleration() { return acceleration; }
 	void SetVelocity(vec2 new_velocity) { velocity = new_velocity; }

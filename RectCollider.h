@@ -57,7 +57,7 @@ public:
 		return corner;
 	}
 
-	
+	vec2 GetDistanceFromCircle(CircleCollider* other);
 	bool IsCircleColliding(CircleCollider* other);
 	bool IsRectColliding(RectCollider* other);
 
