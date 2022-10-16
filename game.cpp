@@ -21,7 +21,7 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 	void Game::Init()
 	{
-		player = new Player(vec2(400, 400));
+		player = new Player(vec2(350, 400));
 		player->setRadius(32);
 		tile1 = new Tile(vec2(500, 400));
 		tile1->setRect(32, 32);

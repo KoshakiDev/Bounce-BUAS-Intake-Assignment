@@ -30,7 +30,7 @@ public:
 	}
 
 	inline Transform* GetTransform() { return m_transform; }
-	
+	// new stuff
 	// Return each corner from the rectangle
 	inline vec2 GetTopLeftCorner() 
 	{ 

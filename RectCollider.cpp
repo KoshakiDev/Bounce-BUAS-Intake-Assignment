@@ -10,11 +10,11 @@ bool RectCollider::IsCircleColliding(CircleCollider* other)
 	vec2 bottomLeft = GetBottomLeftCorner();
 	vec2 bottomRight = GetBottomRightCorner();
 	vec2 pointOnRect = vec2(
-		clamp(other->GetTrueCenter()->GetPosition().x, topLeft.x, topRight.x), 
-		clamp(other->GetTrueCenter()->GetPosition().y, topLeft.y, bottomLeft.y)
+		clamp(other->GetTransform()->GetPosition().x + other->GetRadius(), topLeft.x, topRight.x),
+		clamp(other->GetTransform()->GetPosition().y + other->GetRadius(), topLeft.y, bottomLeft.y)
 	);
 
-	vec2 distance = other->GetTrueCenter()->GetPosition() - pointOnRect;
+	vec2 distance = other->GetTransform()->GetPosition() + vec2(other->GetRadius(), other->GetRadius()) - pointOnRect;
 
 	//printf("R Position: %f, %f \n", pointOnRect.x, pointOnRect.y);
 	//printf("O Position: %f, %f \n", other->GetTrueCenter()->GetPosition().x, other->GetTrueCenter()->GetPosition().y);

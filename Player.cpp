@@ -1,5 +1,6 @@
 #include "Player.h"
 
+Sprite theSprite(new Surface("assets/ball.png"), 1);
 
 void Player::Tick(float deltatime)
 {
@@ -9,8 +10,15 @@ void Player::Tick(float deltatime)
 
 void Player::Draw(Surface* screen)
 {
-	int x1 = m_circle_collider.GetTrueCenter()->GetPosition().x;
-	int y1 = m_circle_collider.GetTrueCenter()->GetPosition().y;
+	theSprite.DrawScaled(
+		GetTransform()->GetPosition().x,
+		GetTransform()->GetPosition().y,
+		m_circle_collider.GetRadius() * 2,
+		m_circle_collider.GetRadius() * 2,
+		screen
+	);
+	int x1 = m_circle_collider.GetTransform()->GetPosition().x + m_circle_collider.GetRadius();
+	int y1 = m_circle_collider.GetTransform()->GetPosition().y + m_circle_collider.GetRadius();
 	screen->ApproximateCircle(x1, y1, m_circle_collider.GetRadius(), 255 * 255 * 255);
 }
 
