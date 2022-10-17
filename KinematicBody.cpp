@@ -7,18 +7,14 @@ int counter = 0;
 
 void KinematicBody::Tick(float deltatime)
 {
-	acceleration = vec2(0, 0.5);
-	velocity = velocity + acceleration * deltatime;
-	
+	acceleration = vec2(0, 1);
+	velocity.x = clamp(velocity.x + acceleration.x * deltatime, -m_speed_cap, m_speed_cap);
+	velocity.y = clamp(velocity.y + acceleration.y * deltatime, -m_speed_cap, m_speed_cap);
+
+
 	vec2 position = GetTransform()->GetPosition();
 	position = position + velocity * deltatime;
 	GetTransform()->SetTransform(position);
-}
-
-void KinematicBody::ChangeTrajectory(vec2 collision_direction)
-{
-	
-	velocity *= 0.9;
 }
 
 //printf("Normal Velocity: %f, %f \n", normal_velocity.x, normal_velocity.y);

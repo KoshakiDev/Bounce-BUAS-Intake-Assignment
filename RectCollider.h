@@ -59,6 +59,55 @@ public:
 	//TESTING PURPOSES DRAW
 	virtual void Draw(Surface* screen);
 
+	vec2 FindSideDirection(vec2 point) 
+	{
+		vec2 direction = vec2(0, 0);
+		if (GetTopLeftCorner().x < point.x && point.x < GetTopRightCorner().x)
+		{
+			//Either top side or bottom side
+			if (point.y == GetTopRightCorner().y)
+			{
+				//it is a top side
+				direction = GetTopRightCorner() - GetTopLeftCorner();
+			}
+			else
+			{
+				//it is a bottom side
+				direction = GetBottomRightCorner() - GetBottomLeftCorner();
+			}
+		}
+		else if (GetTopLeftCorner().y < point.y && point.y < GetBottomLeftCorner().y)
+		{
+			//Either right side or left side
+			if (point.x == GetTopRightCorner().x)
+			{
+				//it is a right side
+				direction = GetTopRightCorner() - GetBottomRightCorner();
+			}
+			else
+			{
+				//it is the left side
+				direction = GetTopLeftCorner() - GetBottomLeftCorner();
+			}
+		}
+		else
+		{
+			//corner case, we will return either top or bottom side; temp solution
+			printf("Corner case \n");
+			if (point.y == GetTopRightCorner().y)
+			{
+				//it is a top side
+				direction = GetTopRightCorner() - GetTopLeftCorner();
+			}
+			else
+			{
+				//it is a bottom side
+				direction = GetBottomRightCorner() - GetBottomLeftCorner();
+			}
+		}
+		return direction;
+	}
+
 	vec2 GetPointOnRect(CircleCollider* other);
 	vec2 GetDistanceFromCircle(CircleCollider* other);
 	bool IsCircleColliding(CircleCollider* other);

@@ -23,8 +23,6 @@ public:
 	virtual void Draw(Surface* screen) {}
 	virtual void Input(int key) {}
 
-	virtual void ChangeTrajectory(vec2 collision_direction);
-
 	vec2 GetVelocity() { return velocity; }
 	vec2 GetAcceleration() { return acceleration; }
 	void SetVelocity(vec2 new_velocity) { velocity = new_velocity; }
@@ -34,4 +32,7 @@ public:
 protected:
 	vec2 velocity;
 	vec2 acceleration;
+	float m_speed_cap = 1.0;
+	float m_speed = 0.5;
+
 };

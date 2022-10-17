@@ -34,7 +34,7 @@ vec2 RectCollider::GetDistanceFromCircle(CircleCollider* other)
 bool RectCollider::IsCircleColliding(CircleCollider* other)
 {
 	vec2 distance = GetDistanceFromCircle(other);
-	if (distance.sqrLentgh() < other->GetRadius() * other->GetRadius()) {
+	if (distance.sqrLentgh() <= other->GetRadius() * other->GetRadius()) {
 		//printf("Collided! Square Distance %f out of %f\n", distance.sqrLentgh(), other->GetRadius() * other->GetRadius());
 		/*
 		printf("===========\n");

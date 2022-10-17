@@ -3,6 +3,7 @@
 #include "game.h"
 #include "surface.h"
 #include "Transform.h"
+#include <iostream>
 
 using namespace std;
 using namespace Tmpl8;

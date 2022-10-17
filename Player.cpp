@@ -12,11 +12,10 @@ void Player::Tick(float deltatime)
 	KinematicBody::Tick(deltatime);
 }
 
-void Player::ChangeTrajectory(vec2 collision_direction)
+void Player::ChangeTrajectory(vec2 side, vec2 pointOnRect)
 {
-
-	vec2 pointOnRect = m_circle_collider.GetTransform()->GetPosition() + vec2(m_circle_collider.GetRadius(), m_circle_collider.GetRadius()) - collision_direction;
 	float r = m_circle_collider.GetRadius();
+	
 	float prev_center_x = GetPrevTransform()->GetPosition().x + r;
 	float prev_center_y = GetPrevTransform()->GetPosition().y + r;
 
@@ -30,73 +29,27 @@ void Player::ChangeTrajectory(vec2 collision_direction)
 
 	float sign = 1;
 
-	if ((collision_direction.x == 0 && collision_direction.y != 0) || (collision_direction.x == 0 && collision_direction.y == 0 && prev_center_x == cur_center_x))// Solve for y
+	
+	
+	if (side.x == 0 && side.y != 0)// Solve for y
 	{
 		//printf("ENTERED SOLVE FOR Y \n");
-		if (collision_direction.sqrLentgh() == 0)
-		{
-			if (signbit(velocity.y))
-			{
-				sign = 1;
-			}
-			else
-			{
-				sign = -1;
-			}
-			velocity.y = -velocity.y;
-		}
-		else
-		{
-			if (signbit(collision_direction.y))
-			{
-				sign = 1;
-				velocity.y = -velocity.y;
-			}
-			else
-			{
-				sign = -1;
-				velocity.y = -velocity.y;
-			}
-		}
-		t = returnNewTrajectory(pointOnRect.y, r, sign, cur_center_y, prev_center_y);
-
+		sign = returnSign(cur_center_x - prev_center_x);
+		//sign = -1 * returnSign(cur_center_y - prev_center_y);
+		t = returnNewTrajectory(pointOnRect.x, r, sign, cur_center_x, prev_center_x);
+		velocity.x = -velocity.x;
 	}
-	else 
-	if ((collision_direction.y == 0 && collision_direction.x != 0) || (collision_direction.x == 0 && collision_direction.y == 0 && prev_center_y == cur_center_y)) // Solve for x
+	else if (side.y == 0 && side.x != 0) // Solve for x
 	{
 		//printf("ENTERED SOLVE FOR X \n");
-		if(collision_direction.sqrLentgh() == 0)
-		{
-			if (signbit(velocity.x))
-			{
-				sign = 1;
-				velocity.y = -velocity.y;
-			}
-			else
-			{
-				sign = -1;
-				velocity.x = -velocity.x;
-			}
-		}
-		else
-		{
-			if (signbit(collision_direction.x))
-			{
-				sign = 1;
-				velocity.y = -velocity.y;
-			}
-			else
-			{
-				sign = -1;
-				velocity.x = -velocity.x;
-			}
-		}
-		t = returnNewTrajectory(pointOnRect.x, r, sign, cur_center_x, prev_center_x);
-		
+		sign = returnSign(cur_center_y- prev_center_y);
+		t = returnNewTrajectory(pointOnRect.y, r, sign, cur_center_y, prev_center_y);
+		velocity.y = -velocity.y;
 	}
-	printf("%f \n", sign);
+	
 	new_y = t * prev_center_y + (1 - t) * cur_center_y;
 	new_x = t * prev_center_x + (1 - t) * cur_center_x;
+	
 	
 	/*
 	printf("Point on Rect: %f %f \n", pointOnRect.x, pointOnRect.y);
