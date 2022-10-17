@@ -56,7 +56,10 @@ public:
 		corner = corner + vec2(m_width, m_height);
 		return corner;
 	}
+	//TESTING PURPOSES DRAW
+	virtual void Draw(Surface* screen);
 
+	vec2 GetPointOnRect(CircleCollider* other);
 	vec2 GetDistanceFromCircle(CircleCollider* other);
 	bool IsCircleColliding(CircleCollider* other);
 	bool IsRectColliding(RectCollider* other);
@@ -65,5 +68,7 @@ private:
 	Transform* m_transform = nullptr;
 	float m_width = 0;
 	float m_height = 0;
+
+	vec2 prevPointOnRect = vec2(0, 0);
 };
 

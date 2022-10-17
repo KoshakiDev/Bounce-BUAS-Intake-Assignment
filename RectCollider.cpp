@@ -2,7 +2,15 @@
 #include "RectCollider.h"
 using namespace std;
 
-vec2 RectCollider::GetDistanceFromCircle(CircleCollider* other)
+
+void RectCollider::Draw(Surface* screen)
+{
+	int x1 = prevPointOnRect.x;
+	int y1 = prevPointOnRect.y;
+	screen->ApproximateCircle(x1, y1, 8, 1 * 255 * 255);
+}
+
+vec2 RectCollider::GetPointOnRect(CircleCollider* other)
 {
 	vec2 topLeft = GetTopLeftCorner();
 	vec2 topRight = GetTopRightCorner();
@@ -12,7 +20,13 @@ vec2 RectCollider::GetDistanceFromCircle(CircleCollider* other)
 		clamp(other->GetTransform()->GetPosition().x + other->GetRadius(), topLeft.x, topRight.x),
 		clamp(other->GetTransform()->GetPosition().y + other->GetRadius(), topLeft.y, bottomLeft.y)
 	);
+	prevPointOnRect = pointOnRect;
+	return pointOnRect;
+}
 
+vec2 RectCollider::GetDistanceFromCircle(CircleCollider* other)
+{
+	vec2 pointOnRect = GetPointOnRect(other);
 	vec2 distance = other->GetTransform()->GetPosition() + vec2(other->GetRadius(), other->GetRadius()) - pointOnRect;
 	return distance;
 }
@@ -20,13 +34,17 @@ vec2 RectCollider::GetDistanceFromCircle(CircleCollider* other)
 bool RectCollider::IsCircleColliding(CircleCollider* other)
 {
 	vec2 distance = GetDistanceFromCircle(other);
-	//printf("R Position: %f, %f \n", pointOnRect.x, pointOnRect.y);
-	//printf("O Position: %f, %f \n", other->GetTrueCenter()->GetPosition().x, other->GetTrueCenter()->GetPosition().y);
-	//printf("Distance: %f, Radius %f \n", distance.length(), other->GetRadius());
-
-	if (distance.length() < other->GetRadius())
+	if (distance.sqrLentgh() < other->GetRadius() * other->GetRadius()) {
+		//printf("Collided! Square Distance %f out of %f\n", distance.sqrLentgh(), other->GetRadius() * other->GetRadius());
+		/*
+		printf("===========\n");
+		if (distance.sqrLentgh() == 0)
+			printf("Collided! Uh oh! The distance is zero, we can't tell the direction!\n");
+		else
+			printf("Collided! Direction of Distance: %f %f\n", distance.x, distance.y);
+		/**/
 		return true;
-
+	}
 	return false;
 }
 

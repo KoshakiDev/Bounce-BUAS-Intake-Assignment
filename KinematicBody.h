@@ -6,6 +6,13 @@ class KinematicBody : public GameObject
 public:
 	KinematicBody() = default;
 
+	float clamp(float value, float min, float max)
+	{
+		if (value <= min) return min;
+		if (value >= max) return max;
+		return value;
+	}
+
 	KinematicBody(vec2 position) : GameObject(position) 
 	{
 		velocity = vec2(0, 0);
@@ -16,7 +23,7 @@ public:
 	virtual void Draw(Surface* screen) {}
 	virtual void Input(int key) {}
 
-	void ChangeTrajectory(vec2 collision_direction);
+	virtual void ChangeTrajectory(vec2 collision_direction);
 
 	vec2 GetVelocity() { return velocity; }
 	vec2 GetAcceleration() { return acceleration; }
