@@ -15,6 +15,8 @@ class RectCollider
 public:
 	RectCollider() = default;
 
+	string tag;
+
 	float clamp(float value, float min, float max)
 	{
 		if (value <= min) return min;
@@ -62,6 +64,19 @@ public:
 	vec2 FindSideDirection(vec2 point) 
 	{
 		vec2 direction = vec2(0, 0);
+		cout << "========" << endl;
+		if (GetTopLeftCorner().x < point.x && point.x < GetTopRightCorner().x && GetTopLeftCorner().y < point.y && point.y < GetBottomLeftCorner().y)
+		{
+			/*
+			THIS IS NEW, MAY HAVE BUGS
+
+			This checks whether the point is inside the rectangle
+			If it is, then we switch to the previous point.
+			*/
+			point = prevPointOnRect;
+			cout << "WARNING: Previous point was used" << endl;
+		}
+
 		if (GetTopLeftCorner().x < point.x && point.x < GetTopRightCorner().x)
 		{
 			//Either top side or bottom side
@@ -69,11 +84,14 @@ public:
 			{
 				//it is a top side
 				direction = GetTopRightCorner() - GetTopLeftCorner();
+				cout << "Top side was chosen" << endl;
+
 			}
 			else
 			{
 				//it is a bottom side
 				direction = GetBottomRightCorner() - GetBottomLeftCorner();
+				cout << "Bottom side was chosen" << endl;
 			}
 		}
 		else if (GetTopLeftCorner().y < point.y && point.y < GetBottomLeftCorner().y)
@@ -83,26 +101,30 @@ public:
 			{
 				//it is a right side
 				direction = GetTopRightCorner() - GetBottomRightCorner();
+				cout << "Right side was chosen" << endl;
 			}
 			else
 			{
 				//it is the left side
 				direction = GetTopLeftCorner() - GetBottomLeftCorner();
+				cout << "Left side was chosen" << endl;
 			}
 		}
 		else
 		{
 			//corner case, we will return either top or bottom side; temp solution
-			printf("Corner case \n");
+			printf("Corner case: ");
 			if (point.y == GetTopRightCorner().y)
 			{
 				//it is a top side
 				direction = GetTopRightCorner() - GetTopLeftCorner();
+				cout << "Top side was chosen" << endl;
 			}
 			else
 			{
 				//it is a bottom side
 				direction = GetBottomRightCorner() - GetBottomLeftCorner();
+				cout << "Bottom side was chosen" << endl;
 			}
 		}
 		return direction;

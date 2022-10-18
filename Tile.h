@@ -20,7 +20,15 @@ public:
 	{
 		return &m_rect_collider;
 	}
+
+	//CRUTCH
+	bool getReal() { return is_real; }
+	void setReal() { is_real = true; }
+
+	void setFake() { is_real = false; }
+
 protected:
 	RectCollider m_rect_collider;
-	
+
+	bool is_real = true;
 };

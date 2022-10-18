@@ -7,6 +7,7 @@ void Tile::Tick(float deltaTime)
 
 void Tile::Draw(Surface* screen)
 {
+	//printf("i was drawn");
 	screen->Box(
 		m_rect_collider.GetTopLeftCorner().x, 
 		m_rect_collider.GetTopLeftCorner().y, 

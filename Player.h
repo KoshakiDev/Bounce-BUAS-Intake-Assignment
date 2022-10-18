@@ -30,6 +30,8 @@ public:
 
 	float returnNewTrajectory(float pointOnRect, float radius, float sign, float cur_center, float prev_center)
 	{
+		if (prev_center == cur_center)
+			printf("WARNING: DIVISION BY ZERO \n");
 		return (pointOnRect + (radius) * sign - cur_center) / (prev_center - cur_center);
 	}
 	

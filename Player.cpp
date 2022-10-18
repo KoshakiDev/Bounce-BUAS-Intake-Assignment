@@ -6,8 +6,6 @@ void Player::Tick(float deltatime)
 {
 	clamp(velocity.x, -m_speed_cap, m_speed_cap);
 	clamp(velocity.y, -m_speed_cap, m_speed_cap);
-	if(abs(velocity.x) > 1.0 || abs(velocity.y) > 1.0)
-		printf("Current Velocity exceeded: %f %f \n", velocity.x, velocity.y);
 	GetPrevTransform()->SetTransform(GetTransform()->GetPosition());
 	KinematicBody::Tick(deltatime);
 }
@@ -28,21 +26,18 @@ void Player::ChangeTrajectory(vec2 side, vec2 pointOnRect)
 	float t = 0;
 
 	float sign = 1;
-
 	
-	
-	if (side.x == 0 && side.y != 0)// Solve for y
+	if (side.x == 0 && side.y != 0)// Solve for X
 	{
-		//printf("ENTERED SOLVE FOR Y \n");
+		//printf("ENTERED SOLVE FOR X \n");
 		sign = returnSign(cur_center_x - prev_center_x);
-		//sign = -1 * returnSign(cur_center_y - prev_center_y);
 		t = returnNewTrajectory(pointOnRect.x, r, sign, cur_center_x, prev_center_x);
 		velocity.x = -velocity.x;
 	}
-	else if (side.y == 0 && side.x != 0) // Solve for x
+	else if (side.y == 0 && side.x != 0) // Solve for Y
 	{
-		//printf("ENTERED SOLVE FOR X \n");
-		sign = returnSign(cur_center_y- prev_center_y);
+		//printf("ENTERED SOLVE FOR Y \n");
+		sign = returnSign(cur_center_y - prev_center_y);
 		t = returnNewTrajectory(pointOnRect.y, r, sign, cur_center_y, prev_center_y);
 		velocity.y = -velocity.y;
 	}
@@ -52,8 +47,11 @@ void Player::ChangeTrajectory(vec2 side, vec2 pointOnRect)
 	
 	
 	/*
+	printf("Side         : %f %f \n", side.x, side.y);
 	printf("Point on Rect: %f %f \n", pointOnRect.x, pointOnRect.y);
 
+	printf("  t  Value: %f \n", t);
+	printf("Sign Value: %f \n", sign);
 	printf("Previous  CENTER    Position: %f %f \n", prev_center_x, prev_center_y);
 	printf("Current   CENTER    Position: %f %f \n", cur_center_x, cur_center_y);
 	printf("Corrected TRANSFORM Position: %f %f \n", new_x, new_y);
