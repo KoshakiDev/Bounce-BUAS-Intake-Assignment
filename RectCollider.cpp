@@ -2,6 +2,21 @@
 #include "RectCollider.h"
 using namespace std;
 
+/*
+Ray casting
+A shooting game has typically many very fast, very small objects: bullets. 
+Bullet collisions are better checked with ray casting. 
+A ray is cast from the bullet’s current position to the bullet’s position of the next frame. 
+This way no collisions are missed.
+
+The ray casting approach can also be used for bigger objects if we cast a ray from the object center point to 
+the future center point. 
+We can get better results if we place more sample points in the object and shoot several rays. 
+But this approach is not appropriate to test for collision of two moving objects 
+because it is unlikely that rays of one object hit the rays of the other objects. 
+The ray casting method is good for the bullet vs. slow object scenario.
+*/
+
 
 void RectCollider::Draw(Surface* screen)
 {
@@ -20,13 +35,14 @@ vec2 RectCollider::GetPointOnRect(CircleCollider* other)
 		clamp(other->GetTransform()->GetPosition().x + other->GetRadius(), topLeft.x, topRight.x),
 		clamp(other->GetTransform()->GetPosition().y + other->GetRadius(), topLeft.y, bottomLeft.y)
 	);
-	prevPointOnRect = pointOnRect;
+	curPointOnRect = pointOnRect;
 	return pointOnRect;
 }
 
 vec2 RectCollider::GetDistanceFromCircle(CircleCollider* other)
 {
 	vec2 pointOnRect = GetPointOnRect(other);
+	
 	vec2 distance = other->GetTransform()->GetPosition() + vec2(other->GetRadius(), other->GetRadius()) - pointOnRect;
 	return distance;
 }
@@ -34,15 +50,8 @@ vec2 RectCollider::GetDistanceFromCircle(CircleCollider* other)
 bool RectCollider::IsCircleColliding(CircleCollider* other)
 {
 	vec2 distance = GetDistanceFromCircle(other);
+	
 	if (distance.sqrLentgh() <= other->GetRadius() * other->GetRadius()) {
-		//printf("Collided! Square Distance %f out of %f\n", distance.sqrLentgh(), other->GetRadius() * other->GetRadius());
-		/*
-		printf("===========\n");
-		if (distance.sqrLentgh() == 0)
-			printf("Collided! Uh oh! The distance is zero, we can't tell the direction!\n");
-		else
-			printf("Collided! Direction of Distance: %f %f\n", distance.x, distance.y);
-		/**/
 		return true;
 	}
 	return false;

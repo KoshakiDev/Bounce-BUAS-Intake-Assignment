@@ -27,18 +27,18 @@ void Player::ChangeTrajectory(vec2 side, vec2 pointOnRect)
 
 	float sign = 1;
 	
-	if (side.x == 0 && side.y != 0)// Solve for X
+	if (side.x == 0 && side.y != 0)// The side is Left-Right
 	{
 		//printf("ENTERED SOLVE FOR X \n");
 		sign = returnSign(cur_center_x - prev_center_x);
-		t = returnNewTrajectory(pointOnRect.x, r, sign, cur_center_x, prev_center_x);
+		t = returnNewTrajectory(side.y, r, sign, cur_center_x, prev_center_x);
 		velocity.x = -velocity.x;
 	}
-	else if (side.y == 0 && side.x != 0) // Solve for Y
+	else if (side.y == 0 && side.x != 0) // The side is Up-Down
 	{
 		//printf("ENTERED SOLVE FOR Y \n");
 		sign = returnSign(cur_center_y - prev_center_y);
-		t = returnNewTrajectory(pointOnRect.y, r, sign, cur_center_y, prev_center_y);
+		t = returnNewTrajectory(side.x, r, sign, cur_center_y, prev_center_y);
 		velocity.y = -velocity.y;
 	}
 	

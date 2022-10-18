@@ -28,11 +28,11 @@ public:
 		return sign;
 	}
 
-	float returnNewTrajectory(float pointOnRect, float radius, float sign, float cur_center, float prev_center)
+	float returnNewTrajectory(float side, float radius, float sign, float cur_center, float prev_center)
 	{
 		if (prev_center == cur_center)
 			printf("WARNING: DIVISION BY ZERO \n");
-		return (pointOnRect + (radius) * sign - cur_center) / (prev_center - cur_center);
+		return (side + (radius) * sign - cur_center) / (prev_center - cur_center);
 	}
 	
 

@@ -58,10 +58,13 @@ namespace Tmpl8
 					if (tilemap->getTile(i, j)->GetRectCollider()->IsCircleColliding(player->GetCircleCollider()))
 					{
 						vec2 point = tilemap->getTile(i, j)->GetRectCollider()->GetPointOnRect(player->GetCircleCollider());
+						point = tilemap->getTile(i, j)->GetRectCollider()->checkIfPointInRect(point);
 						vec2 side = tilemap->getTile(i, j)->GetRectCollider()->FindSideDirection(point);
 						player->ChangeTrajectory(side, point);
 					}
+					tilemap->getTile(i, j)->GetRectCollider()->updatePrevPointOnRect();
 				}
+				
 			}
 		}
 		/**/

@@ -61,10 +61,8 @@ public:
 	//TESTING PURPOSES DRAW
 	virtual void Draw(Surface* screen);
 
-	vec2 FindSideDirection(vec2 point) 
+	vec2 checkIfPointInRect(vec2 point) 
 	{
-		vec2 direction = vec2(0, 0);
-		cout << "========" << endl;
 		if (GetTopLeftCorner().x < point.x && point.x < GetTopRightCorner().x && GetTopLeftCorner().y < point.y && point.y < GetBottomLeftCorner().y)
 		{
 			/*
@@ -74,8 +72,16 @@ public:
 			If it is, then we switch to the previous point.
 			*/
 			point = prevPointOnRect;
-			cout << "WARNING: Previous point was used" << endl;
+			cout << "WARNING: Previous point was used " << prevPointOnRect.x << ' ' << prevPointOnRect.y << endl;
 		}
+		return point;
+	}
+
+	vec2 FindSideDirection(vec2 point) 
+	{
+		vec2 direction = vec2(0, 0);
+		cout << "========" << endl;
+		cout << "Point on/in rectangle "<< point.x << ' ' << point.y << endl;	
 
 		if (GetTopLeftCorner().x < point.x && point.x < GetTopRightCorner().x)
 		{
@@ -84,14 +90,14 @@ public:
 			{
 				//it is a top side
 				direction = GetTopRightCorner() - GetTopLeftCorner();
-				cout << "Top side was chosen" << endl;
+				cout << "Top side was chosen: " << direction.x << " " << direction.y << endl;
 
 			}
 			else
 			{
 				//it is a bottom side
 				direction = GetBottomRightCorner() - GetBottomLeftCorner();
-				cout << "Bottom side was chosen" << endl;
+				cout << "Bottom side was chosen: " << direction.x << " " << direction.y << endl;
 			}
 		}
 		else if (GetTopLeftCorner().y < point.y && point.y < GetBottomLeftCorner().y)
@@ -100,14 +106,14 @@ public:
 			if (point.x == GetTopRightCorner().x)
 			{
 				//it is a right side
-				direction = GetTopRightCorner() - GetBottomRightCorner();
-				cout << "Right side was chosen" << endl;
+				direction =  GetBottomRightCorner() - GetTopRightCorner();
+				cout << "Right side was chosen: " << direction.x << " " << direction.y << endl;
 			}
 			else
 			{
 				//it is the left side
-				direction = GetTopLeftCorner() - GetBottomLeftCorner();
-				cout << "Left side was chosen" << endl;
+				direction = GetBottomLeftCorner() - GetTopLeftCorner();
+				cout << "Left side was chosen: " << direction.x << " " << direction.y << endl;
 			}
 		}
 		else
@@ -118,16 +124,22 @@ public:
 			{
 				//it is a top side
 				direction = GetTopRightCorner() - GetTopLeftCorner();
-				cout << "Top side was chosen" << endl;
+				cout << "Top side was chosen: " << direction.x << " " << direction.y << endl;
 			}
 			else
 			{
 				//it is a bottom side
 				direction = GetBottomRightCorner() - GetBottomLeftCorner();
-				cout << "Bottom side was chosen" << endl;
+				cout << "Bottom side was chosen: " << direction.x << " " << direction.y << endl;
 			}
 		}
 		return direction;
+	}
+
+	void updatePrevPointOnRect()
+	{
+		prevPointOnRect = curPointOnRect;
+		curPointOnRect = vec2(0, 0);
 	}
 
 	vec2 GetPointOnRect(CircleCollider* other);
@@ -141,5 +153,6 @@ private:
 	float m_height = 0;
 
 	vec2 prevPointOnRect = vec2(0, 0);
+	vec2 curPointOnRect = vec2(0, 0);
 };
 
