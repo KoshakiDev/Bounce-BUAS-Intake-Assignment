@@ -9,9 +9,15 @@ You are a dodgeball which can turn into a rock and a balloon. Dodgeballs bounce.
 
 I have experience coding and making games (with a preexisting game engine), but I do not have experience creating without one purely on Visual Studio. Therefore, I used online tutorials to get myself started.
 
+Game Engine Architecture by Jason Gregory
+
 [BUAS Visual Studio Community 2019 Game Template](https://www.3dgep.com/cppfast-track-1-getting-started)
 
 [Lazy Foo's SDL Tutorials](http://lazyfoo.net/SDL_tutorials/)
 
 ["Lets Make Games!" Playlist](https://www.youtube.com/playlist?list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx)
+
+https://www.youtube.com/watch?v=eED4bSkYCB8
+
+https://www.youtube.com/watch?v=_xj8FyG-aac
 
