@@ -6,8 +6,6 @@ using namespace std;
 
 #define TILE_SIZE 32
 
-
-
 Manager manager;
 auto& newPlayer(manager.addObject());
 
@@ -18,7 +16,11 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 	void Game::Init()
 	{
-		newPlayer.addComponent<ShapeComponent>(t_circle);
+		newPlayer.addComponent<TransformComponent>(100, 100);
+		newPlayer.addComponent<ShapeComponent>(t_rectangle);
+		//newPlayer.getComponent<ShapeComponent>().pShape.radius = 16;
+
+		//newPlayer.getComponent<ShapeComponent>().pShape.radius = 16;
 		//newPlayer.getComponent<ShapeComponent>().pShape.transform = Vector2D(100, 100);
 	}
 	
@@ -39,6 +41,7 @@ namespace Tmpl8
 		manager.refresh();
 		manager.Tick(delta);
 		Draw(screen);
+		newPlayer.getComponent<TransformComponent>().position = Vector2D(mousex, mousey);
 
 		/*
 		for (int i = 0; i < 20; i++)

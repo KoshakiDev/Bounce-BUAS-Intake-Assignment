@@ -74,6 +74,27 @@ void timer::init()
 	inv_freq = 1000. / double(f.QuadPart);
 }
 
+//##############################################################################
+// Custom functions by me (having in Components.h does not work for some reason)
+
+
+float returnSign(float value)
+{
+	float sign = 0.0;
+	if (signbit(value))
+	{
+		sign = 1.0;
+	}
+	else
+	{
+		sign = -1.0;
+	}
+	return sign;
+}
+
+//##############################################################################
+
+
 // Math Stuff
 // ----------------------------------------------------------------------------
 vec3 normalize( const vec3& v ) { return v.normalized(); }

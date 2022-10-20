@@ -3,11 +3,14 @@
 
 enum ShapeType {t_point, t_lineSegment, t_circle, t_rectangle};
 
-class Shape : public Component
+class Shape
 {
 public:
     string name;
     Pixel color = 255 * 255 * 255;
+    Vector2D position;
+
+    //virtual void getInfo() {}
     static Shape* Create(ShapeType type);
     virtual void Init() {}
     virtual void Tick(float delta) {}
@@ -19,15 +22,12 @@ class Point : public Shape
 public:
     Point()
     {
-        point = Vector2D(0, 0);
+        name = "POINT";
+        position = Vector2D(0, 0);
     }
-    string name = "POINT";
-    Vector2D point;
     void Draw(Surface* screen)
     {
-        Shape::Draw(screen);
-
-        screen->Point(point.x, point.y, color);
+        screen->Point(position.x, position.y, color);
     }
 };
 
@@ -36,18 +36,16 @@ class LineSegment : public Shape
 public:
     LineSegment()
     {
-        point_1 = Vector2D(0, 0);
-        point_2 = Vector2D(0, 0);
+        name = "LINE";
+        position = Vector2D(0, 0);
+        point = Vector2D(0, 0);
     }
-    string name = "LINE";
-    Vector2D point_1;
-    Vector2D point_2;
+    Vector2D point;
     void Draw(Surface* screen)
     {
-        Shape::Draw(screen);
-        screen->Point(point_1.x, point_1.y, color);
-        screen->Point(point_2.x, point_2.y, color);
-        screen->Line(point_1.x, point_1.y, point_2.x, point_2.y, color);
+        screen->Point(position.x, position.y, color);
+        screen->Point(point.x, point.y, color);
+        screen->Line(position.x, position.y, point.x, point.y, color);
     }
 };
 
@@ -56,16 +54,16 @@ class Circle : public Shape
 public:
     Circle()
     {
-        transform = Vector2D(0, 0);
+        name = "CIRCLE";
+        position = Vector2D(0, 0);
         radius = 1.0;
     }
-    string name = "CIRCLE";
-    Vector2D transform;
     float radius;
+    
     void Draw(Surface* screen)
     {
-        Shape::Draw(screen);
-        screen->ApproximateCircle(transform.x, transform.y, radius, color);
+        //cout << "a " << name <<" is being drawn with position " << transform << " and radius " << radius << endl;
+        screen->ApproximateCircle(position.x, position.y, radius, color);
     }
 };
 
@@ -74,34 +72,19 @@ class Rectangle : public Shape
 public:
     Rectangle()
     {
-        transform = Vector2D(0, 0);
+        name = "RECTANGLE";
+        position = Vector2D(0, 0);
         width = 1.0;
         height = 1.0;
     }
-    string name = "RECTANGLE";
-    Vector2D transform;
     float width;
     float height;
     void Draw(Surface* screen)
     {
-        Shape::Draw(screen);
-        screen->Box(transform.x, transform.y, transform.x + width, transform.y + height, color);
+        screen->Box(position.x, position.y, position.x + width, position.y + height, color);
     }
 };
 
-
-Shape* Shape::Create(ShapeType type)
-{
-    if (type == t_point)
-        return new Point();
-    else if (type == t_lineSegment)
-        return new LineSegment();
-    else if (type == t_circle)
-        return new Circle();
-    else if (type == t_rectangle)
-        return new Rectangle();
-    else return NULL;
-}
 
 class ShapeComponent : public Component
 {
@@ -112,6 +95,26 @@ public:
         pShape = Shape::Create(type);
     }
     Shape* pShape;
+    TransformComponent* ptransformComponent;
+
+    void Init()
+    {
+        if (!owner->hasComponent<TransformComponent>())
+        {
+            owner->addComponent<TransformComponent>();
+        }
+        ptransformComponent = &owner->getComponent<TransformComponent>();
+    }
+    void Tick(float delta)
+    {
+        pShape->Tick(delta);
+        pShape->position = ptransformComponent->position;
+    }
+    void Draw(Surface* screen)
+    {
+        pShape->Draw(screen);
+    }
+
     virtual ~ShapeComponent() {}
 };
 

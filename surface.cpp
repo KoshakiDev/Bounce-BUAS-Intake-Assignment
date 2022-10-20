@@ -192,15 +192,16 @@ void Surface::Plot( int x, int y, Pixel c )
 
 void Surface::Point(float x1, float y1, Pixel color)
 {
-	float root2 = 1.41421356237 / 2.0;
-	float half1 = 0.5;
-	Line(x1, y1, x1        , y1 - half1, color);
+	float scale = 5.0;
+	float root2 = 1.41421356237 / 2.0 * scale;
+	float full1 = 1 * scale;
+	Line(x1, y1, x1        , y1 - full1, color);
 	Line(x1, y1, x1 + root2, y1 - root2, color);
-	Line(x1, y1, x1 + half1, y1        , color);
+	Line(x1, y1, x1 + full1, y1        , color);
 	Line(x1, y1, x1 + root2, y1 + root2, color);
-	Line(x1, y1, x1        , y1 + half1, color);
+	Line(x1, y1, x1        , y1 + full1, color);
 	Line(x1, y1, x1 - root2, y1 + root2, color);
-	Line(x1, y1, x1 - half1, y1        , color);
+	Line(x1, y1, x1 - full1, y1        , color);
 	Line(x1, y1, x1 - root2, y1 - root2, color);
 }
 

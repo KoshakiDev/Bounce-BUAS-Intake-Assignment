@@ -34,6 +34,7 @@ public:
 		position = set_position;
 	}
 	/**/
+	
 	Vector2D position = Vector2D(0, 0);
 
 };

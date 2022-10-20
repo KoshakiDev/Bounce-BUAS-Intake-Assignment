@@ -225,6 +225,7 @@
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="ObjectComponentSystem.cpp" />
+    <ClCompile Include="ShapeComponent.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RectCollider.cpp" />

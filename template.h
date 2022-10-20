@@ -75,24 +75,7 @@ struct timer
 	void reset();
 	static void init();
 };
-//##############################################################################
-// Custom functions by me (having in Components.h does not work for some reason)
 
-float returnSign(float value)
-{
-	float sign = 0.0;
-	if (signbit(value))
-	{
-		sign = 1.0;
-	}
-	else
-	{
-		sign = -1.0;
-	}
-	return sign;
-}
-
-//##############################################################################
 
 // vectors
 class Vector2D // adapted from https://github.com/dcow/RayTracer
