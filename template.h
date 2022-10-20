@@ -10,6 +10,7 @@
 
 #include <cstdlib>
 #include <cstdio>
+#include <iostream>
 
 constexpr int ScreenWidth = 800;
 constexpr int ScreenHeight = 640;
@@ -74,31 +75,56 @@ struct timer
 	void reset();
 	static void init();
 };
+//##############################################################################
+// Custom functions by me (having in Components.h does not work for some reason)
+
+float returnSign(float value)
+{
+	float sign = 0.0;
+	if (signbit(value))
+	{
+		sign = 1.0;
+	}
+	else
+	{
+		sign = -1.0;
+	}
+	return sign;
+}
+
+//##############################################################################
 
 // vectors
-class vec2 // adapted from https://github.com/dcow/RayTracer
+class Vector2D // adapted from https://github.com/dcow/RayTracer
 {
 public:
 	union { struct { float x, y; }; float cell[2]; };
-	vec2() {}
-	vec2( float v ) : x( v ), y( v ) {}
-	vec2( float x, float y ) : x( x ), y( y ) {}
-	vec2 operator - () const { return vec2( -x, -y ); }
-	vec2 operator + ( const vec2& addOperand ) const { return vec2( x + addOperand.x, y + addOperand.y ); }
-	vec2 operator - ( const vec2& operand ) const { return vec2( x - operand.x, y - operand.y ); }
-	vec2 operator * ( const vec2& operand ) const { return vec2( x * operand.x, y * operand.y ); }
-	vec2 operator * ( float operand ) const { return vec2( x * operand, y * operand ); }
-	void operator -= ( const vec2& a ) { x -= a.x; y -= a.y; }
-	void operator += ( const vec2& a ) { x += a.x; y += a.y; }
-	void operator *= ( const vec2& a ) { x *= a.x; y *= a.y; }
+	Vector2D() {}
+	Vector2D( float v ) : x( v ), y( v ) {}
+	Vector2D( float x, float y ) : x( x ), y( y ) {}
+	Vector2D operator - () const { return Vector2D( -x, -y ); }
+	Vector2D operator + ( const Vector2D& addOperand ) const { return Vector2D( x + addOperand.x, y + addOperand.y ); }
+	Vector2D operator - ( const Vector2D& operand ) const { return Vector2D( x - operand.x, y - operand.y ); }
+	Vector2D operator * ( const Vector2D& operand ) const { return Vector2D( x * operand.x, y * operand.y ); }
+	Vector2D operator * ( float operand ) const { return Vector2D( x * operand, y * operand ); }
+	void operator -= ( const Vector2D& a ) { x -= a.x; y -= a.y; }
+	void operator += ( const Vector2D& a ) { x += a.x; y += a.y; }
+	void operator *= ( const Vector2D& a ) { x *= a.x; y *= a.y; }
 	void operator *= ( float a ) { x *= a; y *= a; }
 	float& operator [] ( const int idx ) { return cell[idx]; }
 	float length() { return sqrtf( x * x + y * y ); }
 	float sqrLentgh() { return x * x + y * y; }
-	vec2 normalized() { float r = 1.0f / length(); return vec2( x * r, y * r ); }
+	Vector2D normalized() { float r = 1.0f / length(); return Vector2D( x * r, y * r ); }
 	void normalize() { float r = 1.0f / length(); x *= r; y *= r; }
-	static vec2 normalize( vec2 v ) { return v.normalized(); }
-	float dot( const vec2& operand ) const { return x * operand.x + y * operand.y; }
+	static Vector2D normalize( Vector2D v ) { return v.normalized(); }
+	float dot( const Vector2D& operand ) const { return x * operand.x + y * operand.y; }
+	
+	//new thing added by me
+	friend std::ostream& operator<<(std::ostream& stream, const Vector2D& vec)
+	{
+		stream << "(" << vec.x << ", " << vec.y << ")";
+		return stream;
+	}
 };
 
 class vec3

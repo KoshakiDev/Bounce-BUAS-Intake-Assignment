@@ -1,6 +1,7 @@
 #include "Tile.h"
 
-void Tile::Tick(float deltaTime)
+/*
+void Tile::Tick(float delta)
 {
 
 }

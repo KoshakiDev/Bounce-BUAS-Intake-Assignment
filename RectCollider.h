@@ -1,14 +1,14 @@
 #pragma once
+
+/*
+WARNING: THIS WILL BE DELETED, IS REPLACED BY COLLIDER COMPONENT + SHAPE COMPONENT
+
+
 #include "Transform.h"
 #include "CircleCollider.h"
 #include <algorithm>
 
-/*
-NOTE: 
-Rectangle's x and y positions are relative to the top left corner.
-This is because Surface is programmed to draw Sprites from the position of the top left corner
 
-*/
 
 class RectCollider
 {
@@ -16,13 +16,6 @@ public:
 	RectCollider() = default;
 
 	string tag;
-
-	float clamp(float value, float min, float max)
-	{
-		if (value <= min) return min;
-		if (value >= max) return max;
-		return value;
-	}
 
 	RectCollider(float width, float height, Transform* transform)
 	{
@@ -34,52 +27,46 @@ public:
 	inline Transform* GetTransform() { return m_transform; }
 	// new stuff
 	// Return each corner from the rectangle
-	inline vec2 GetTopLeftCorner() 
+	inline Vector2D GetTopLeftCorner() 
 	{ 
-		vec2 corner = m_transform->GetPosition();
+		Vector2D corner = m_transform->GetPosition();
 		return corner;
 	}
 	
-	inline vec2 GetTopRightCorner() 
+	inline Vector2D GetTopRightCorner() 
 	{ 
-		vec2 corner = m_transform->GetPosition();
-		corner = corner + vec2(m_width, 0.0);
+		Vector2D corner = m_transform->GetPosition();
+		corner = corner + Vector2D(m_width, 0.0);
 		return corner; 
 	}
-	inline vec2 GetBottomLeftCorner() 
+	inline Vector2D GetBottomLeftCorner() 
 	{
-		vec2 corner = m_transform->GetPosition();
-		corner = corner + vec2(0.0, m_height);
+		Vector2D corner = m_transform->GetPosition();
+		corner = corner + Vector2D(0.0, m_height);
 		return corner;
 	}
-	inline vec2 GetBottomRightCorner() 
+	inline Vector2D GetBottomRightCorner() 
 	{
-		vec2 corner = m_transform->GetPosition();
-		corner = corner + vec2(m_width, m_height);
+		Vector2D corner = m_transform->GetPosition();
+		corner = corner + Vector2D(m_width, m_height);
 		return corner;
 	}
 	//TESTING PURPOSES DRAW
 	virtual void Draw(Surface* screen);
 
-	vec2 checkIfPointInRect(vec2 point) 
+	Vector2D checkIfPointInRect(Vector2D point) 
 	{
 		if (GetTopLeftCorner().x < point.x && point.x < GetTopRightCorner().x && GetTopLeftCorner().y < point.y && point.y < GetBottomLeftCorner().y)
 		{
-			/*
-			THIS IS NEW, MAY HAVE BUGS
-
-			This checks whether the point is inside the rectangle
-			If it is, then we switch to the previous point.
-			*/
 			point = prevPointOnRect;
 			cout << "WARNING: Previous point was used " << prevPointOnRect.x << ' ' << prevPointOnRect.y << endl;
 		}
 		return point;
 	}
 
-	vec2 FindSideDirection(vec2 point) 
+	Vector2D FindSideDirection(Vector2D point) 
 	{
-		vec2 direction = vec2(0, 0);
+		Vector2D direction = Vector2D(0, 0);
 		cout << "========" << endl;
 		cout << "Point on/in rectangle "<< point.x << ' ' << point.y << endl;	
 
@@ -139,11 +126,11 @@ public:
 	void updatePrevPointOnRect()
 	{
 		prevPointOnRect = curPointOnRect;
-		curPointOnRect = vec2(0, 0);
+		curPointOnRect = Vector2D(0, 0);
 	}
 
-	vec2 GetPointOnRect(CircleCollider* other);
-	vec2 GetDistanceFromCircle(CircleCollider* other);
+	Vector2D GetPointOnRect(CircleCollider* other);
+	Vector2D GetDistanceFromCircle(CircleCollider* other);
 	bool IsCircleColliding(CircleCollider* other);
 	bool IsRectColliding(RectCollider* other);
 
@@ -152,7 +139,8 @@ private:
 	float m_width = 0;
 	float m_height = 0;
 
-	vec2 prevPointOnRect = vec2(0, 0);
-	vec2 curPointOnRect = vec2(0, 0);
+	Vector2D prevPointOnRect = Vector2D(0, 0);
+	Vector2D curPointOnRect = Vector2D(0, 0);
 };
 
+*/

@@ -26,6 +26,9 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Source files\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectComponentSystem.cpp">
+      <Filter>Header files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -38,10 +41,10 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header files\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Vec.h">
+    <ClInclude Include="Vector2D.h">
       <Filter>Header files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
+    <ClInclude Include="TransformComponent.h">
       <Filter>Header files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
@@ -61,6 +64,24 @@
     </ClInclude>
     <ClInclude Include="TileMap.h">
       <Filter>Header files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeComponent.h">
+      <Filter>Header files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectComponentSystem.h">
+      <Filter>Header files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.h">
+      <Filter>Header files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="KinematicsComponent.h">
+      <Filter>Header files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderComponent.h">
+      <Filter>Header files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +162,9 @@
     </Filter>
     <Filter Include="Source files\Player">
       <UniqueIdentifier>{cbd91f5b-b6cd-4bb7-b6ed-a88fd3d8c9c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Components\Shape">
+      <UniqueIdentifier>{405ea419-9d11-495c-abe6-550b7fed83b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

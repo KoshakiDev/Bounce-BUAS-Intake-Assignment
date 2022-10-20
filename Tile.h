@@ -2,12 +2,14 @@
 #include "GameObject.h"
 #include "RectCollider.h"
 
+/*
+
 class Tile : public GameObject
 {
 public:
-	Tile(vec2 position) : GameObject(position) {}
+	Tile(Vector2D position) : GameObject(position) {}
 	
-	virtual void Tick(float deltatime) override;
+	virtual void Tick(float delta) override;
 	virtual void Draw(Surface* screen) override;
 	virtual void Input(int key) {}
 
@@ -32,3 +34,4 @@ protected:
 
 	bool is_real = true;
 };
+*/

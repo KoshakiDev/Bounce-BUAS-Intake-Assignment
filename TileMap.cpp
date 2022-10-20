@@ -1,5 +1,6 @@
 #include "TileMap.h"
 
+/*
 #define TILE_SIZE 32
 
 
@@ -32,7 +33,7 @@ Map::Map()
 	{
 		for (int j = 0; j < 25; j++)
 		{
-			vec2 destination = vec2(0, 0);
+			Vector2D destination = Vector2D(0, 0);
 			destination.y = i * TILE_SIZE;
 			destination.x = j * TILE_SIZE;
 			map[i][j] = new Tile(destination);
@@ -44,7 +45,7 @@ Map::Map()
 void Map::LoadMap(int a[20][25])
 {
 	int type = 0;
-	vec2 destination = vec2(0, 0);
+	Vector2D destination = Vector2D(0, 0);
 
 	for (int i = 0; i < 20; i++)
 	{
@@ -80,3 +81,5 @@ void Map::DrawMap(Surface* screen)
 		}
 	}
 }
+
+*/

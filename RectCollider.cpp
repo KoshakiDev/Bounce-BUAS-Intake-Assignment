@@ -15,7 +15,7 @@ We can get better results if we place more sample points in the object and shoot
 But this approach is not appropriate to test for collision of two moving objects 
 because it is unlikely that rays of one object hit the rays of the other objects. 
 The ray casting method is good for the bullet vs. slow object scenario.
-*/
+
 
 
 void RectCollider::Draw(Surface* screen)
@@ -25,13 +25,13 @@ void RectCollider::Draw(Surface* screen)
 	screen->ApproximateCircle(x1, y1, 8, 1 * 255 * 255);
 }
 
-vec2 RectCollider::GetPointOnRect(CircleCollider* other)
+Vector2D RectCollider::GetPointOnRect(CircleCollider* other)
 {
-	vec2 topLeft = GetTopLeftCorner();
-	vec2 topRight = GetTopRightCorner();
-	vec2 bottomLeft = GetBottomLeftCorner();
-	vec2 bottomRight = GetBottomRightCorner();
-	vec2 pointOnRect = vec2(
+	Vector2D topLeft = GetTopLeftCorner();
+	Vector2D topRight = GetTopRightCorner();
+	Vector2D bottomLeft = GetBottomLeftCorner();
+	Vector2D bottomRight = GetBottomRightCorner();
+	Vector2D pointOnRect = Vector2D(
 		clamp(other->GetTransform()->GetPosition().x + other->GetRadius(), topLeft.x, topRight.x),
 		clamp(other->GetTransform()->GetPosition().y + other->GetRadius(), topLeft.y, bottomLeft.y)
 	);
@@ -39,17 +39,17 @@ vec2 RectCollider::GetPointOnRect(CircleCollider* other)
 	return pointOnRect;
 }
 
-vec2 RectCollider::GetDistanceFromCircle(CircleCollider* other)
+Vector2D RectCollider::GetDistanceFromCircle(CircleCollider* other)
 {
-	vec2 pointOnRect = GetPointOnRect(other);
+	Vector2D pointOnRect = GetPointOnRect(other);
 	
-	vec2 distance = other->GetTransform()->GetPosition() + vec2(other->GetRadius(), other->GetRadius()) - pointOnRect;
+	Vector2D distance = other->GetTransform()->GetPosition() + Vector2D(other->GetRadius(), other->GetRadius()) - pointOnRect;
 	return distance;
 }
 
 bool RectCollider::IsCircleColliding(CircleCollider* other)
 {
-	vec2 distance = GetDistanceFromCircle(other);
+	Vector2D distance = GetDistanceFromCircle(other);
 	
 	if (distance.sqrLentgh() <= other->GetRadius() * other->GetRadius()) {
 		return true;
@@ -59,15 +59,15 @@ bool RectCollider::IsCircleColliding(CircleCollider* other)
 
 bool RectCollider::IsRectColliding(RectCollider* other)
 {
-	vec2 topLeft_1 = GetTopLeftCorner();
-	vec2 topRight_1 = GetTopRightCorner();
-	vec2 bottomLeft_1 = GetBottomLeftCorner();
-	vec2 bottomRight_1 = GetBottomRightCorner();
+	Vector2D topLeft_1 = GetTopLeftCorner();
+	Vector2D topRight_1 = GetTopRightCorner();
+	Vector2D bottomLeft_1 = GetBottomLeftCorner();
+	Vector2D bottomRight_1 = GetBottomRightCorner();
 	
-	vec2 topLeft_2 = other->GetTopLeftCorner();
-	vec2 topRight_2 = other->GetTopRightCorner();
-	vec2 bottomLeft_2 = other->GetBottomLeftCorner();
-	vec2 bottomRight_2 = other->GetBottomRightCorner();
+	Vector2D topLeft_2 = other->GetTopLeftCorner();
+	Vector2D topRight_2 = other->GetTopRightCorner();
+	Vector2D bottomLeft_2 = other->GetBottomLeftCorner();
+	Vector2D bottomRight_2 = other->GetBottomRightCorner();
 
 	if (
 		topLeft_1.x < topRight_2.x &&
@@ -79,3 +79,4 @@ bool RectCollider::IsRectColliding(RectCollider* other)
 
 	return false;
 }
+*/

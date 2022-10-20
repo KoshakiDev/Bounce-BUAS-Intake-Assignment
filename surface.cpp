@@ -184,44 +184,41 @@ void Surface::Line( float x1, float y1, float x2, float y2, Pixel c )
 	}
 }
 
+
 void Surface::Plot( int x, int y, Pixel c )
 { 
 	if ((x >= 0) && (y >= 0) && (x < m_Width) && (y < m_Height)) m_Buffer[x + y * m_Pitch] = c;
 }
 
-void Surface::ApproximateCircle(int x1, int y1, int radius, Pixel c)
+void Surface::Point(float x1, float y1, Pixel color)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		int a = 0;
-		int b = 0;
-		if (i == 0)
-		{
-			a = 0;
-			b = 1;
-		}
-		if (i == 1)
-		{
-			a = 1;
-			b = 0;
-		}
-		if (i == 2)
-		{
-			a = 0;
-			b = -1;
-		}
-		if (i == 3)
-		{
-			a = -1;
-			b = 0;
-		}
-		int x2 = x1 + a * radius;
-		int y2 = y1 + b * radius;
-		Line(x1, y1, x2, y2, c);
-	}
+	float root2 = 1.41421356237 / 2.0;
+	float half1 = 0.5;
+	Line(x1, y1, x1        , y1 - half1, color);
+	Line(x1, y1, x1 + root2, y1 - root2, color);
+	Line(x1, y1, x1 + half1, y1        , color);
+	Line(x1, y1, x1 + root2, y1 + root2, color);
+	Line(x1, y1, x1        , y1 + half1, color);
+	Line(x1, y1, x1 - root2, y1 + root2, color);
+	Line(x1, y1, x1 - half1, y1        , color);
+	Line(x1, y1, x1 - root2, y1 - root2, color);
 }
 
-void Surface::Box( int x1, int y1, int x2, int y2, Pixel c )
+void Surface::ApproximateCircle(float x1, float y1, float radius, Pixel color)
+{
+	float root2 = 1.41421356237 / 2.0;
+
+	Line(x1                 , y1 - radius        , x1 + radius * root2, y1 - radius * root2, color);
+	Line(x1 + radius * root2, y1 - radius * root2, x1 + radius        , y1                 , color);
+	Line(x1 + radius        , y1                  , x1 + radius * root2, y1 + radius * root2, color);
+	Line(x1 + radius * root2, y1 + radius * root2, x1                 , y1 + radius         , color);
+	Line(x1                 , y1 + radius        , x1 - radius * root2, y1 + radius * root2,  color);
+	Line(x1 - radius * root2, y1 + radius * root2, x1 - radius        , y1                 ,  color);
+	Line(x1 - radius        , y1                 , x1 - radius * root2, y1 - radius * root2, color);
+	Line(x1 - radius * root2, y1 - radius * root2, x1                 , y1 - radius        , color);
+}
+
+void Surface::Box( float x1, float y1, float x2, float y2, Pixel c )
 {
 	Line( (float)x1, (float)y1, (float)x2, (float)y1, c );
 	Line( (float)x2, (float)y1, (float)x2, (float)y2, c );

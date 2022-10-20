@@ -1,3 +1,4 @@
+/*
 #include <math.h>
 #include "CircleCollider.h"
 
@@ -15,3 +16,4 @@ bool CircleCollider::IsCircleColliding(CircleCollider* other)
 
 	return false;
 }
+*/

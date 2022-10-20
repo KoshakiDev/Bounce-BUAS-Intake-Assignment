@@ -1,7 +1,8 @@
 #pragma once
-#include "Transform.h"
+//#include "Transform.h"
 #include "Tile.h"
 
+/*
 class Map
 {
 public:
@@ -21,3 +22,4 @@ private:
 	Tile* map[20][25];
 	
 };
+*/

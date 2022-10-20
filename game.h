@@ -12,7 +12,7 @@ public:
 	void SetTarget( Surface* surface ) { screen = surface; }
 	void Init(); // equivalent of _ready() function
 	void Shutdown(); 
-	void Tick( float deltaTime ); // equivalent of physics_process(delta)
+	void Tick( float delta ); // equivalent of physics_process(delta)
 	
 	void Draw( Surface* screen );
 
@@ -28,6 +28,8 @@ public:
 	}
 	void KeyUp(int key) {}
 	void KeyDown(int key);
+
+	Surface* getScreen() { return screen; }
 	
 private:
 	Surface* screen;
