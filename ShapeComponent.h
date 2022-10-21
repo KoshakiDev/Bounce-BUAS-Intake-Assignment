@@ -1,17 +1,23 @@
 #pragma once
 #include "Components.h"
+#include <unordered_map>
+#include <map>
+#include <any> 
 
 enum ShapeType {t_point, t_lineSegment, t_circle, t_rectangle};
 
 class Shape
 {
 public:
-    string name;
+    ShapeType type;
     Pixel color = 255 * 255 * 255;
     Vector2D position;
+    unordered_map<string, auto> params;
 
-    //virtual void getInfo() {}
-    static Shape* Create(ShapeType type);
+    // some function which returns the shape information
+    Shape* getInfo(Shape shape);
+    
+    static Shape* Create(ShapeType set_type);
     virtual void Init() {}
     virtual void Tick(float delta) {}
     virtual void Draw(Surface* screen) {}
@@ -22,13 +28,14 @@ class Point : public Shape
 public:
     Point()
     {
-        name = "POINT";
+        type = t_point;
         position = Vector2D(0, 0);
     }
     void Draw(Surface* screen)
     {
         screen->Point(position.x, position.y, color);
     }
+    
 };
 
 class LineSegment : public Shape
@@ -36,7 +43,7 @@ class LineSegment : public Shape
 public:
     LineSegment()
     {
-        name = "LINE";
+        type = t_lineSegment;
         position = Vector2D(0, 0);
         point = Vector2D(0, 0);
     }
@@ -47,6 +54,7 @@ public:
         screen->Point(point.x, point.y, color);
         screen->Line(position.x, position.y, point.x, point.y, color);
     }
+   
 };
 
 class Circle : public Shape
@@ -54,16 +62,17 @@ class Circle : public Shape
 public:
     Circle()
     {
-        name = "CIRCLE";
+        type = t_circle;
         position = Vector2D(0, 0);
-        radius = 1.0;
+        //radius = 1.0;
+        params["radius"] = 1.0;
     }
-    float radius;
+    //float radius;
     
     void Draw(Surface* screen)
     {
         //cout << "a " << name <<" is being drawn with position " << transform << " and radius " << radius << endl;
-        screen->ApproximateCircle(position.x, position.y, radius, color);
+        screen->ApproximateCircle(position.x, position.y, params["radius"], color);
     }
 };
 
@@ -72,7 +81,7 @@ class Rectangle : public Shape
 public:
     Rectangle()
     {
-        name = "RECTANGLE";
+        type = t_rectangle;
         position = Vector2D(0, 0);
         width = 1.0;
         height = 1.0;

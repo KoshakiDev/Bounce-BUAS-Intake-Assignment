@@ -22,6 +22,7 @@ class GameObject : public Object
 		virtual void Tick(float delta) 
 		{
 			Object::Tick(delta);
+			cout << "i am working";
 		}
 		virtual void Draw(Surface* screen) 
 		{

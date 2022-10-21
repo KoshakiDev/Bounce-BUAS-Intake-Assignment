@@ -1,13 +1,17 @@
 #include "game.h"
 #include "surface.h"
 #include "Components.h"
+#include "Objects.h"
 
 using namespace std;
 
 #define TILE_SIZE 32
 
 Manager manager;
-auto& newPlayer(manager.addObject());
+
+//GameObject newObject(manager.addObject(), Vector2D(0, 0));
+
+Object& newPlayer = manager.addObject();
 
 namespace Tmpl8
 {
@@ -17,8 +21,9 @@ namespace Tmpl8
 	void Game::Init()
 	{
 		newPlayer.addComponent<TransformComponent>(100, 100);
-		newPlayer.addComponent<ShapeComponent>(t_rectangle);
-		//newPlayer.getComponent<ShapeComponent>().pShape.radius = 16;
+		newPlayer.addComponent<ShapeComponent>(t_circle);
+		cout << newPlayer.getComponent<ShapeComponent>().pShape->params["radius"];
+		newPlayer.getComponent<ShapeComponent>().pShape->params["radius"] = 16;
 
 		//newPlayer.getComponent<ShapeComponent>().pShape.radius = 16;
 		//newPlayer.getComponent<ShapeComponent>().pShape.transform = Vector2D(100, 100);

@@ -222,20 +222,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="ObjectComponentSystem.cpp" />
     <ClCompile Include="ShapeComponent.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="RectCollider.cpp" />
     <ClCompile Include="KinematicBody.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Components.h" />
@@ -244,15 +241,14 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="KinematicBody.h" />
+    <ClInclude Include="Objects.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="RectCollider.h" />
     <ClInclude Include="ShapeComponent.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TransformComponent.h" />
-    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt" />

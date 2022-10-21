@@ -6,7 +6,7 @@
 This checks collision with primitives (point, line segment, circle, rectangle)
 Check function is a double dispatch. 
 We get 2 arbitrary shapes, we must figure out their types and use the correct function
-*/
+
 
 class Collision
 {
@@ -14,16 +14,47 @@ public:
 
 	static void Check(Shape shape_1, Shape shape_2)
 	{
-		
+		if (shape_1.type == t_circle && shape_2.type == t_rectangle)
+		{
+			// I can't send shape_1 and shape_2 to the checker, it says that it can't convert Shape to Circle/Rect
+			//CheckCircleRectangle(shape_1, shape_2);
+		}
 	}
 
 	static bool CheckCircleRectangle(const Circle circle, const Rectangle rectangle)
 	{
+		Vector2D topLeft = rectangle.position;
+		Vector2D topRight = rectangle.position + Vector2D(rectangle.width, 0);
+		Vector2D bottomLeft = rectangle.position + Vector2D(0, rectangle.height);
+		Vector2D bottomRight = rectangle.position + Vector2D(rectangle.width, rectangle.height);
+		
+		
+		Vector2D pointOnRect = Vector2D(
+			Clamp(circle.position.x, topLeft.x, topRight.x),
+			Clamp(circle.position.y, topLeft.y, bottomLeft.y)
+		);
 
+		Vector2D distance = circle.position - pointOnRect;
+		
+		if (distance.sqrLentgh() <= circle.radius * circle.radius) 
+		{
+			return true;
+		}
+		return false;
 	}
 	static bool CheckCircleCircle(const Circle circle_1, const Circle circle_2)
 	{
+		float distanceX = circle_1.position.x - circle_2.position.x;
+		float distanceY = circle_1.position.y - circle_2.position.y;
+		float radiusSquared = circle_1.radius + circle_2.radius;
+		distanceX *= distanceX;
+		distanceY *= distanceY;
+		radiusSquared *= radiusSquared;
 
+		if (distanceX + distanceY < radiusSquared)
+			return true;
+
+		return false;
 	}
 	static bool CheckCirclePoint(const Circle circle, const Point point)
 	{
@@ -35,7 +66,25 @@ public:
 	}
 	static bool CheckRectangleRectangle(const Rectangle rectangle_1, const Rectangle rectangle_2)
 	{
+		Vector2D topLeft_1 = rectangle_1.position;
+		Vector2D topRight_1 = rectangle_1.position + Vector2D(rectangle_1.width, 0);
+		Vector2D bottomLeft_1 = rectangle_1.position + Vector2D(0, rectangle_1.height);
+		Vector2D bottomRight_1 = rectangle_1.position + Vector2D(rectangle_1.width, rectangle_1.height);
 
+		Vector2D topLeft_2 = rectangle_2.position;
+		Vector2D topRight_2 = rectangle_2.position + Vector2D(rectangle_2.width, 0);
+		Vector2D bottomLeft_2 = rectangle_2.position + Vector2D(0, rectangle_2.height);
+		Vector2D bottomRight_2 = rectangle_2.position + Vector2D(rectangle_2.width, rectangle_2.height);
+
+		if (
+			topLeft_1.x < topRight_2.x &&
+			topRight_1.x > topLeft_2.x &&
+			topLeft_1.y <  bottomLeft_2.y &&
+			bottomLeft_1.y > topLeft_2.y
+			)
+			return true;
+
+		return false;
 	}
 	static bool CheckRectanglePoint(const Rectangle rectangle, const Point point)
 	{
@@ -120,5 +169,6 @@ public:
 			printf("WARNING: DIVISION BY ZERO \n");
 		return (side + (radius) * sign - cur_center) / (prev_center - cur_center);
 	}
-	/**/
+	/*
 };
+*/
