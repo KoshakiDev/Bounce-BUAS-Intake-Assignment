@@ -9,9 +9,14 @@ using namespace std;
 
 Manager manager;
 
-//GameObject newObject(manager.addObject(), Vector2D(0, 0));
+/*
+The game does not have a "player". Instead, there are numerous components working together which form a "player".
+I started out with a "player.cpp", but then throughout development, the component system worked so well, it made
+the "player.cpp" redundant.
+*/
 
-Object& newPlayer = manager.addObject();
+
+Object& Player = manager.addObject();
 
 namespace Tmpl8
 {
@@ -20,13 +25,12 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 	void Game::Init()
 	{
-		newPlayer.addComponent<TransformComponent>(100, 100);
-		newPlayer.addComponent<ShapeComponent>(t_circle);
-		cout << newPlayer.getComponent<ShapeComponent>().pShape->params["radius"];
-		newPlayer.getComponent<ShapeComponent>().pShape->params["radius"] = 16;
+		//Creating the player
+		Player.addComponent<TransformComponent>(100, 100);
+		Player.addComponent<KinematicsComponent>(1, 1);
+		Player.addComponent<ShapeComponent>(t_circle);
+		Player.getComponent<ShapeComponent>().pShape->params["radius"] = 16;
 
-		//newPlayer.getComponent<ShapeComponent>().pShape.radius = 16;
-		//newPlayer.getComponent<ShapeComponent>().pShape.transform = Vector2D(100, 100);
 	}
 	
 	// -----------------------------------------------------------
@@ -46,7 +50,7 @@ namespace Tmpl8
 		manager.refresh();
 		manager.Tick(delta);
 		Draw(screen);
-		newPlayer.getComponent<TransformComponent>().position = Vector2D(mousex, mousey);
+		//newPlayer.getComponent<TransformComponent>().position = Vector2D(mousex, mousey);
 
 		/*
 		for (int i = 0; i < 20; i++)

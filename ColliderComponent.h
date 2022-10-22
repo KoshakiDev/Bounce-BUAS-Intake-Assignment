@@ -8,8 +8,13 @@ public:
 	string tag;
 	TransformComponent* ptransformComponent;
 	ShapeComponent* pShapeComponent;
+	
+	ColliderComponent(string t)
+	{
+		tag = t;
+	}
 
-	void Init()
+	void Init() override
 	{
 		if (!owner->hasComponent<TransformComponent>())
 		{
@@ -24,4 +29,8 @@ public:
 		pShapeComponent = &owner->getComponent<ShapeComponent>();
 	}
 
+	void Tick(float delta)
+	{
+		
+	}
 };

@@ -1,6 +1,10 @@
 #pragma once
 #include "Components.h"
 
+#define GRAVITY 0.5
+#define FRICTION 0.9
+
+
 class KinematicsComponent : public Component
 {
 public:
@@ -8,6 +12,9 @@ public:
 	Vector2D acceleration;
 	float speed;
 	float max_speed;
+
+	TransformComponent* ptransformComponent;
+
 
 	KinematicsComponent()
 	{
@@ -24,11 +31,20 @@ public:
 		speed = set_speed;
 	}
 
-	virtual void Init() {}
-	virtual void Tick(float delta)
+	void Init() 
+	{
+		if (!owner->hasComponent<TransformComponent>())
+		{
+			owner->addComponent<TransformComponent>();
+		}
+		ptransformComponent = &owner->getComponent<TransformComponent>();
+	}
+	void Tick(float delta)
 	{
 		velocity.x = Clamp(velocity.x + acceleration.x * delta, -max_speed, max_speed);
 		velocity.y = Clamp(velocity.y + acceleration.y * delta, -max_speed, max_speed);
+		acceleration = Vector2D(0, 0);
+		ptransformComponent->position = ptransformComponent->position + velocity * delta;
 	}
-	virtual void Draw(Surface* screen) {}
+	void Draw(Surface* screen) {}
 };

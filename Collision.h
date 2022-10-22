@@ -6,7 +6,7 @@
 This checks collision with primitives (point, line segment, circle, rectangle)
 Check function is a double dispatch. 
 We get 2 arbitrary shapes, we must figure out their types and use the correct function
-
+*/
 
 class Collision
 {
@@ -21,12 +21,12 @@ public:
 		}
 	}
 
-	static bool CheckCircleRectangle(const Circle circle, const Rectangle rectangle)
+	static bool CheckCircleRectangle(Circle circle, Rectangle rectangle)
 	{
 		Vector2D topLeft = rectangle.position;
-		Vector2D topRight = rectangle.position + Vector2D(rectangle.width, 0);
-		Vector2D bottomLeft = rectangle.position + Vector2D(0, rectangle.height);
-		Vector2D bottomRight = rectangle.position + Vector2D(rectangle.width, rectangle.height);
+		Vector2D topRight = rectangle.position + Vector2D(rectangle.params["width"], 0);
+		Vector2D bottomLeft = rectangle.position + Vector2D(0, rectangle.params["height"]);
+		Vector2D bottomRight = rectangle.position + Vector2D(rectangle.params["width"], rectangle.params["height"]);
 		
 		
 		Vector2D pointOnRect = Vector2D(
@@ -36,17 +36,17 @@ public:
 
 		Vector2D distance = circle.position - pointOnRect;
 		
-		if (distance.sqrLentgh() <= circle.radius * circle.radius) 
+		if (distance.sqrLentgh() <= circle.params["radius"] * circle.params["radius"])
 		{
 			return true;
 		}
 		return false;
 	}
-	static bool CheckCircleCircle(const Circle circle_1, const Circle circle_2)
+	static bool CheckCircleCircle(Circle circle_1, Circle circle_2)
 	{
 		float distanceX = circle_1.position.x - circle_2.position.x;
 		float distanceY = circle_1.position.y - circle_2.position.y;
-		float radiusSquared = circle_1.radius + circle_2.radius;
+		float radiusSquared = circle_1.params["radius"] + circle_2.params["radius"];
 		distanceX *= distanceX;
 		distanceY *= distanceY;
 		radiusSquared *= radiusSquared;
@@ -64,17 +64,17 @@ public:
 	{
 
 	}
-	static bool CheckRectangleRectangle(const Rectangle rectangle_1, const Rectangle rectangle_2)
+	static bool CheckRectangleRectangle(Rectangle rectangle_1, Rectangle rectangle_2)
 	{
 		Vector2D topLeft_1 = rectangle_1.position;
-		Vector2D topRight_1 = rectangle_1.position + Vector2D(rectangle_1.width, 0);
-		Vector2D bottomLeft_1 = rectangle_1.position + Vector2D(0, rectangle_1.height);
-		Vector2D bottomRight_1 = rectangle_1.position + Vector2D(rectangle_1.width, rectangle_1.height);
+		Vector2D topRight_1 = rectangle_1.position + Vector2D(rectangle_1.params["width"], 0);
+		Vector2D bottomLeft_1 = rectangle_1.position + Vector2D(0, rectangle_1.params["height"]);
+		Vector2D bottomRight_1 = rectangle_1.position + Vector2D(rectangle_1.params["width"], rectangle_1.params["height"]);
 
 		Vector2D topLeft_2 = rectangle_2.position;
-		Vector2D topRight_2 = rectangle_2.position + Vector2D(rectangle_2.width, 0);
-		Vector2D bottomLeft_2 = rectangle_2.position + Vector2D(0, rectangle_2.height);
-		Vector2D bottomRight_2 = rectangle_2.position + Vector2D(rectangle_2.width, rectangle_2.height);
+		Vector2D topRight_2 = rectangle_2.position + Vector2D(rectangle_2.params["width"], 0);
+		Vector2D bottomLeft_2 = rectangle_2.position + Vector2D(0, rectangle_2.params["height"]);
+		Vector2D bottomRight_2 = rectangle_2.position + Vector2D(rectangle_2.params["width"], rectangle_2.params["height"]);
 
 		if (
 			topLeft_1.x < topRight_2.x &&
@@ -169,6 +169,5 @@ public:
 			printf("WARNING: DIVISION BY ZERO \n");
 		return (side + (radius) * sign - cur_center) / (prev_center - cur_center);
 	}
-	/*
+	*/
 };
-*/

@@ -5,6 +5,14 @@
 
 namespace Tmpl8 {
 
+//##################
+// My custom variables
+constexpr int ALPHA = 24;
+constexpr int RED = 16;
+constexpr int GREEN = 8;
+constexpr int BLUE = 0;
+
+//##################
 constexpr int RedMask = 0xff0000;
 constexpr int GreenMask = 0x00ff00;
 constexpr int BlueMask = 0x0000ff;

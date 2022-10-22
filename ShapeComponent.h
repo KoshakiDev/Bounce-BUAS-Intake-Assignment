@@ -2,7 +2,7 @@
 #include "Components.h"
 #include <unordered_map>
 #include <map>
-#include <any> 
+#include <any>
 
 enum ShapeType {t_point, t_lineSegment, t_circle, t_rectangle};
 
@@ -10,12 +10,16 @@ class Shape
 {
 public:
     ShapeType type;
-    Pixel color = 255 * 255 * 255;
+    Pixel color = (0 << ALPHA) + (255 << RED) + (255 << GREEN) + (0 << BLUE);
     Vector2D position;
-    unordered_map<string, auto> params;
+    
 
-    // some function which returns the shape information
-    Shape* getInfo(Shape shape);
+    /*
+    NOTE: I tried to use any, but turns out it is literally useless. I just decided to keep only floats
+    in there (I also figured that there is no purpose to store a vector2d there; it can be stored as pointx and pointy)
+    */
+    unordered_map<string, float> params;
+
     
     static Shape* Create(ShapeType set_type);
     virtual void Init() {}
@@ -45,14 +49,15 @@ public:
     {
         type = t_lineSegment;
         position = Vector2D(0, 0);
-        point = Vector2D(0, 0);
+        params["point.x"] = 0.0;
+        params["point.y"] = 0.0;
     }
-    Vector2D point;
+
     void Draw(Surface* screen)
     {
         screen->Point(position.x, position.y, color);
-        screen->Point(point.x, point.y, color);
-        screen->Line(position.x, position.y, point.x, point.y, color);
+        screen->Point(params["point.x"], params["point.y"], color);
+        screen->Line(position.x, position.y, params["point.x"], params["point.y"], color);
     }
    
 };
@@ -64,10 +69,8 @@ public:
     {
         type = t_circle;
         position = Vector2D(0, 0);
-        //radius = 1.0;
-        params["radius"] = 1.0;
+        params["radius"] = float(1.0);
     }
-    //float radius;
     
     void Draw(Surface* screen)
     {
@@ -83,14 +86,12 @@ public:
     {
         type = t_rectangle;
         position = Vector2D(0, 0);
-        width = 1.0;
-        height = 1.0;
+        params["width"] = 1.0;
+        params["height"] = 1.0;
     }
-    float width;
-    float height;
     void Draw(Surface* screen)
     {
-        screen->Box(position.x, position.y, position.x + width, position.y + height, color);
+        screen->Box(position.x, position.y, position.x + params["width"], position.y + params["height"], color);
     }
 };
 

@@ -1,22 +1,6 @@
-#include "Player.h"
+/*
+extern Manager manager;
 
-
-void Player::Tick(float delta)
-{
-	KinematicBody::Tick(delta);
-	//GetPrevTransform()->SetTransform(GetTransform()->GetPosition());
-}
-
-
-
-void Player::Draw(Surface* screen)
-{
-	KinematicBody::Draw(screen);
-}
-
-void Player::Input(int key)
-{
-	/*
 	if (key == SDL_SCANCODE_E)
 	{
 		velocity = Vector2D(0, 0);
@@ -44,4 +28,3 @@ void Player::Input(int key)
 	clamp(velocity.x, -m_speed_cap, m_speed_cap);
 	clamp(velocity.y, -m_speed_cap, m_speed_cap);
 	*/
-}
