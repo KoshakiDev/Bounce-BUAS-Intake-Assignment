@@ -1,7 +1,6 @@
 #include "game.h"
 #include "surface.h"
 #include "Components.h"
-#include "Objects.h"
 
 using namespace std;
 
@@ -17,6 +16,7 @@ the "player.cpp" redundant.
 
 
 Object& Player = manager.addObject();
+Map* tilemap;
 
 namespace Tmpl8
 {
@@ -30,7 +30,11 @@ namespace Tmpl8
 		Player.addComponent<KinematicsComponent>(1, 1);
 		Player.addComponent<ShapeComponent>(t_circle);
 		Player.getComponent<ShapeComponent>().pShape->params["radius"] = 16;
+		
+		tilemap = new Map(32);
+		tilemap->LoadMap("default.map", 25, 20);
 
+		
 	}
 	
 	// -----------------------------------------------------------

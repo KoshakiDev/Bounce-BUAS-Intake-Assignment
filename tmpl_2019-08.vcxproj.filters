@@ -8,10 +8,7 @@
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source files\Tile\BaseTile</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMap.cpp">
+    <ClCompile Include="Map.cpp">
       <Filter>Source files\Tile</Filter>
     </ClCompile>
     <ClCompile Include="ObjectComponentSystem.cpp">
@@ -50,7 +47,7 @@
     <ClInclude Include="ShapeComponent.h">
       <Filter>Source files\Components\Shape</Filter>
     </ClInclude>
-    <ClInclude Include="TileMap.h">
+    <ClInclude Include="Map.h">
       <Filter>Source files\Tile</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,6 +92,9 @@
   <ItemGroup>
     <Text Include="_readme.txt">
       <Filter>template code</Filter>
+    </Text>
+    <Text Include="default.map">
+      <Filter>Source files\Tile</Filter>
     </Text>
   </ItemGroup>
 </Project>
