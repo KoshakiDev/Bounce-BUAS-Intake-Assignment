@@ -1,25 +1,18 @@
 #pragma once
-//#include "Transform.h"
-#include "Tile.h"
+#include "Components.h"
 
-/*
 class Map
 {
 public:
-	Map();
+	Map(float set_tileSize)
+	{
+		tileSize = set_tileSize;
+	}
 	~Map();
 
-	void LoadMap(int a[20][25]);
-	void DrawMap(Surface* screen);
-
-	Tile* getTile(int i, int j) 
-	{
-		return map[i][j];
-	}
-
+	void LoadMap(string path, int sizeX, int sizeY);
+	void AddTile(int xpos, int ypos);
 private:
-	//initialize the possible tiles here
-	Tile* map[20][25];
-	
+	float tileSize;
+
 };
-*/

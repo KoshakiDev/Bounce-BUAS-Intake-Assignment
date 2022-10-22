@@ -238,11 +238,9 @@
     <ClInclude Include="KinematicsComponent.h" />
     <ClInclude Include="ObjectComponentSystem.h" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="Objects.h" />
     <ClInclude Include="ShapeComponent.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
-    <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TransformComponent.h" />
   </ItemGroup>

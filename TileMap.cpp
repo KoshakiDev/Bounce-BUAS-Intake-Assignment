@@ -1,8 +1,9 @@
-#include "TileMap.h"
-
-/*
+#include "Components.h"
+#include "Game.h"
+#include <fstream>
 #define TILE_SIZE 32
 
+extern Manager manager;
 
 int default_level[20][25] = {
 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -27,59 +28,58 @@ int default_level[20][25] = {
 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
-Map::Map()
+
+void Map::LoadMap(string path, int sizeX, int sizeY)
 {
-	for (int i = 0; i < 20; i++)
+	char c;
+	std::fstream mapFile;
+	mapFile.open(path);
+
+	int srcX, srcY;
+
+	for (int y = 0; y < sizeY; y++)
 	{
-		for (int j = 0; j < 25; j++)
+		for (int x = 0; x < sizeX; x++)
 		{
-			Vector2D destination = Vector2D(0, 0);
-			destination.y = i * TILE_SIZE;
-			destination.x = j * TILE_SIZE;
-			map[i][j] = new Tile(destination);
+			mapFile.get(c);
+			srcY = atoi(&c) * tileSize;
+			mapFile.get(c);
+			srcX = atoi(&c) * tileSize;
+			AddTile(x * tileSize, y * tileSize);
+			mapFile.ignore();
 		}
 	}
-	LoadMap(default_level);
-}
+	/*
+	mapFile.ignore();
 
-void Map::LoadMap(int a[20][25])
-{
-	int type = 0;
-	Vector2D destination = Vector2D(0, 0);
-
-	for (int i = 0; i < 20; i++)
+	for (int y = 0; y < sizeY; y++)
 	{
-		for (int j = 0; j < 25; j++)
+		for (int x = 0; x < sizeX; x++)
 		{
-			destination.x = i * TILE_SIZE;
-			destination.y = j * TILE_SIZE;
-			type = a[i][j];
-			if (type == 1)
+			mapFile.get(c);
+			if (c == '1')
 			{
-				map[i][j]->setRect(TILE_SIZE, TILE_SIZE);
-				map[i][j]->setReal();
+				auto& tcol(manager.addEntity());
+				tcol.addComponent<ColliderComponent>("TERRAIN");
+				//tcol.addGroup(Game::groupColliders);
 			}
-			else
-			{
-				//crutch
-				map[i][j]->setFake();
-			}
-			
+			mapFile.ignore();
 		}
-		//cout << endl;
 	}
+	*/
+	mapFile.close();
 }
 
-void Map::DrawMap(Surface* screen)
+
+void Map::AddTile(int xpos, int ypos)
 {
-	for (int i = 0; i < 20; i++)
-	{
-		for (int j = 0; j < 25; j++)
-		{
-			if (map[i][j]->getReal())
-				map[i][j]->Draw(screen);
-		}
-	}
-}
+	auto& tile(manager.addObject());
+	
+	tile.addComponent<TransformComponent>(xpos, ypos);
+	tile.addComponent<ShapeComponent>(t_rectangle);
+	tile.getComponent<ShapeComponent>().pShape->params["width"] = tileSize;
+	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
 
-*/
+
+	//tile.addGroup(Game::groupMap);
+}
