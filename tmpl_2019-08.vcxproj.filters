@@ -26,9 +26,6 @@
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
     </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Source files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="KinematicsComponent.h">
       <Filter>Source files\Components</Filter>
     </ClInclude>
@@ -38,9 +35,6 @@
     <ClInclude Include="Collision.h">
       <Filter>Source files\Components\Colliders</Filter>
     </ClInclude>
-    <ClInclude Include="Components.h">
-      <Filter>Source files\Components\OCS</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectComponentSystem.h">
       <Filter>Source files\Components\OCS</Filter>
     </ClInclude>
@@ -49,6 +43,15 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Source files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="PrevTransformComponent.h">
+      <Filter>Source files\Components\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Source files\Components\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.h">
+      <Filter>Source files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +91,9 @@
     <Filter Include="Source files\Components\Shape">
       <UniqueIdentifier>{f5aa3616-77c4-4d8f-8f3e-5bd7538effae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\Components\Transform">
+      <UniqueIdentifier>{c1a8fb97-612b-4abc-9bfe-6a205a9748ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt">
@@ -96,5 +102,10 @@
     <Text Include="default.map">
       <Filter>Source files\Tile</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="onetile.map">
+      <Filter>Source files\Tile</Filter>
+    </None>
   </ItemGroup>
 </Project>

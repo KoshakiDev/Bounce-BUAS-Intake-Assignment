@@ -14,9 +14,17 @@ I started out with a "player.cpp", but then throughout development, the componen
 the "player.cpp" redundant.
 */
 
+Pixel yellow = (0 << ALPHA) + (255 << RED) + (255 << GREEN) + (0 << BLUE);
+Pixel red = (0 << ALPHA) + (255 << RED) + (0 << GREEN) + (0 << BLUE);
 
-Object& Player = manager.addObject();
+Object& player = manager.addObject();
 Map* tilemap;
+
+auto& tiles(manager.getGroup(Game::groupMap));
+auto& players(manager.getGroup(Game::groupPlayers));
+auto& colliders(manager.getGroup(Game::groupColliders));
+auto& projectiles(manager.getGroup(Game::groupProjectiles));
+
 
 namespace Tmpl8
 {
@@ -26,15 +34,17 @@ namespace Tmpl8
 	void Game::Init()
 	{
 		//Creating the player
-		Player.addComponent<TransformComponent>(100, 100);
-		Player.addComponent<KinematicsComponent>(1, 1);
-		Player.addComponent<ShapeComponent>(t_circle);
-		Player.getComponent<ShapeComponent>().pShape->params["radius"] = 16;
+
+		
+		player.addComponent<TransformComponent>(500, 500);
+		player.addComponent<PrevTransformComponent>();
+		player.addComponent<KinematicsComponent>(0.1, 0.5);
+		player.addComponent<ShapeComponent>(t_circle);
+		player.getComponent<ShapeComponent>().pShape->params["radius"] = 16;
+		player.getComponent<ShapeComponent>().pShape->color = (0 << ALPHA) + (255 << RED) + (255 << GREEN) + (255 << BLUE);
 		
 		tilemap = new Map(32);
 		tilemap->LoadMap("default.map", 25, 20);
-
-		
 	}
 	
 	// -----------------------------------------------------------
@@ -48,34 +58,58 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 
 
-	//Sprite theSprite(new Surface("assets/ball.png"), 1);
 	void Game::Tick(float delta)
 	{
+		player.getComponent<PrevTransformComponent>().position = player.getComponent<TransformComponent>().position;
+
 		manager.refresh();
 		manager.Tick(delta);
-		Draw(screen);
-		//newPlayer.getComponent<TransformComponent>().position = Vector2D(mousex, mousey);
-
+		
 		/*
-		for (int i = 0; i < 20; i++)
+		Well, the trick there is to not let the circle intersect with the box in the first place. 
+		When you move you check if there's something at your new position, and if not, you move. 
+		Not the other way around where you move and then check : )
+		*/
+
+		for (auto& t : tiles)
 		{
-			for (int j = 0; j < 25; j++)
+			Vector2D penetration_normal = Vector2D(-1, -1);
+			float penetration_depth = 0;
+
+			if (Collision::CheckCircleRectangle(
+				player.getComponent<ShapeComponent>().pShape, 
+				t->getComponent<ShapeComponent>().pShape, 
+				penetration_normal,
+				penetration_depth)
+			)
 			{
-				if (tilemap->getTile(i, j)->getReal())
-				{
-					if (tilemap->getTile(i, j)->GetRectCollider()->IsCircleColliding(player->GetCircleCollider()))
-					{
-						Vector2D point = tilemap->getTile(i, j)->GetRectCollider()->GetPointOnRect(player->GetCircleCollider());
-						point = tilemap->getTile(i, j)->GetRectCollider()->checkIfPointInRect(point);
-						Vector2D side = tilemap->getTile(i, j)->GetRectCollider()->FindSideDirection(point);
-						player->ChangeTrajectory(side, point);
-					}
-					tilemap->getTile(i, j)->GetRectCollider()->updatePrevPointOnRect();
-				}
 				
+				// This changes the velocity trajectory
+				cout << penetration_normal << endl;
+				if (penetration_normal.x != 0)
+				{
+					player.getComponent<KinematicsComponent>().velocity.x *= -1 * abs(penetration_normal.x);
+				}
+				else if (penetration_normal.y != 0)
+				{
+					player.getComponent<KinematicsComponent>().velocity.y *= -1 * abs(penetration_normal.y);
+				}
+
+				/*
+				Vector2D velocity_length = player.getComponent<KinematicsComponent>().velocity.length();
+				Vector2D velocity_normalized = player.getComponent<KinematicsComponent>().velocity.normalized();
+				float dot_product = velocity_normalized.dot(penetration_normal);
+				Vector2D undesired_motion = penetration_normal * dot_product;
+				Vector2D desired_motion = velocity_normalized - undesired_motion;
+				player.getComponent<KinematicsComponent>().velocity = desired_motion * velocity_length;
+				/**/
+				
+				// Remove penetration (penetration epsilon added to handle infinitely small penetration):
+				
+				player.getComponent<TransformComponent>().Translate(penetration_normal * (penetration_depth + 0.0001f));
 			}
 		}
-		/**/
+		Draw(screen);
 	}
 
 	void Game::Draw(Surface* screen)
@@ -84,10 +118,25 @@ namespace Tmpl8
 		manager.Draw(screen);
 	}
 
-	
-	void Game::KeyDown(int key) //NOTE: Do not forget the "Game::" prefix, otherwise functions don't works
+	void Game::MouseUp(int button)
 	{
-		//player->Input(key);	
+		manager.MouseUp(button);
+	}
+	void Game::MouseDown(int button)
+	{
+		manager.MouseDown(button);
+	}
+	void Game::MouseMove(int x, int y)
+	{
+		manager.MouseMove(x, y);
+	}
+	void Game::KeyUp(int key)
+	{
+		manager.KeyUp(key);
+	}
+	void Game::KeyDown(int key)
+	{
+		manager.KeyDown(key);
 	}
 	
 };

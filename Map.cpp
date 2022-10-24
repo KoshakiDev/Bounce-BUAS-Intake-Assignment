@@ -20,6 +20,8 @@ void Map::LoadMap(string path, int sizeX, int sizeY)
 			mapFile.get(c);
 			int type = atoi(&c);
 			//srcY = atoi(&c) * tileSize;
+
+			//todo: add tile factory
 			if (type == 1)
 			{
 				AddTile(x * tileSize, y * tileSize);
@@ -27,24 +29,6 @@ void Map::LoadMap(string path, int sizeX, int sizeY)
 			mapFile.ignore();
 		}
 	}
-	/*
-	mapFile.ignore();
-
-	for (int y = 0; y < sizeY; y++)
-	{
-		for (int x = 0; x < sizeX; x++)
-		{
-			mapFile.get(c);
-			if (c == '1')
-			{
-				auto& tcol(manager.addEntity());
-				tcol.addComponent<ColliderComponent>("TERRAIN");
-				//tcol.addGroup(Game::groupColliders);
-			}
-			mapFile.ignore();
-		}
-	}
-	*/
 	mapFile.close();
 }
 
@@ -59,5 +43,5 @@ void Map::AddTile(int xpos, int ypos)
 	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
 
 
-	//tile.addGroup(Game::groupMap);
+	tile.addGroup(Game::groupMap);
 }

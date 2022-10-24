@@ -1,6 +1,5 @@
 #pragma once
 #include "Components.h"
-#include <typeinfo>
 
 /*
 This checks collision with primitives (point, line segment, circle, rectangle)
@@ -8,36 +7,32 @@ Check function is a double dispatch.
 We get 2 arbitrary shapes, we must figure out their types and use the correct function
 */
 
+
+
+
 class Collision
-{
+{	
 public:
+	static void Check(Shape shape_1, Shape shape_2) {}
 
-	static void Check(Shape shape_1, Shape shape_2)
+	static bool CheckCircleRectangle(Shape* circle, Shape* rectangle, Vector2D& penetration_normal, float& penetration_depth)
 	{
-		if (shape_1.type == t_circle && shape_2.type == t_rectangle)
-		{
-			// I can't send shape_1 and shape_2 to the checker, it says that it can't convert Shape to Circle/Rect
-			//CheckCircleRectangle(shape_1, shape_2);
-		}
-	}
-
-	static bool CheckCircleRectangle(Circle circle, Rectangle rectangle)
-	{
-		Vector2D topLeft = rectangle.position;
-		Vector2D topRight = rectangle.position + Vector2D(rectangle.params["width"], 0);
-		Vector2D bottomLeft = rectangle.position + Vector2D(0, rectangle.params["height"]);
-		Vector2D bottomRight = rectangle.position + Vector2D(rectangle.params["width"], rectangle.params["height"]);
-		
+		Vector2D topLeft = rectangle->position;
+		Vector2D topRight = rectangle->position + Vector2D(rectangle->params["width"], 0);
+		Vector2D bottomLeft = rectangle->position + Vector2D(0, rectangle->params["height"]);
+		Vector2D bottomRight = rectangle->position + Vector2D(rectangle->params["width"], rectangle->params["height"]);
 		
 		Vector2D pointOnRect = Vector2D(
-			Clamp(circle.position.x, topLeft.x, topRight.x),
-			Clamp(circle.position.y, topLeft.y, bottomLeft.y)
+			Clamp(circle->position.x, topLeft.x, topRight.x),
+			Clamp(circle->position.y, topLeft.y, bottomLeft.y)
 		);
 
-		Vector2D distance = circle.position - pointOnRect;
+		Vector2D intersection_vector = circle->position - pointOnRect;
 		
-		if (distance.sqrLentgh() <= circle.params["radius"] * circle.params["radius"])
+		if (intersection_vector.sqrLentgh() < circle->params["radius"] * circle->params["radius"])
 		{
+			penetration_normal = intersection_vector.normalized();
+			penetration_depth = circle->params["radius"] - intersection_vector.length();
 			return true;
 		}
 		return false;
@@ -90,10 +85,65 @@ public:
 	{
 
 	}
-	static bool CheckRectangleLineSegment(const Rectangle rectangle, const LineSegment lineSegment)
-	{
+	
+	
 
+	static bool clipLine(int dimension, Shape* rectangle, Vector2D& v0, Vector2D& v1, float& f_low, float& f_high)
+	{
+		float f_dim_low;
+		float f_dim_high;
+		
+		if (dimension == 0)
+		{
+			f_dim_low = (rectangle->position.x - v0.x) / (v1.x - v0.x);
+			f_dim_high = ((rectangle->position.x + rectangle->params["width"]) - v0.x) / (v1.x - v0.x);
+		}
+		else if (dimension == 1)
+		{
+			f_dim_low = (rectangle->position.y - v0.y) / (v1.y - v0.y);
+			f_dim_high = ((rectangle->position.y + rectangle->params["height"]) - v0.y) / (v1.y - v0.y);
+		}
+
+		// If this dimension's high is less than the low we got then we definitely missed. http://youtu.be/USjbg5QXk3g?t=7m16s
+		if (f_dim_high < f_low)
+			return false;
+
+		// Likewise if the low is less than the high.
+		if (f_dim_low > f_high)
+			return false;
+
+		// Add the clip from this dimension to the previous results http://youtu.be/USjbg5QXk3g?t=5m32s
+		f_low = max(f_dim_low, f_low);
+		f_high = min(f_dim_high, f_high);
+
+		if (f_low > f_high)
+			return false;
+
+		return true;
+ 
 	}
+
+	static bool CheckRectangleLineSegment(
+		Shape* rectangle, 
+		Vector2D& v0, 
+		Vector2D& v1, 
+		Vector2D& intersection, 
+		float& flFraction
+	)
+	{
+		float f_low = 0;
+		float f_high = 1;
+		if (!clipLine(0, rectangle, v0, v1, f_low, f_high))
+			return false;
+		if (!clipLine(1, rectangle, v0, v1, f_low, f_high))
+			return false;
+
+		Vector2D b = v1 - v0;
+		intersection = v0 + b * f_low;
+		flFraction = f_low;
+		return true;
+	}
+
 	static bool CheckPointPoint(const Point point_1, const Point point_2)
 	{
 
@@ -106,68 +156,100 @@ public:
 	{
 
 	}
-	/*
-	void Player::ChangeTrajectory(Vector2D side, Vector2D pointOnRect)
+
+	static void ChangeTrajectory(Object& player, Shape* rectangle, Object& test_point)
 	{
-		float r = m_circle_collider.GetRadius();
-
-		float prev_center_x = GetPrevTransform()->GetPosition().x + r;
-		float prev_center_y = GetPrevTransform()->GetPosition().y + r;
-
-		float cur_center_x = GetTransform()->GetPosition().x + r;
-		float cur_center_y = GetTransform()->GetPosition().y + r;
-
-		float new_x = 0;
-		float new_y = 0;
+		float r = player.getComponent<ShapeComponent>().pShape->params["radius"];
+		Vector2D prev = player.getComponent<PrevTransformComponent>().position;
+		Vector2D curr = player.getComponent<TransformComponent>().position;
+		Vector2D output = Vector2D(-1, -1);
 
 		float t = 0;
 
 		float sign = 1;
 
-		if (side.x == 0 && side.y != 0)// The side is Left-Right
-		{
-			//printf("ENTERED SOLVE FOR X \n");
-			sign = returnSign(cur_center_x - prev_center_x);
-			t = returnNewTrajectory(side.y, r, sign, cur_center_x, prev_center_x);
-			velocity.x = -velocity.x;
-		}
-		else if (side.y == 0 && side.x != 0) // The side is Up-Down
-		{
-			//printf("ENTERED SOLVE FOR Y \n");
-			sign = returnSign(cur_center_y - prev_center_y);
-			t = returnNewTrajectory(side.x, r, sign, cur_center_y, prev_center_y);
-			velocity.y = -velocity.y;
-		}
+		//###########
 
-		new_y = t * prev_center_y + (1 - t) * cur_center_y;
-		new_x = t * prev_center_x + (1 - t) * cur_center_x;
+		float tan_angle = (curr.y - prev.y) / (curr.x - prev.y);
+		float angle = atan(tan_angle);
+		Vector2D prev_with_radius = Vector2D(prev.x - r * cos(angle), prev.y - r * sin(angle));
+		Vector2D curr_with_radius = Vector2D(curr.x + r * cos(angle), curr.y + r * sin(angle));
+
 
 
 		/*
-		printf("Side         : %f %f \n", side.x, side.y);
-		printf("Point on Rect: %f %f \n", pointOnRect.x, pointOnRect.y);
+		cout << "=============" << endl;
+		cout << "Prev center: " << prev.x << " " << prev.y << endl;
+		cout << "Curr center: " << curr.x << " " << curr.y << endl;
 
-		printf("  t  Value: %f \n", t);
-		printf("Sign Value: %f \n", sign);
-		printf("Previous  CENTER    Position: %f %f \n", prev_center_x, prev_center_y);
-		printf("Current   CENTER    Position: %f %f \n", cur_center_x, cur_center_y);
-		printf("Corrected TRANSFORM Position: %f %f \n", new_x, new_y);
-		/*
+		cout << "Prev with radius: " << prev_with_radius.x << " " << prev_with_radius.y << endl;
+		cout << "Curr with radius: " << curr_with_radius.x << " " << curr_with_radius.y << endl;
+		/**/
 
-		GetPrevTransform()->SetTransform(GetTransform()->GetPosition());
-		GetTransform()->SetTransform(Vector2D(new_x - r, new_y - r));
+		Vector2D intersection;
+		float flFraction;
 
-		velocity *= 0.9;
+		if (CheckRectangleLineSegment(
+			rectangle,
+			prev_with_radius,
+			curr_with_radius,
+			intersection,
+			flFraction
+		))
+		{
+			intersection.x = float(ceil(intersection.x));
+			intersection.y = float(ceil(intersection.y));
 
-		//KinematicBody::ChangeTrajectory(collision_direction);
+			test_point.getComponent<TransformComponent>().position.x = float(ceil(intersection.x));
+			test_point.getComponent<TransformComponent>().position.y = float(ceil(intersection.y));
+			//cout << "=============" << endl;
+			//test_point.getComponent<TransformComponent>().position = intersection;
+			//cout << rectangle->position << " " << rectangle->params["width"] << " " << rectangle->params["height"];
+			//cout << intersection << endl;
 
+			if (intersection.x == 0 && intersection.y != 0)// The side is Left-Right
+			{
+				//printf("ENTERED SOLVE FOR X \n");
+				sign = returnSign(curr.x - prev.x);
+				t = returnNewTrajectory(intersection.y, r, sign, curr.x, prev.x);
+				player.getComponent<KinematicsComponent>().velocity.x *= (-1);
+
+			}
+			else if (intersection.y == 0 && intersection.x != 0) // The side is Up-Down
+			{
+				//printf("ENTERED SOLVE FOR Y \n");
+				sign = returnSign(curr.y - prev.y);
+				t = returnNewTrajectory(intersection.x, r, sign, curr.y, prev.y);
+				player.getComponent<KinematicsComponent>().velocity.y *= (-1);
+			}
+		}
+		else
+			cout << "not detected" << endl;
+
+		output.y = t * prev.y + (1 - t) * curr.y;
+		output.x = t * prev.x + (1 - t) * curr.x;
+
+		player.getComponent<TransformComponent>().position = output;
+		player.getComponent<KinematicsComponent>().velocity *= 0.1;
 	}
 
-	float returnNewTrajectory(float side, float radius, float sign, float cur_center, float prev_center)
+	static float returnNewTrajectory(float side, float radius, float sign, float cur_center, float prev_center)
 	{
 		if (prev_center == cur_center)
 			printf("WARNING: DIVISION BY ZERO \n");
 		return (side + (radius) * sign - cur_center) / (prev_center - cur_center);
 	}
-	*/
+	static float returnSign(float value)
+	{
+		float sign = 0.0;
+		if (signbit(value))
+		{
+			sign = 1.0;
+		}
+		else
+		{
+			sign = -1.0;
+		}
+		return sign;
+	}
 };

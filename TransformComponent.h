@@ -18,7 +18,6 @@ This would mean that I have to drastically modify the given template
 class TransformComponent : public Component
 {
 public:
-	/**/
 	TransformComponent()
 	{
 		position.x = 0.0f;
@@ -33,7 +32,11 @@ public:
 	{ 
 		position = set_position;
 	}
-	/**/
+	
+	void Translate(Vector2D set_translate)
+	{
+		position += set_translate;
+	}
 	
 	Vector2D position = Vector2D(0, 0);
 

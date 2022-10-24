@@ -18,18 +18,20 @@ public:
 
 	//Input-related things
 	
-	void MouseUp( int button ) { /* implement if you want to detect mouse button presses */ }
-	void MouseDown( int button ) { /* implement if you want to detect mouse button presses */ }
-	void MouseMove(int x, int y) 
-	{ 
-		mousex = x;
-		mousey = y;
-		//printf("%i %i", x, y); /* implement if you want to detect mouse movement */ 
-	}
-	void KeyUp(int key) {}
-	void KeyDown(int key);
+	virtual void MouseUp(int button);
+	virtual void MouseDown(int button);
+	virtual void MouseMove(int x, int y);
+	virtual void KeyUp(int key);
+	virtual void KeyDown(int key);
 
 	Surface* getScreen() { return screen; }
+	enum groupLabels : std::size_t
+	{
+		groupMap,
+		groupPlayers,
+		groupColliders,
+		groupProjectiles
+	};
 	
 private:
 	Surface* screen;

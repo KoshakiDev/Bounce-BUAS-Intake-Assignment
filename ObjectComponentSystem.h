@@ -8,6 +8,9 @@
 
 #include "surface.h"
 
+#include <SDL.h>
+
+
 using namespace std;
 using namespace Tmpl8;
 
@@ -48,6 +51,13 @@ public:
 	virtual void Init() {}
 	virtual void Tick(float delta) {}
 	virtual void Draw(Surface* screen) {}
+	//Input
+	virtual void MouseUp(int button) {}
+	virtual void MouseDown(int button) {}
+	virtual void MouseMove(int x, int y) {}
+	virtual void KeyUp(int key) {}
+	virtual void KeyDown(int key) {}
+	
 	virtual ~Component() {}
 };
 
@@ -64,6 +74,29 @@ public:
 	{
 		for (auto& c : components) c->Draw(screen);
 	}
+	//Input
+	void MouseUp(int button) 
+	{
+		for (auto& c : components) c->MouseUp(button);
+	}
+	void MouseDown(int button) 
+	{
+		for (auto& c : components) c->MouseDown(button);
+	}
+	void MouseMove(int x, int y) 
+	{
+		for (auto& c : components) c->MouseMove(x, y);
+	}
+	void KeyUp(int key) 
+	{
+		for (auto& c : components) c->KeyUp(key);
+	}
+	void KeyDown(int key) 
+	{
+		for (auto& c : components) c->KeyDown(key);
+	}
+
+
 
 	bool isActive() const { return active; }
 	void destroy() { active = false; }
@@ -124,6 +157,27 @@ public:
 	void Draw(Surface* screen)
 	{
 		for (auto& o : objects) o->Draw(screen);
+	}
+	//Input
+	void MouseUp(int button)
+	{
+		for (auto& o : objects) o->MouseUp(button);
+	}
+	void MouseDown(int button)
+	{
+		for (auto& o : objects) o->MouseDown(button);
+	}
+	void MouseMove(int x, int y)
+	{
+		for (auto& o : objects) o->MouseMove(x, y);
+	}
+	void KeyUp(int key)
+	{
+		for (auto& o : objects) o->KeyUp(key);
+	}
+	void KeyDown(int key)
+	{
+		for (auto& o : objects) o->KeyDown(key);
 	}
 
 	void refresh()
