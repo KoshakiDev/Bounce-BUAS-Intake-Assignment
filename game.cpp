@@ -76,16 +76,24 @@ namespace Tmpl8
 			Vector2D penetration_normal = Vector2D(-1, -1);
 			float penetration_depth = 0;
 
-			if (Collision::CheckCircleRectangle(
+			if (Collision::Check(
 				player.getComponent<ShapeComponent>().pShape, 
 				t->getComponent<ShapeComponent>().pShape, 
 				penetration_normal,
 				penetration_depth)
 			)
 			{
-				
+				/*
+				// Make the ball slide on the surface
+				Vector2D velocity_length = player.getComponent<KinematicsComponent>().velocity.length();
+				Vector2D velocity_normalized = player.getComponent<KinematicsComponent>().velocity.normalized();
+				float dot_product = velocity_normalized.dot(penetration_normal);
+				Vector2D undesired_motion = penetration_normal * dot_product;
+				Vector2D desired_motion = velocity_normalized - undesired_motion;
+				player.getComponent<KinematicsComponent>().velocity = desired_motion * velocity_length;
+				/**/
+
 				// This changes the velocity trajectory
-				cout << penetration_normal << endl;
 				if (penetration_normal.x != 0)
 				{
 					player.getComponent<KinematicsComponent>().velocity.x *= -1 * abs(penetration_normal.x);
@@ -95,17 +103,8 @@ namespace Tmpl8
 					player.getComponent<KinematicsComponent>().velocity.y *= -1 * abs(penetration_normal.y);
 				}
 
-				/*
-				Vector2D velocity_length = player.getComponent<KinematicsComponent>().velocity.length();
-				Vector2D velocity_normalized = player.getComponent<KinematicsComponent>().velocity.normalized();
-				float dot_product = velocity_normalized.dot(penetration_normal);
-				Vector2D undesired_motion = penetration_normal * dot_product;
-				Vector2D desired_motion = velocity_normalized - undesired_motion;
-				player.getComponent<KinematicsComponent>().velocity = desired_motion * velocity_length;
-				/**/
 				
 				// Remove penetration (penetration epsilon added to handle infinitely small penetration):
-				
 				player.getComponent<TransformComponent>().Translate(penetration_normal * (penetration_depth + 0.0001f));
 			}
 		}
