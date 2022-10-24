@@ -65,7 +65,6 @@ public:
 		if (key == SDL_SCANCODE_W)
 		{
 			velocity.y = clamp(velocity.y + (-speed), -max_speed, max_speed);
-			//acceleration.y = acceleration.y + (-speed);
 		}
 		if (key == SDL_SCANCODE_S)
 		{
