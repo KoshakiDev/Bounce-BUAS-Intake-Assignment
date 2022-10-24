@@ -48,10 +48,7 @@ public:
 	}
 	void Draw(Surface* screen) {}
 
-	void MouseMove(int x, int y)
-	{
-		//owner->getComponent<TransformComponent>().position = Vector2D(x, y);
-	}
+	void MouseMove(int x, int y) {}
 
 	void KeyDown(int key)
 	{

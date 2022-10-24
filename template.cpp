@@ -74,15 +74,6 @@ void timer::init()
 	inv_freq = 1000. / double(f.QuadPart);
 }
 
-//##############################################################################
-// Custom functions by me (having in Components.h does not work for some reason)
-
-
-
-
-//##############################################################################
-
-
 // Math Stuff
 // ----------------------------------------------------------------------------
 vec3 normalize( const vec3& v ) { return v.normalized(); }

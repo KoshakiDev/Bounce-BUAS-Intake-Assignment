@@ -20,7 +20,6 @@ int rgb(int red, int green, int blue)
 	return (0 << ALPHA) + (red << RED) + (green << GREEN) + (blue << BLUE);
 }
 
-
 Pixel moldy_white = rgb(240, 246, 240);
 Pixel moldy_black = rgb(34, 35, 35);
 
@@ -32,6 +31,8 @@ Pixel blue = rgb(0, 0, 255);
 
 Object& player = manager.addObject();
 Map* tilemap;
+
+Pixel background_color = moldy_white;
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
@@ -51,10 +52,10 @@ namespace Tmpl8
 		player.addComponent<TransformComponent>(500, 500);
 		player.addComponent<KinematicsComponent>(0.1, 0.5);
 		player.addComponent<ShapeComponent>(t_circle);
-		player.getComponent<ShapeComponent>().pShape->params["radius"] = 16;
+		player.getComponent<ShapeComponent>().pShape->params["radius"] = TILE_SIZE / 2;
 		player.getComponent<ShapeComponent>().pShape->color = moldy_black;
 
-		tilemap = new Map(32);
+		tilemap = new Map(TILE_SIZE);
 		tilemap->LoadMap("default.map", 25, 20, moldy_black);
 	}
 	
@@ -121,7 +122,7 @@ namespace Tmpl8
 
 	void Game::Draw(Surface* screen)
 	{
-		screen->Clear(moldy_white);
+		screen->Clear(background_color);
 		manager.Draw(screen);
 	}
 
@@ -140,6 +141,17 @@ namespace Tmpl8
 	void Game::KeyUp(int key)
 	{
 		manager.KeyUp(key);
+		if (key == SDL_SCANCODE_Z)
+		{
+			if (background_color == moldy_white)
+			{
+				background_color = moldy_black;
+			}
+			else if (background_color == moldy_black)
+			{
+				background_color = moldy_white;
+			}
+		}
 	}
 	void Game::KeyDown(int key)
 	{

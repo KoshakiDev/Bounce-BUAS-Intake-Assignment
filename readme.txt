@@ -6,3 +6,5 @@ D - Right
 J - Turn into balloon
 K - Turn into dodgeball
 L - Turn into rock
+
+Z - Switch theme

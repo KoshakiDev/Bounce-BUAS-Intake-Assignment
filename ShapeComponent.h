@@ -4,13 +4,15 @@
 #include <map>
 #include <any>
 
+extern Pixel moldy_white, moldy_black;
+
 enum ShapeType {t_point, t_lineSegment, t_circle, t_rectangle};
 
 class Shape
 {
 public:
     ShapeType type;
-    Pixel color = (0 << ALPHA) + (255 << RED) + (255 << GREEN) + (0 << BLUE);
+    Pixel color = moldy_black;
     Vector2D position;
     
 
@@ -74,7 +76,6 @@ public:
     
     void Draw(Surface* screen)
     {
-        //cout << "a " << name <<" is being drawn with position " << transform << " and radius " << radius << endl;
         screen->ApproximateCircle(position.x, position.y, params["radius"], color);
     }
 };
@@ -126,5 +127,21 @@ public:
     }
 
     virtual ~ShapeComponent() {}
+
+    void KeyUp(int key)
+    {
+        if (key == SDL_SCANCODE_Z)
+        {
+            if (pShape->color == moldy_white)
+            {
+                pShape->color = moldy_black;
+            }
+            else if (pShape->color == moldy_black)
+            {
+                pShape->color = moldy_white;
+            }
+        }
+    }
+    
 };
 
