@@ -15,11 +15,11 @@ Prior to this project, I did not have experience of making games purely on Visua
 
 Various ideas from "Game Engine Architecture" by Jason Gregory 
 
-[Video from Reducible on Building Collision Simulations](https://www.youtube.com/watch?v=eED4bSkYCB8)
+["Building Collision Simulations" by Reducible](https://www.youtube.com/watch?v=eED4bSkYCB8)
 
-[Implementation of Ideas from "Lets Make Games!" Playlist:](https://www.youtube.com/playlist?list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx)
-- Object-Component System
-- Parsing external level files
+[Implementation of Object Component System](https://www.youtube.com/watch?v=XsvI8Sng6dk)
+
+[Implementation of Parsing External Levels](https://www.youtube.com/watch?v=1Fo-5vJcB4w)
 
 [Implementation of Penetration Normal Vector and Depth](https://wickedengine.net/2020/04/26/capsule-collision-detection/)
 
