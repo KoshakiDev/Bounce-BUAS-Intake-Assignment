@@ -11,7 +11,12 @@ I have experience coding and making games (with a preexisting game engine), but 
 
 [BUAS Visual Studio Community 2019 Game Template](https://www.3dgep.com/cppfast-track-1-getting-started)
 
-["Lets Make Games!" Playlist](https://www.youtube.com/playlist?list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx)
+
+Game Engine Architecture by Jason Gregory 
+
+[Video from Reducible on Building Collision Simulations](https://www.youtube.com/watch?v=eED4bSkYCB8)
+
+[Implementation of Ideas from "Lets Make Games!" Playlist:](https://www.youtube.com/playlist?list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx)
 - Object-Component System
 - Parsing external level files
 
