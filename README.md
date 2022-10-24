@@ -7,12 +7,13 @@ You are a dodgeball which can turn into a rock and a balloon. Dodgeballs bounce.
 
 ## References
 
-I have experience coding and making games (with a preexisting game engine), but I do not have experience creating without one purely on Visual Studio. Therefore, I used online tutorials to get myself started.
+This is a list of resources and references I used to build this project. 
+Prior to this project, I did not have experience of making games purely on Visual Studio 2019 Community Edition.
+
 
 [BUAS Visual Studio Community 2019 Game Template](https://www.3dgep.com/cppfast-track-1-getting-started)
 
-
-Game Engine Architecture by Jason Gregory 
+Various ideas from "Game Engine Architecture" by Jason Gregory 
 
 [Video from Reducible on Building Collision Simulations](https://www.youtube.com/watch?v=eED4bSkYCB8)
 
