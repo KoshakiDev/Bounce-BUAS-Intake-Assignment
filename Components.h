@@ -6,7 +6,6 @@ It does not do anything other than providing a link back to them
 #include "template.h"
 #include "ObjectComponentSystem.h"
 #include "TransformComponent.h"
-#include "PrevTransformComponent.h"
 #include "KinematicsComponent.h"
 #include "ShapeComponent.h"
 #include "ColliderComponent.h"

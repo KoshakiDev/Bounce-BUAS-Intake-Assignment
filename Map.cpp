@@ -5,7 +5,7 @@
 
 extern Manager manager;
 
-void Map::LoadMap(string path, int sizeX, int sizeY)
+void Map::LoadMap(string path, int sizeX, int sizeY, Pixel set_color)
 {
 	char c;
 	std::fstream mapFile;
@@ -24,7 +24,7 @@ void Map::LoadMap(string path, int sizeX, int sizeY)
 			//todo: add tile factory
 			if (type == 1)
 			{
-				AddTile(x * tileSize, y * tileSize);
+				AddTile(x * tileSize, y * tileSize, set_color);
 			}
 			mapFile.ignore();
 		}
@@ -33,12 +33,13 @@ void Map::LoadMap(string path, int sizeX, int sizeY)
 }
 
 
-void Map::AddTile(int xpos, int ypos)
+void Map::AddTile(int xpos, int ypos, Pixel set_color)
 {
 	auto& tile(manager.addObject());
 	
 	tile.addComponent<TransformComponent>(xpos, ypos);
 	tile.addComponent<ShapeComponent>(t_rectangle);
+	tile.getComponent<ShapeComponent>().pShape->color = set_color;
 	tile.getComponent<ShapeComponent>().pShape->params["width"] = tileSize;
 	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
 

@@ -234,7 +234,6 @@
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Components.h" />
-    <ClInclude Include="PrevTransformComponent.h" />
     <ClInclude Include="KinematicsComponent.h" />
     <ClInclude Include="ObjectComponentSystem.h" />
     <ClInclude Include="game.h" />

@@ -14,8 +14,21 @@ I started out with a "player.cpp", but then throughout development, the componen
 the "player.cpp" redundant.
 */
 
-Pixel yellow = (0 << ALPHA) + (255 << RED) + (255 << GREEN) + (0 << BLUE);
-Pixel red = (0 << ALPHA) + (255 << RED) + (0 << GREEN) + (0 << BLUE);
+
+int rgb(int red, int green, int blue)
+{
+	return (0 << ALPHA) + (red << RED) + (green << GREEN) + (blue << BLUE);
+}
+
+
+Pixel moldy_white = rgb(240, 246, 240);
+Pixel moldy_black = rgb(34, 35, 35);
+
+// debug colors
+Pixel red = rgb(255, 0, 0);
+Pixel yellow = rgb(255, 255, 0);
+Pixel green = rgb(0, 255, 0);
+Pixel blue = rgb(0, 0, 255);
 
 Object& player = manager.addObject();
 Map* tilemap;
@@ -35,16 +48,14 @@ namespace Tmpl8
 	{
 		//Creating the player
 
-		
 		player.addComponent<TransformComponent>(500, 500);
-		player.addComponent<PrevTransformComponent>();
 		player.addComponent<KinematicsComponent>(0.1, 0.5);
 		player.addComponent<ShapeComponent>(t_circle);
 		player.getComponent<ShapeComponent>().pShape->params["radius"] = 16;
-		player.getComponent<ShapeComponent>().pShape->color = (0 << ALPHA) + (255 << RED) + (255 << GREEN) + (255 << BLUE);
-		
+		player.getComponent<ShapeComponent>().pShape->color = moldy_black;
+
 		tilemap = new Map(32);
-		tilemap->LoadMap("default.map", 25, 20);
+		tilemap->LoadMap("default.map", 25, 20, moldy_black);
 	}
 	
 	// -----------------------------------------------------------
@@ -60,8 +71,6 @@ namespace Tmpl8
 
 	void Game::Tick(float delta)
 	{
-		player.getComponent<PrevTransformComponent>().position = player.getComponent<TransformComponent>().position;
-
 		manager.refresh();
 		manager.Tick(delta);
 		
@@ -103,7 +112,6 @@ namespace Tmpl8
 					player.getComponent<KinematicsComponent>().velocity.y *= -1 * abs(penetration_normal.y);
 				}
 
-				
 				// Remove penetration (penetration epsilon added to handle infinitely small penetration):
 				player.getComponent<TransformComponent>().Translate(penetration_normal * (penetration_depth + 0.0001f));
 			}
@@ -113,7 +121,7 @@ namespace Tmpl8
 
 	void Game::Draw(Surface* screen)
 	{
-		screen->Clear(0);
+		screen->Clear(moldy_white);
 		manager.Draw(screen);
 	}
 

@@ -2,9 +2,14 @@
 #include "Components.h"
 
 /*
-This checks collision with primitives (point, line segment, circle, rectangle)
-Check function is a double dispatch. 
-We get 2 arbitrary shapes, we must figure out their types and use the correct function
+
+Purpose:
+Check collisions between two shapes (circles and rectangles). 
+Double dispatch directs arbitrary shapes to use correct functions
+
+Using the normal and the depth, it helps us:
+- Move the object out in the correct direction and at correct distance
+- Change velocity's trajectory
 */
 
 class Collision

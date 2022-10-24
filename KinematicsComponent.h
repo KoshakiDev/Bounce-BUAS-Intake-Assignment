@@ -1,7 +1,7 @@
 #pragma once
 #include "Components.h"
 
-#define GRAVITY 0.5
+#define GRAVITY 0.001
 #define FRICTION 0.9
 
 
@@ -41,7 +41,7 @@ public:
 	}
 	void Tick(float delta)
 	{
-		acceleration = Vector2D(0, 0.001);
+		acceleration = Vector2D(0, GRAVITY);
 		velocity.x = Clamp(velocity.x + acceleration.x * delta, -max_speed, max_speed);
 		velocity.y = Clamp(velocity.y + acceleration.y * delta, -max_speed, max_speed);
 		ptransformComponent->position = ptransformComponent->position + velocity * delta;

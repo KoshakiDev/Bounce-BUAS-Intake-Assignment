@@ -10,8 +10,8 @@ public:
 	}
 	~Map();
 
-	void LoadMap(string path, int sizeX, int sizeY);
-	void AddTile(int xpos, int ypos);
+	void LoadMap(string path, int sizeX, int sizeY, Pixel set_color);
+	void AddTile(int xpos, int ypos, Pixel set_color);
 private:
 	float tileSize;
 

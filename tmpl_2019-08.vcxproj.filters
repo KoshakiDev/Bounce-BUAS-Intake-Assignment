@@ -44,9 +44,6 @@
     <ClInclude Include="Map.h">
       <Filter>Source files\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="PrevTransformComponent.h">
-      <Filter>Source files\Components\Transform</Filter>
-    </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>Source files\Components\Transform</Filter>
     </ClInclude>
