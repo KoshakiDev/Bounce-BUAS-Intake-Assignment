@@ -231,7 +231,6 @@
     <ClCompile Include="template.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="KinematicsComponent.h" />
@@ -241,6 +240,7 @@
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="FutureTransformComponent.h" />
     <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>

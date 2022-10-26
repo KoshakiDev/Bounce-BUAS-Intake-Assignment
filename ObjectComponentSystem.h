@@ -150,6 +150,7 @@ private:
 class Manager
 {
 public:
+
 	void Tick(float delta)
 	{
 		for (auto& o : objects) o->Tick(delta);

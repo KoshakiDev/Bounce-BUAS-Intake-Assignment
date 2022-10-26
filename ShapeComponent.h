@@ -6,16 +6,17 @@
 
 extern Pixel moldy_white, moldy_black;
 
-enum ShapeType {t_point, t_lineSegment, t_circle, t_rectangle};
+enum ShapeType {t_circle, t_rectangle};
 
 class Shape
 {
 public:
     ShapeType type;
     Pixel color = moldy_black;
-    Vector2D position;
     
-
+    TransformComponent* ptransformComponent;
+    //Vector2D position;
+    
     /*
     NOTE: I tried to use any, but turns out it is literally useless. I just decided to keep only floats
     in there (I also figured that there is no purpose to store a vector2d there; it can be stored as pointx and pointy)
@@ -29,54 +30,40 @@ public:
     virtual void Draw(Surface* screen) {}
 };
 
-class Point : public Shape
-{
-public:
-    Point()
-    {
-        type = t_point;
-        position = Vector2D(0, 0);
-    }
-    void Draw(Surface* screen)
-    {
-        screen->Point(position.x, position.y, color);
-    }
-    
-};
-
-class LineSegment : public Shape
-{
-public:
-    LineSegment()
-    {
-        type = t_lineSegment;
-        position = Vector2D(0, 0);
-        params["point.x"] = 0.0;
-        params["point.y"] = 0.0;
-    }
-
-    void Draw(Surface* screen)
-    {
-        screen->Point(position.x, position.y, color);
-        screen->Point(params["point.x"], params["point.y"], color);
-        screen->Line(position.x, position.y, params["point.x"], params["point.y"], color);
-    }
-   
-};
-
 class Circle : public Shape
 {
 public:
     Circle()
     {
         type = t_circle;
-        position = Vector2D(0, 0);
+        //position = Vector2D(0, 0);
         params["radius"] = float(1.0);
+
+        params["ball_type"] = float(2.0);
     }
     
     void Draw(Surface* screen)
     {
-        screen->ApproximateCircle(position.x, position.y, params["radius"], color);
+        /**/
+        if (params["ball_type"] == 1.0)
+        {
+            screen->Balloon(ptransformComponent->position.x, ptransformComponent->position.y, params["radius"], color);
+        }
+        if (params["ball_type"] == 2.0)
+        {
+            screen->Ball(ptransformComponent->position.x, ptransformComponent->position.y, params["radius"], color);
+        }
+        if (params["ball_type"] == 3.0)
+        {
+            screen->Rock(ptransformComponent->position.x, ptransformComponent->position.y, params["radius"], color);
+        }
+        /**
+        screen->ApproximateCircle(
+            ptransformComponent->position.x, 
+            ptransformComponent->position.y, 
+            params["radius"], 
+            color);
+        /**/
     }
 };
 
@@ -86,13 +73,16 @@ public:
     Rectangle()
     {
         type = t_rectangle;
-        position = Vector2D(0, 0);
         params["width"] = 1.0;
         params["height"] = 1.0;
     }
     void Draw(Surface* screen)
     {
-        screen->Box(position.x, position.y, position.x + params["width"], position.y + params["height"], color);
+        screen->Box(ptransformComponent->position.x, 
+            ptransformComponent->position.y, 
+            ptransformComponent->position.x + params["width"], 
+            ptransformComponent->position.y + params["height"], 
+            color);
     }
 };
 
@@ -115,11 +105,12 @@ public:
             owner->addComponent<TransformComponent>();
         }
         ptransformComponent = &owner->getComponent<TransformComponent>();
+        pShape->ptransformComponent = &owner->getComponent<TransformComponent>();
     }
     void Tick(float delta)
     {
         pShape->Tick(delta);
-        pShape->position = ptransformComponent->position;
+        //pShape->position = ptransformComponent->position;
     }
     void Draw(Surface* screen)
     {
@@ -127,6 +118,7 @@ public:
     }
 
     virtual ~ShapeComponent() {}
+
 
     void KeyUp(int key)
     {
@@ -141,6 +133,20 @@ public:
                 pShape->color = moldy_white;
             }
         }
+        /**/
+        if (key == SDL_SCANCODE_J) //Balloon
+        {
+            pShape->params["ball_type"] = 1.0;
+        }
+        if (key == SDL_SCANCODE_K) //Ball
+        {
+            pShape->params["ball_type"] = 2.0;
+        }
+        if (key == SDL_SCANCODE_L) //Rock
+        {
+            pShape->params["ball_type"] = 3.0;
+        }
+        /**/
     }
     
 };

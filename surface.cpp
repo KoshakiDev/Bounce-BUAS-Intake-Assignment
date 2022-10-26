@@ -211,12 +211,48 @@ void Surface::ApproximateCircle(float x1, float y1, float radius, Pixel color)
 
 	Line(x1                 , y1 - radius        , x1 + radius * root2, y1 - radius * root2, color);
 	Line(x1 + radius * root2, y1 - radius * root2, x1 + radius        , y1                 , color);
-	Line(x1 + radius        , y1                  , x1 + radius * root2, y1 + radius * root2, color);
-	Line(x1 + radius * root2, y1 + radius * root2, x1                 , y1 + radius         , color);
-	Line(x1                 , y1 + radius        , x1 - radius * root2, y1 + radius * root2,  color);
-	Line(x1 - radius * root2, y1 + radius * root2, x1 - radius        , y1                 ,  color);
+	Line(x1 + radius        , y1                 , x1 + radius * root2, y1 + radius * root2, color);
+	Line(x1 + radius * root2, y1 + radius * root2, x1                 , y1 + radius        , color);
+	Line(x1                 , y1 + radius        , x1 - radius * root2, y1 + radius * root2, color);
+	Line(x1 - radius * root2, y1 + radius * root2, x1 - radius        , y1                 , color);
 	Line(x1 - radius        , y1                 , x1 - radius * root2, y1 - radius * root2, color);
 	Line(x1 - radius * root2, y1 - radius * root2, x1                 , y1 - radius        , color);
+}
+
+void Surface::Ball(float x1, float y1, float radius, Pixel color)
+{
+	float half1 = 0.5;
+	float root2 = 1.41421356237 / 2.0;
+	ApproximateCircle(x1, y1, radius, color);
+	Line(x1                 , y1 - radius        , x1                 , y1 + radius        , color);
+	Line(x1 - radius * root2, y1 - radius * root2, x1 - radius * half1, y1                 , color);
+	Line(x1 - radius * root2, y1 + radius * root2, x1 - radius * half1, y1                 , color);
+	Line(x1 + radius * root2, y1 - radius * root2, x1 + radius * half1, y1                 , color);
+	Line(x1 + radius * root2, y1 + radius * root2, x1 + radius * half1, y1                 , color);
+}
+void Surface::Balloon(float x1, float y1, float radius, Pixel color)
+{
+	float half1 = 0.5;
+	float root2 = 1.41421356237 / 2.0;
+	ApproximateCircle(x1, y1, radius, color);
+	ApproximateCircle(x1 - radius * root2 * half1, y1 - radius * root2 * half1, radius * 0.25, color);
+	Box(x1 - radius * 0.125, y1 + radius, x1 + radius * 0.125, y1 + 1.25 * radius, color);
+	Line(x1, y1 + 1.25 * radius, x1, y1 + 1.75 * radius, color);
+}
+void Surface::Rock(float x1, float y1, float radius, Pixel color)
+{
+	ApproximateCircle(x1, y1, radius, color);
+	float scale = radius * 0.75;
+	float root2 = 1.41421356237 / 2.0 * scale;
+	float full1 = 1 * scale;
+	Line(x1, y1, x1        , y1 - full1, color);
+	Line(x1, y1, x1 + root2, y1 - root2, color);
+	Line(x1, y1, x1 + full1, y1        , color);
+	Line(x1, y1, x1 + root2, y1 + root2, color);
+	Line(x1, y1, x1        , y1 + full1, color);
+	Line(x1, y1, x1 - root2, y1 + root2, color);
+	Line(x1, y1, x1 - full1, y1        , color);
+	Line(x1, y1, x1 - root2, y1 - root2, color);
 }
 
 void Surface::Box( float x1, float y1, float x2, float y2, Pixel c )

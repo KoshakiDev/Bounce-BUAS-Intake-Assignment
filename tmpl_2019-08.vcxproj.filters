@@ -29,9 +29,6 @@
     <ClInclude Include="KinematicsComponent.h">
       <Filter>Source files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="ColliderComponent.h">
-      <Filter>Source files\Components\Colliders</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Source files\Components\Colliders</Filter>
     </ClInclude>
@@ -49,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="Components.h">
       <Filter>Source files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="FutureTransformComponent.h">
+      <Filter>Source files\Components\Transform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

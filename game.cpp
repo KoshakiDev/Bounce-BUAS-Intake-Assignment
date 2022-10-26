@@ -50,7 +50,9 @@ namespace Tmpl8
 		//Creating the player
 
 		player.addComponent<TransformComponent>(500, 500);
-		player.addComponent<KinematicsComponent>(0.1, 0.5);
+
+		//player.addComponent<FutureTransformComponent>();
+		player.addComponent<KinematicsComponent>(0.1, 0.4);
 		player.addComponent<ShapeComponent>(t_circle);
 		player.getComponent<ShapeComponent>().pShape->params["radius"] = TILE_SIZE / 2;
 		player.getComponent<ShapeComponent>().pShape->color = moldy_black;
@@ -74,24 +76,17 @@ namespace Tmpl8
 	{
 		manager.refresh();
 		manager.Tick(delta);
-		
-		/*
-		Well, the trick there is to not let the circle intersect with the box in the first place. 
-		When you move you check if there's something at your new position, and if not, you move. 
-		Not the other way around where you move and then check : )
-		*/
-
 		for (auto& t : tiles)
 		{
 			Vector2D penetration_normal = Vector2D(-1, -1);
 			float penetration_depth = 0;
 
 			if (Collision::Check(
-				player.getComponent<ShapeComponent>().pShape, 
-				t->getComponent<ShapeComponent>().pShape, 
+				player.getComponent<ShapeComponent>().pShape,
+				t->getComponent<ShapeComponent>().pShape,
 				penetration_normal,
 				penetration_depth)
-			)
+				)
 			{
 				/*
 				// Make the ball slide on the surface
@@ -112,11 +107,19 @@ namespace Tmpl8
 				{
 					player.getComponent<KinematicsComponent>().velocity.y *= -1 * abs(penetration_normal.y);
 				}
+				player.getComponent<KinematicsComponent>().velocity *= player.getComponent<KinematicsComponent>().bounce_coefficient;
 
 				// Remove penetration (penetration epsilon added to handle infinitely small penetration):
 				player.getComponent<TransformComponent>().Translate(penetration_normal * (penetration_depth + 0.0001f));
 			}
 		}
+		
+		/*
+		Well, the trick there is to not let the circle intersect with the box in the first place. 
+		When you move you check if there's something at your new position, and if not, you move. 
+		Not the other way around where you move and then check : )
+		*/
+
 		Draw(screen);
 	}
 
@@ -124,6 +127,8 @@ namespace Tmpl8
 	{
 		screen->Clear(background_color);
 		manager.Draw(screen);
+		//Vector2D above_circle = player.getComponent<TransformComponent>().position + Vector2D(0, -player.getComponent<ShapeComponent>().pShape->params["radius"]);
+		//screen->Print("YOU", above_circle.x, above_circle.y, moldy_black);
 	}
 
 	void Game::MouseUp(int button)

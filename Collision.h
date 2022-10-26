@@ -48,17 +48,17 @@ public:
 		{
 			swap(circle, rectangle);
 		}
-		Vector2D topLeft = rectangle->position;
-		Vector2D topRight = rectangle->position + Vector2D(rectangle->params["width"], 0);
-		Vector2D bottomLeft = rectangle->position + Vector2D(0, rectangle->params["height"]);
-		Vector2D bottomRight = rectangle->position + Vector2D(rectangle->params["width"], rectangle->params["height"]);
+		Vector2D topLeft = rectangle->ptransformComponent->position;
+		Vector2D topRight = rectangle->ptransformComponent->position + Vector2D(rectangle->params["width"], 0);
+		Vector2D bottomLeft = rectangle->ptransformComponent->position + Vector2D(0, rectangle->params["height"]);
+		Vector2D bottomRight = rectangle->ptransformComponent->position + Vector2D(rectangle->params["width"], rectangle->params["height"]);
 		
 		Vector2D pointOnRect = Vector2D(
-			Clamp(circle->position.x, topLeft.x, topRight.x),
-			Clamp(circle->position.y, topLeft.y, bottomLeft.y)
+			Clamp(circle->ptransformComponent->position.x, topLeft.x, topRight.x),
+			Clamp(circle->ptransformComponent->position.y, topLeft.y, bottomLeft.y)
 		);
 
-		Vector2D intersection_vector = circle->position - pointOnRect;
+		Vector2D intersection_vector = circle->ptransformComponent->position - pointOnRect;
 		
 		if (intersection_vector.sqrLentgh() < circle->params["radius"] * circle->params["radius"])
 		{
@@ -75,7 +75,7 @@ public:
 		float& penetration_depth
 	)
 	{
-		Vector2D intersection_vector = circle_1->position - circle_2->position;
+		Vector2D intersection_vector = circle_1->ptransformComponent->position - circle_2->ptransformComponent->position;
 
 		float radius_sum = circle_1->params["radius"] + circle_2->params["radius"];
 		
@@ -93,15 +93,15 @@ public:
 		Vector2D& penetration_normal,
 		float& penetration_depth)
 	{
-		Vector2D topLeft_1 = rectangle_1->position;
-		Vector2D topRight_1 = rectangle_1->position + Vector2D(rectangle_1->params["width"], 0);
-		Vector2D bottomLeft_1 = rectangle_1->position + Vector2D(0, rectangle_1->params["height"]);
-		Vector2D bottomRight_1 = rectangle_1->position + Vector2D(rectangle_1->params["width"], rectangle_1->params["height"]);
+		Vector2D topLeft_1 = rectangle_1->ptransformComponent->position;
+		Vector2D topRight_1 = rectangle_1->ptransformComponent->position + Vector2D(rectangle_1->params["width"], 0);
+		Vector2D bottomLeft_1 = rectangle_1->ptransformComponent->position + Vector2D(0, rectangle_1->params["height"]);
+		Vector2D bottomRight_1 = rectangle_1->ptransformComponent->position + Vector2D(rectangle_1->params["width"], rectangle_1->params["height"]);
 
-		Vector2D topLeft_2 = rectangle_2->position;
-		Vector2D topRight_2 = rectangle_2->position + Vector2D(rectangle_2->params["width"], 0);
-		Vector2D bottomLeft_2 = rectangle_2->position + Vector2D(0, rectangle_2->params["height"]);
-		Vector2D bottomRight_2 = rectangle_2->position + Vector2D(rectangle_2->params["width"], rectangle_2->params["height"]);
+		Vector2D topLeft_2 = rectangle_2->ptransformComponent->position;
+		Vector2D topRight_2 = rectangle_2->ptransformComponent->position + Vector2D(rectangle_2->params["width"], 0);
+		Vector2D bottomLeft_2 = rectangle_2->ptransformComponent->position + Vector2D(0, rectangle_2->params["height"]);
+		Vector2D bottomRight_2 = rectangle_2->ptransformComponent->position + Vector2D(rectangle_2->params["width"], rectangle_2->params["height"]);
 
 		if (
 			topLeft_1.x < topRight_2.x &&
