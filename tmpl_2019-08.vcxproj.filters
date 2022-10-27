@@ -91,18 +91,36 @@
     <Filter Include="Source files\Components\Transform">
       <UniqueIdentifier>{c1a8fb97-612b-4abc-9bfe-6a205a9748ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\Tile\Maps">
+      <UniqueIdentifier>{86742fc6-8fba-4826-a2b8-f6e502c8f10e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt">
       <Filter>template code</Filter>
     </Text>
     <Text Include="default.map">
-      <Filter>Source files\Tile</Filter>
+      <Filter>Source files\Tile\Maps</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="onetile.map">
-      <Filter>Source files\Tile</Filter>
+    <None Include="1.map">
+      <Filter>Source files\Tile\Maps</Filter>
+    </None>
+    <None Include="2.map">
+      <Filter>Source files\Tile\Maps</Filter>
+    </None>
+    <None Include="3.map">
+      <Filter>Source files\Tile\Maps</Filter>
+    </None>
+    <None Include="4.map">
+      <Filter>Source files\Tile\Maps</Filter>
+    </None>
+    <None Include="5.map">
+      <Filter>Source files\Tile\Maps</Filter>
+    </None>
+    <None Include="win.map">
+      <Filter>Source files\Tile\Maps</Filter>
     </None>
   </ItemGroup>
 </Project>

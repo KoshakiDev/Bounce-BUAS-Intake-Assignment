@@ -70,12 +70,20 @@ public:
 	void CopyTo( Surface* a_Dst, int a_X, int a_Y );
 	void BlendCopyTo( Surface* a_Dst, int a_X, int a_Y );
 	void ScaleColor( unsigned int a_Scale );
-
+	//#######
 	void Point(float x1, float y1, Pixel color);
 	void ApproximateCircle(float x1, float y1, float radius, Pixel color);
+	
 	void Ball(float x1, float y1, float radius, Pixel color);
 	void Balloon(float x1, float y1, float radius, Pixel color);
 	void Rock(float x1, float y1, float radius, Pixel color);
+
+	void Flag(float x1, float y1, float x2, float y2, Pixel color);
+
+	void Skull(float x1, float y1, float x2, float y2, Pixel color);
+
+
+	//#######
 
 	void Box(float x1, float y1, float x2, float y2, Pixel color );
 	

@@ -255,6 +255,37 @@ void Surface::Rock(float x1, float y1, float radius, Pixel color)
 	Line(x1, y1, x1 - root2, y1 - root2, color);
 }
 
+void Surface::Flag(float x1, float y1, float x2, float y2, Pixel c)
+{
+	Line(x1 + (x2 - x1) / 2, y1, x1 + (x2 - x1) / 2, y2, c);
+
+	Line(x1 + (x2 - x1) / 2, y1, x2, y1 + (y2 - y1) / 4, c);
+	
+	Line(x1 + (x2 - x1) / 2, y1 + (y2 - y1) / 2, x2, y1 + (y2 - y1) / 4, c);
+}
+
+
+void Surface::Skull(float x1, float y1, float x2, float y2, Pixel c)
+{
+	float lengthX = x2 - x1;
+	float lengthY = y2 - y1;
+	ApproximateCircle(x1 + lengthX / 4.0, y1 + lengthY / 2, lengthX / 8, c);
+	ApproximateCircle(x1 + (lengthX * 3.0 / 4.0), y1 + lengthY / 2, lengthX / 8, c);
+
+	Line(x1, y1, x2, y1, c);
+	Line(x2, y1, x2, y1 + (lengthY * 3.0 / 4.0), c);
+	Line(x1, y1, x1, y1 + (lengthY * 3.0 / 4.0), c);
+	Line(x1, y1 + (lengthY * 3.0 / 4.0), x2, y1 + (lengthY * 3.0 / 4.0), c);
+	Line(x1 + lengthX / 4.0, y2, x1 + (lengthX * 3.0 / 4.0), y2, c);
+
+	Line(x1 + lengthX / 4.0, y2 - lengthY / 8, x1 + (lengthX * 3.0 / 4.0), y2 - lengthY / 8, c);
+
+
+	for (float i = 2; i <= 6; i++)
+		Line(x1 + i * lengthX / 8.0, y1 + (lengthY * 3.0 / 4.0), x1 + i * lengthX / 8.0, y2, c);
+}
+
+
 void Surface::Box( float x1, float y1, float x2, float y2, Pixel c )
 {
 	Line( (float)x1, (float)y1, (float)x2, (float)y1, c );

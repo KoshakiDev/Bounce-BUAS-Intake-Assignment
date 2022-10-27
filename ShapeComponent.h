@@ -75,14 +75,34 @@ public:
         type = t_rectangle;
         params["width"] = 1.0;
         params["height"] = 1.0;
+        params["tile_type"] = 1.0;
     }
     void Draw(Surface* screen)
     {
-        screen->Box(ptransformComponent->position.x, 
-            ptransformComponent->position.y, 
-            ptransformComponent->position.x + params["width"], 
-            ptransformComponent->position.y + params["height"], 
-            color);
+        if (params["tile_type"] == 1.0)
+        {
+            screen->Box(ptransformComponent->position.x,
+                ptransformComponent->position.y,
+                ptransformComponent->position.x + params["width"],
+                ptransformComponent->position.y + params["height"],
+                color);
+        }
+        if (params["tile_type"] == 2.0)
+        {
+            screen->Flag(ptransformComponent->position.x,
+                ptransformComponent->position.y,
+                ptransformComponent->position.x + params["width"],
+                ptransformComponent->position.y + params["height"],
+                color);
+        }
+        if (params["tile_type"] == 3.0)
+        {
+            screen->Skull(ptransformComponent->position.x,
+                ptransformComponent->position.y,
+                ptransformComponent->position.x + params["width"],
+                ptransformComponent->position.y + params["height"],
+                color);
+        }
     }
 };
 

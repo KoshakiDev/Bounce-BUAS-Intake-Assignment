@@ -75,10 +75,7 @@ public:
 			bounce_coefficient = 0.0;
 		}
 		/**/
-		if (key == SDL_SCANCODE_E)
-		{
-			ptransformComponent->position = Vector2D(ScreenWidth / 2, ScreenHeight / 2);
-		}
+		
 		if (key == SDL_SCANCODE_D)
 		{
 			velocity.x = clamp(velocity.x + (speed), -max_speed, max_speed);

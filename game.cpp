@@ -30,6 +30,7 @@ Pixel green = rgb(0, 255, 0);
 Pixel blue = rgb(0, 0, 255);
 
 Object& player = manager.addObject();
+
 Map* tilemap;
 
 Pixel background_color = moldy_white;
@@ -37,8 +38,21 @@ Pixel background_color = moldy_white;
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
-auto& projectiles(manager.getGroup(Game::groupProjectiles));
 
+auto& skulls(manager.getGroup(Game::groupSkulls));
+auto& flags(manager.getGroup(Game::groupFlags));
+
+string path[7] = {
+	"default.map",
+	"1.map",
+	"2.map",
+	"3.map",
+	"4.map",
+	"5.map",
+	"win.map"
+};
+Vector2D level_beginning = Vector2D(0, 0);
+int current_level = -1;
 
 namespace Tmpl8
 {
@@ -49,18 +63,38 @@ namespace Tmpl8
 	{
 		//Creating the player
 
-		player.addComponent<TransformComponent>(500, 500);
-
-		//player.addComponent<FutureTransformComponent>();
+		player.addComponent<TransformComponent>(0, 0);
 		player.addComponent<KinematicsComponent>(0.1, 0.4);
 		player.addComponent<ShapeComponent>(t_circle);
 		player.getComponent<ShapeComponent>().pShape->params["radius"] = TILE_SIZE / 2;
 		player.getComponent<ShapeComponent>().pShape->color = moldy_black;
 
 		tilemap = new Map(TILE_SIZE);
-		tilemap->LoadMap("default.map", 25, 20, moldy_black);
+
+		ClearLevel();
 	}
 	
+	void Game::ClearLevel()
+	{
+		for (auto& t : tiles)
+		{
+			t->destroy();
+		}
+		for (auto& t : flags)
+		{
+			t->destroy();
+		}
+		for (auto& t : skulls)
+		{
+			t->destroy();
+		}
+		current_level++;
+		cout << "current level :" << current_level << endl;;
+		tilemap->LoadMap(path[current_level], 25, 20, moldy_black);
+		player.getComponent<TransformComponent>().position = level_beginning;
+		player.getComponent<KinematicsComponent>().velocity = Vector2D(0, 0);
+	}
+
 	// -----------------------------------------------------------
 	// Close down application
 	// -----------------------------------------------------------
@@ -114,6 +148,40 @@ namespace Tmpl8
 			}
 		}
 		
+		for (auto& t : skulls)
+		{
+			Vector2D penetration_normal = Vector2D(-1, -1);
+			float penetration_depth = 0;
+
+			if (Collision::Check(
+				player.getComponent<ShapeComponent>().pShape,
+				t->getComponent<ShapeComponent>().pShape,
+				penetration_normal,
+				penetration_depth)
+				)
+			{
+				player.getComponent<TransformComponent>().position = level_beginning;
+				player.getComponent<KinematicsComponent>().velocity = Vector2D(0, 0);
+			}
+		}
+
+		for (auto& t : flags)
+		{
+			Vector2D penetration_normal = Vector2D(-1, -1);
+			float penetration_depth = 0;
+
+			if (Collision::Check(
+				player.getComponent<ShapeComponent>().pShape,
+				t->getComponent<ShapeComponent>().pShape,
+				penetration_normal,
+				penetration_depth)
+				)
+			{
+				ClearLevel();
+			}
+		}
+
+
 		/*
 		Well, the trick there is to not let the circle intersect with the box in the first place. 
 		When you move you check if there's something at your new position, and if not, you move. 
@@ -127,8 +195,8 @@ namespace Tmpl8
 	{
 		screen->Clear(background_color);
 		manager.Draw(screen);
-		//Vector2D above_circle = player.getComponent<TransformComponent>().position + Vector2D(0, -player.getComponent<ShapeComponent>().pShape->params["radius"]);
-		//screen->Print("YOU", above_circle.x, above_circle.y, moldy_black);
+		//const char name = "level %i";
+		//screen->Print(name, 50, 50, red);
 	}
 
 	void Game::MouseUp(int button)
@@ -156,6 +224,7 @@ namespace Tmpl8
 			{
 				background_color = moldy_white;
 			}
+			ClearLevel();
 		}
 	}
 	void Game::KeyDown(int key)
