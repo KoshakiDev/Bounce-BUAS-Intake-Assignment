@@ -1,0 +1,18 @@
+"_" - empty space
+"#" - Basic tile
+"@" - Player
+
+"^" - Accel Up
+"v" - Accel Down
+">" - Accel Right
+"<" - Accel Left
+
+
+"U" - Moving Tile Up
+"D" - Moving Tile Down
+"R" - Moving Tile Right
+"L" - Moving Tile Left
+
+"X" - Skull
+
+"F" - Finish

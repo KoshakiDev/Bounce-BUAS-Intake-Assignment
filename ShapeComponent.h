@@ -22,7 +22,7 @@ public:
     in there (I also figured that there is no purpose to store a vector2d there; it can be stored as pointx and pointy)
     */
     unordered_map<string, float> params;
-
+    unordered_map<string, bool> material_type;
     
     static Shape* Create(ShapeType set_type);
     virtual void Init() {}
@@ -38,22 +38,23 @@ public:
         type = t_circle;
         //position = Vector2D(0, 0);
         params["radius"] = float(1.0);
-
-        params["ball_type"] = float(2.0);
+        material_type["ball"] = true;
+        material_type["balloon"] = false;
+        material_type["rock"] = false;
     }
     
     void Draw(Surface* screen)
     {
         /**/
-        if (params["ball_type"] == 1.0)
+        if (material_type["balloon"])
         {
             screen->Balloon(ptransformComponent->position.x, ptransformComponent->position.y, params["radius"], color);
         }
-        if (params["ball_type"] == 2.0)
+        if (material_type["ball"])
         {
             screen->Ball(ptransformComponent->position.x, ptransformComponent->position.y, params["radius"], color);
         }
-        if (params["ball_type"] == 3.0)
+        if (material_type["rock"])
         {
             screen->Rock(ptransformComponent->position.x, ptransformComponent->position.y, params["radius"], color);
         }
@@ -78,7 +79,7 @@ public:
     }
     void Draw(Surface* screen)
     {
-        if (params["basic_tile"] == 1.0)
+        if (material_type["basic_tile"])
         {
             screen->Box(ptransformComponent->position.x,
                 ptransformComponent->position.y,
@@ -86,7 +87,7 @@ public:
                 ptransformComponent->position.y + params["height"],
                 color);
         }
-        if (params["flag"] == 1.0)
+        if (material_type["flag"])
         {
             screen->Flag(ptransformComponent->position.x,
                 ptransformComponent->position.y,
@@ -94,7 +95,7 @@ public:
                 ptransformComponent->position.y + params["height"],
                 color);
         }
-        if (params["skull"] == 1.0)
+        if (material_type["skull"])
         {
             screen->Skull(ptransformComponent->position.x,
                 ptransformComponent->position.y,
@@ -102,7 +103,7 @@ public:
                 ptransformComponent->position.y + params["height"],
                 color);
         }
-        if (params["accelerator_up"] == 1.0)
+        if (material_type["accelerator_up"])
         {
             screen->AcceleratorUp(ptransformComponent->position.x,
                 ptransformComponent->position.y,
@@ -110,9 +111,25 @@ public:
                 ptransformComponent->position.y + params["height"],
                 color);
         }
-        if (params["accelerator_down"] == 1.0)
+        if (material_type["accelerator_down"])
         {
             screen->AcceleratorDown(ptransformComponent->position.x,
+                ptransformComponent->position.y,
+                ptransformComponent->position.x + params["width"],
+                ptransformComponent->position.y + params["height"],
+                color);
+        }
+        if (material_type["accelerator_left"])
+        {
+            screen->AcceleratorLeft(ptransformComponent->position.x,
+                ptransformComponent->position.y,
+                ptransformComponent->position.x + params["width"],
+                ptransformComponent->position.y + params["height"],
+                color);
+        }
+        if (material_type["accelerator_right"])
+        {
+            screen->AcceleratorRight(ptransformComponent->position.x,
                 ptransformComponent->position.y,
                 ptransformComponent->position.x + params["width"],
                 ptransformComponent->position.y + params["height"],
@@ -145,7 +162,6 @@ public:
     void Tick(float delta)
     {
         pShape->Tick(delta);
-        //pShape->position = ptransformComponent->position;
     }
     void Draw(Surface* screen)
     {
@@ -171,15 +187,22 @@ public:
         /**/
         if (key == SDL_SCANCODE_J) //Balloon
         {
-            pShape->params["ball_type"] = 1.0;
+            pShape->material_type["balloon"] = true;
+            pShape->material_type["ball"] = false;
+            pShape->material_type["rock"] = false;
         }
         if (key == SDL_SCANCODE_K) //Ball
         {
-            pShape->params["ball_type"] = 2.0;
+
+            pShape->material_type["balloon"] = false;
+            pShape->material_type["ball"] = true;
+            pShape->material_type["rock"] = false;
         }
         if (key == SDL_SCANCODE_L) //Rock
         {
-            pShape->params["ball_type"] = 3.0;
+            pShape->material_type["balloon"] = false;
+            pShape->material_type["ball"] = false;
+            pShape->material_type["rock"] = true;
         }
         /**/
     }

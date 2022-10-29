@@ -6,23 +6,22 @@ class MovingTileComponent : public Component
 {
 public:
 	Vector2D velocity;
-	float speed;
 	
 	TransformComponent* ptransformComponent;
-	Vector2D travel_vector;
-	Vector2D original_position;
+	Vector2D final_position_1;
+	Vector2D final_position_2;
 	
 	MovingTileComponent()
 	{
 		velocity = Vector2D(0, 0);
-		travel_vector = Vector2D(0, 1);
-		speed = 0.0f;
+		final_position_1 = Vector2D(0, 0);
+		final_position_2 = Vector2D(0, 0);
 	}
-	MovingTileComponent(Vector2D set_travel_vector, float set_speed)
+	MovingTileComponent(Vector2D set_final_position_1, Vector2D set_final_position_2, Vector2D set_velocity)
 	{
-		velocity = Vector2D(0, 0);
-		travel_vector = set_travel_vector;
-		speed = set_speed;
+		velocity = set_velocity;
+		final_position_1 = set_final_position_1;
+		final_position_2 = set_final_position_2;
 	}
 
 	void Init()
@@ -32,19 +31,20 @@ public:
 			owner->addComponent<TransformComponent>();
 		}
 		ptransformComponent = &owner->getComponent<TransformComponent>();
-		original_position = owner->getComponent<TransformComponent>().position;
-
 	}
 	void Tick(float delta)
 	{
-		/**
-		Vector2D change_in_position = ptransformComponent->position - original_position;
-		if (change_in_position.x == travel_vector.x && change_in_position.y == travel_vector.y)
+		if (ptransformComponent->position.x >= final_position_1.x && ptransformComponent->position.y >= final_position_1.y)
 		{
 			velocity = -velocity;
+			ptransformComponent->position = final_position_1;
+		}
+		if (ptransformComponent->position.x <= final_position_2.x && ptransformComponent->position.y <= final_position_2.y)
+		{
+			velocity = -velocity;
+			ptransformComponent->position = final_position_2;
 		}
 		ptransformComponent->position = ptransformComponent->position + velocity * delta;
-		/**/
 	}
 	void Draw(Surface* screen) {}
 

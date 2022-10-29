@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9BC7617C-CBF5-4AD6-B39E-149A41125824}"
 	ProjectSection(SolutionItems) = preProject
 		dump.txt = dump.txt
+		map legend.txt = map legend.txt
 		readme.txt = readme.txt
 		References.txt = References.txt
 	EndProjectSection

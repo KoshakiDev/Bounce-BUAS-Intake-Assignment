@@ -1,3 +1,8 @@
+
+
+
+
+
 static void ChangeTrajectory(Object& player, Shape* rectangle, Object& test_point)
 	{
 		float r = player.getComponent<ShapeComponent>().pShape->params["radius"];

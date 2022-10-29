@@ -19,57 +19,153 @@ void Map::LoadMap(string path, int sizeX, int sizeY, Pixel set_color)
 		for (int x = 0; x < sizeX; x++)
 		{
 			mapFile.get(c);
-			int type = atoi(&c);
-			//srcY = atoi(&c) * tileSize;
-
+			
 			//todo: add tile factory
-			if (type == 1)
+			if (c == '#')
 			{
 				AddTile(x * tileSize, y * tileSize, set_color);
 			}
-			if (type == 2)
+			if (c == 'F')
 			{
 				AddFlag(x * tileSize, y * tileSize, set_color);
 			}
-			if (type == 3)
+			if (c == 'X')
 			{
 				AddSkull(x * tileSize, y * tileSize, set_color);
 			}
-			if (type == 4)
+			if (c == '@')
 			{
-				level_beginning = Vector2D(x * tileSize * 1.5, y * tileSize * 1.5);
+				level_beginning = Vector2D(x * tileSize, y * tileSize);
 			}
-			if (type == 5)
+			if (c == '^')
 			{
-				AddAccelerator(x * tileSize, y * tileSize, set_color);
+				AddAcceleratorUp(x * tileSize, y * tileSize, set_color);
 			}
-			mapFile.ignore();
+			if (c == 'v')
+			{
+				AddAcceleratorDown(x * tileSize, y * tileSize, set_color);
+			}
+			if (c == '<')
+			{
+				AddAcceleratorLeft(x * tileSize, y * tileSize, set_color);
+			}
+			if (c == '>')
+			{
+				AddAcceleratorRight(x * tileSize, y * tileSize, set_color);
+			}
+			if (c == 'U')
+			{
+				AddMovingTileUp(x * tileSize, y * tileSize, set_color);
+			}
+			if (c == 'D')
+			{
+				AddMovingTileDown(x * tileSize, y * tileSize, set_color);
+			}
+			if (c == 'L')
+			{
+				AddMovingTileLeft(x * tileSize, y * tileSize, set_color);
+			}
+			if (c == 'R')
+			{
+				AddMovingTileRight(x * tileSize, y * tileSize, set_color);
+			}
 		}
+		mapFile.ignore();
 	}
 	mapFile.close();
 }
 
-void Map::AddAccelerator(int xpos, int ypos, Pixel set_color)
+void Map::AddBasicComponents(Object& tile, int xpos, int ypos, Pixel set_color)
 {
-	auto& tile(manager.addObject());
-
 	tile.addComponent<TransformComponent>(xpos, ypos);
 	tile.addComponent<ShapeComponent>(t_rectangle);
-	
-	//Up and Down
-	tile.addComponent<AcceleratorComponent>(Vector2D(0, -0.0001));
-	
-	//Left and Right
-	//tile.addComponent<AcceleratorComponent>(Vector2D(0.0002, 0));
-
 	tile.getComponent<ShapeComponent>().pShape->color = set_color;
 	tile.getComponent<ShapeComponent>().pShape->params["width"] = tileSize;
 	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
+}
+
+void Map::AddMovingTileUp(int xpos, int ypos, Pixel set_color)
+{
+	auto& tile(manager.addObject());
+	AddBasicComponents(tile, xpos, ypos, set_color);
+
+	tile.addComponent<MovingTileComponent>(Vector2D(xpos, ypos + 2 * tileSize), Vector2D(xpos, ypos - 2 * tileSize), Vector2D(0, -0.1));
+	tile.getComponent<ShapeComponent>().pShape->material_type["basic_tile"] = true;
+	tile.addGroup(Game::groupMap);
+}
+
+void Map::AddMovingTileDown(int xpos, int ypos, Pixel set_color)
+{
+	auto& tile(manager.addObject());
+	AddBasicComponents(tile, xpos, ypos, set_color);
+
+	tile.addComponent<MovingTileComponent>(Vector2D(xpos, ypos + 2 * tileSize), Vector2D(xpos, ypos - 2 * tileSize), Vector2D(0, 0.1));
+	tile.getComponent<ShapeComponent>().pShape->material_type["basic_tile"] = true;
+	tile.addGroup(Game::groupMap);
+}
+
+void Map::AddMovingTileLeft(int xpos, int ypos, Pixel set_color)
+{
+	auto& tile(manager.addObject());
+	AddBasicComponents(tile, xpos, ypos, set_color);
+
+	tile.addComponent<MovingTileComponent>(Vector2D(xpos + 2 * tileSize, ypos), Vector2D(xpos - 2 * tileSize, ypos), Vector2D(-0.1, 0));
+	tile.getComponent<ShapeComponent>().pShape->material_type["basic_tile"] = true;
+	tile.addGroup(Game::groupMap);
+}
+
+void Map::AddMovingTileRight(int xpos, int ypos, Pixel set_color)
+{
+	auto& tile(manager.addObject());
+	AddBasicComponents(tile, xpos, ypos, set_color);
+
+	tile.addComponent<MovingTileComponent>(Vector2D(xpos + 2 * tileSize, ypos), Vector2D(xpos - 2 * tileSize, ypos), Vector2D(0.1, 0));
+	tile.getComponent<ShapeComponent>().pShape->material_type["basic_tile"] = true;
+	tile.addGroup(Game::groupMap);
+}
+
+
+void Map::AddAcceleratorUp(int xpos, int ypos, Pixel set_color)
+{
+	auto& tile(manager.addObject());
+	AddBasicComponents(tile, xpos, ypos, set_color);
 	
-	tile.getComponent<ShapeComponent>().pShape->params["accelerator_up"] = 1.0;
+	tile.addComponent<AcceleratorComponent>(Vector2D(0, -0.0001));
 
-	//tile.getComponent<ShapeComponent>().pShape->params["accelerator_down"] = 1.0;
+	tile.getComponent<ShapeComponent>().pShape->material_type["accelerator_up"] = true;
+	tile.addGroup(Game::groupAccelerators);
+}
 
+void Map::AddAcceleratorDown(int xpos, int ypos, Pixel set_color)
+{
+	auto& tile(manager.addObject());
+	AddBasicComponents(tile, xpos, ypos, set_color);
+
+	tile.addComponent<AcceleratorComponent>(Vector2D(0, 0.0001));
+
+	tile.getComponent<ShapeComponent>().pShape->material_type["accelerator_down"] = true;
+	tile.addGroup(Game::groupAccelerators);
+}
+
+void Map::AddAcceleratorLeft(int xpos, int ypos, Pixel set_color)
+{
+	auto& tile(manager.addObject());
+	AddBasicComponents(tile, xpos, ypos, set_color);
+
+	tile.addComponent<AcceleratorComponent>(Vector2D(-0.0002, 0));
+
+	tile.getComponent<ShapeComponent>().pShape->material_type["accelerator_left"] = true;
+	tile.addGroup(Game::groupAccelerators);
+}
+
+void Map::AddAcceleratorRight(int xpos, int ypos, Pixel set_color)
+{
+	auto& tile(manager.addObject());
+	AddBasicComponents(tile, xpos, ypos, set_color);
+
+	tile.addComponent<AcceleratorComponent>(Vector2D(0.0002, 0));
+
+	tile.getComponent<ShapeComponent>().pShape->material_type["accelerator_right"] = true;
 	tile.addGroup(Game::groupAccelerators);
 }
 
@@ -78,14 +174,9 @@ void Map::AddTile(int xpos, int ypos, Pixel set_color)
 {
 	auto& tile(manager.addObject());
 	
-	tile.addComponent<TransformComponent>(xpos, ypos);
-	tile.addComponent<ShapeComponent>(t_rectangle);
-	tile.getComponent<ShapeComponent>().pShape->color = set_color;
-	tile.getComponent<ShapeComponent>().pShape->params["width"] = tileSize;
-	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
-	tile.getComponent<ShapeComponent>().pShape->params["basic_tile"] = 1.0;
+	AddBasicComponents(tile, xpos, ypos, set_color);
 
-
+	tile.getComponent<ShapeComponent>().pShape->material_type["basic_tile"] = true;
 	tile.addGroup(Game::groupMap);
 }
 
@@ -93,12 +184,9 @@ void Map::AddFlag(int xpos, int ypos, Pixel set_color)
 {
 	auto& tile(manager.addObject());
 
-	tile.addComponent<TransformComponent>(xpos, ypos);
-	tile.addComponent<ShapeComponent>(t_rectangle);
-	tile.getComponent<ShapeComponent>().pShape->color = set_color;
-	tile.getComponent<ShapeComponent>().pShape->params["width"] = tileSize;
-	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
-	tile.getComponent<ShapeComponent>().pShape->params["flag"] = 1.0;
+	AddBasicComponents(tile, xpos, ypos, set_color);
+
+	tile.getComponent<ShapeComponent>().pShape->material_type["flag"] = true;
 
 	tile.addGroup(Game::groupFlags);
 }
@@ -107,12 +195,9 @@ void Map::AddSkull(int xpos, int ypos, Pixel set_color)
 {
 	auto& tile(manager.addObject());
 
-	tile.addComponent<TransformComponent>(xpos, ypos);
-	tile.addComponent<ShapeComponent>(t_rectangle);
-	tile.getComponent<ShapeComponent>().pShape->color = set_color;
-	tile.getComponent<ShapeComponent>().pShape->params["width"] = tileSize;
-	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
-	tile.getComponent<ShapeComponent>().pShape->params["skull"] = 1.0;
+	AddBasicComponents(tile, xpos, ypos, set_color);
+
+	tile.getComponent<ShapeComponent>().pShape->material_type["skull"] = true;
 
 	tile.addGroup(Game::groupSkulls);
 }
