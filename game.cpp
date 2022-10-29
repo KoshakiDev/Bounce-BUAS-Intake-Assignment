@@ -42,6 +42,9 @@ auto& colliders(manager.getGroup(Game::groupColliders));
 auto& skulls(manager.getGroup(Game::groupSkulls));
 auto& flags(manager.getGroup(Game::groupFlags));
 
+auto& accelerators(manager.getGroup(Game::groupAccelerators));
+
+
 string path[7] = {
 	"default.map",
 	"1.map",
@@ -64,7 +67,7 @@ namespace Tmpl8
 		//Creating the player
 
 		player.addComponent<TransformComponent>(0, 0);
-		player.addComponent<KinematicsComponent>(0.1, 0.4);
+		player.addComponent<KinematicsComponent>(0.1, 0.5);
 		player.addComponent<ShapeComponent>(t_circle);
 		player.getComponent<ShapeComponent>().pShape->params["radius"] = TILE_SIZE / 2;
 		player.getComponent<ShapeComponent>().pShape->color = moldy_black;
@@ -74,6 +77,13 @@ namespace Tmpl8
 		ClearLevel();
 	}
 	
+	void Game::ResetPlayerPosition()
+	{
+		player.getComponent<TransformComponent>().position = level_beginning;
+		player.getComponent<KinematicsComponent>().velocity = Vector2D(0, 0);
+
+	}
+
 	void Game::ClearLevel()
 	{
 		for (auto& t : tiles)
@@ -89,10 +99,17 @@ namespace Tmpl8
 			t->destroy();
 		}
 		current_level++;
-		cout << "current level :" << current_level << endl;;
-		tilemap->LoadMap(path[current_level], 25, 20, moldy_black);
-		player.getComponent<TransformComponent>().position = level_beginning;
-		player.getComponent<KinematicsComponent>().velocity = Vector2D(0, 0);
+		cout << "current level :" << current_level << endl;
+
+		if (background_color == moldy_white)
+		{
+			tilemap->LoadMap(path[current_level], 25, 20, moldy_black);
+		}
+		else if (background_color == moldy_black)
+		{
+			tilemap->LoadMap(path[current_level], 25, 20, moldy_white);
+		}
+		ResetPlayerPosition();
 	}
 
 	// -----------------------------------------------------------
@@ -108,6 +125,10 @@ namespace Tmpl8
 
 	void Game::Tick(float delta)
 	{
+		if (isnan(player.getComponent<TransformComponent>().position.x) || isnan(player.getComponent<TransformComponent>().position.y))
+		{
+			ResetPlayerPosition();
+		}
 		manager.refresh();
 		manager.Tick(delta);
 		for (auto& t : tiles)
@@ -160,8 +181,7 @@ namespace Tmpl8
 				penetration_depth)
 				)
 			{
-				player.getComponent<TransformComponent>().position = level_beginning;
-				player.getComponent<KinematicsComponent>().velocity = Vector2D(0, 0);
+				ResetPlayerPosition();
 			}
 		}
 
@@ -178,6 +198,26 @@ namespace Tmpl8
 				)
 			{
 				ClearLevel();
+			}
+		}
+
+		for (auto& t : accelerators)
+		{
+			Vector2D penetration_normal = Vector2D(-1, -1);
+			float penetration_depth = 0;
+
+			if (Collision::Check(
+				player.getComponent<ShapeComponent>().pShape,
+				t->getComponent<ShapeComponent>().pShape,
+				penetration_normal,
+				penetration_depth)
+				)
+			{
+				player.getComponent<KinematicsComponent>().velocity.y = Clamp(player.getComponent<KinematicsComponent>().velocity.y + t->getComponent<AcceleratorComponent>().acceleration.y * delta, -player.getComponent<KinematicsComponent>().max_speed, player.getComponent<KinematicsComponent>().max_speed);
+				player.getComponent<KinematicsComponent>().velocity.x = Clamp(player.getComponent<KinematicsComponent>().velocity.x + t->getComponent<AcceleratorComponent>().acceleration.x * delta, -player.getComponent<KinematicsComponent>().max_speed, player.getComponent<KinematicsComponent>().max_speed);
+
+				;
+
 			}
 		}
 
@@ -224,7 +264,6 @@ namespace Tmpl8
 			{
 				background_color = moldy_white;
 			}
-			ClearLevel();
 		}
 	}
 	void Game::KeyDown(int key)

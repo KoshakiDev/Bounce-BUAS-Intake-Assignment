@@ -285,6 +285,41 @@ void Surface::Skull(float x1, float y1, float x2, float y2, Pixel c)
 		Line(x1 + i * lengthX / 8.0, y1 + (lengthY * 3.0 / 4.0), x1 + i * lengthX / 8.0, y2, c);
 }
 
+void Surface::AcceleratorUp(float x1, float y1, float x2, float y2, Pixel color)
+{
+	Vector2D point_1 = Vector2D(x1 + (x2 - x1) / 2, y1);
+	Vector2D point_2 = Vector2D(x2, y1 + (y2 - y1) / 2);
+	Vector2D point_3 = Vector2D(x2, y2);
+	Vector2D point_4 = Vector2D(x1 + (x2 - x1) / 2, y1 + (y2 - y1) / 2);
+	Vector2D point_5 = Vector2D(x1, y2);
+	Vector2D point_6 = Vector2D(x1, y1 + (y2 - y1) / 2);
+
+	Line(point_1.x, point_1.y, point_2.x, point_2.y, color);
+	Line(point_2.x, point_2.y, point_3.x, point_3.y, color);
+	Line(point_3.x, point_3.y, point_4.x, point_4.y, color);
+	Line(point_4.x, point_4.y, point_5.x, point_5.y, color);
+	Line(point_5.x, point_5.y, point_6.x, point_6.y, color);
+	Line(point_6.x, point_6.y, point_1.x, point_1.y, color);
+}
+
+
+void Surface::AcceleratorDown(float x1, float y1, float x2, float y2, Pixel color)
+{
+	Vector2D point_1 = Vector2D(x1 + (x2 - x1) / 2, y2);
+	Vector2D point_2 = Vector2D(x1, y1 + (y2 - y1) / 2);
+	Vector2D point_3 = Vector2D(x1, y1);
+	Vector2D point_4 = Vector2D(x1 + (x2 - x1) / 2, y1 + (y2 - y1) / 2);
+	Vector2D point_5 = Vector2D(x2, y1);
+	Vector2D point_6 = Vector2D(x2, y1 + (y2 - y1) / 2);
+
+	Line(point_1.x, point_1.y, point_2.x, point_2.y, color);
+	Line(point_2.x, point_2.y, point_3.x, point_3.y, color);
+	Line(point_3.x, point_3.y, point_4.x, point_4.y, color);
+	Line(point_4.x, point_4.y, point_5.x, point_5.y, color);
+	Line(point_5.x, point_5.y, point_6.x, point_6.y, color);
+	Line(point_6.x, point_6.y, point_1.x, point_1.y, color);
+}
+
 
 void Surface::Box( float x1, float y1, float x2, float y2, Pixel c )
 {

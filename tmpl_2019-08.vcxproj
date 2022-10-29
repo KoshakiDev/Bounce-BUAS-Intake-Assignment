@@ -234,6 +234,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="KinematicsComponent.h" />
+    <ClInclude Include="MovingTileComponent.h" />
     <ClInclude Include="ObjectComponentSystem.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="ShapeComponent.h" />
@@ -242,6 +243,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="FutureTransformComponent.h" />
     <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="AcceleratorComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="default.map" />

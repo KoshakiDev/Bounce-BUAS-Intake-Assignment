@@ -1,8 +1,8 @@
 #pragma once
 #include "Components.h"
 
-#define GRAVITY 0.0005
-#define FRICTION 0.9
+#define GRAVITY 0.0001
+#define FRICTION -0.0001
 
 
 class KinematicsComponent : public Component
@@ -27,7 +27,7 @@ public:
 	KinematicsComponent(float set_speed, float set_max_speed)
 	{
 		velocity = Vector2D(0, 0);
-		acceleration = Vector2D(0, GRAVITY);
+		acceleration = Vector2D(FRICTION, GRAVITY);
 		max_speed = set_max_speed;
 		speed = set_speed;
 	}
@@ -43,9 +43,17 @@ public:
 	}
 	void Tick(float delta)
 	{
-		//acceleration = Vector2D(0, GRAVITY);
-		cout << velocity << " " << ptransformComponent->position << endl;
-		velocity.x = Clamp(velocity.x + acceleration.x * delta, -max_speed, max_speed);
+		if (abs(velocity.x) > 0)
+		{
+			if (velocity.x < 0)
+			{
+				velocity.x = Clamp(velocity.x - acceleration.x * delta, -max_speed, float(0.0));
+			}
+			if (velocity.x > 0)
+			{
+				velocity.x = Clamp(velocity.x + acceleration.x * delta, float(0.0), max_speed);
+			}
+		}
 		velocity.y = Clamp(velocity.y + acceleration.y * delta, -max_speed, max_speed);
 		
 		ptransformComponent->position = ptransformComponent->position + velocity * delta;
@@ -60,18 +68,18 @@ public:
 		/**/
 		if (key == SDL_SCANCODE_J) //Balloon
 		{
-			acceleration = Vector2D(0, -GRAVITY);
+			acceleration = Vector2D(FRICTION, -GRAVITY / 10);
 			bounce_coefficient = 0.2;
 
 		}
 		if (key == SDL_SCANCODE_K) // Ball
 		{
-			acceleration = Vector2D(0, GRAVITY);
-			bounce_coefficient = 0.9;
+			acceleration = Vector2D(FRICTION, GRAVITY);
+			bounce_coefficient = 0.99;
 		}
 		if (key == SDL_SCANCODE_L) //Rock
 		{
-			acceleration = Vector2D(0, GRAVITY * 2);
+			acceleration = Vector2D(FRICTION, GRAVITY * 2);
 			bounce_coefficient = 0.0;
 		}
 		/**/

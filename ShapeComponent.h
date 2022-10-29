@@ -75,11 +75,10 @@ public:
         type = t_rectangle;
         params["width"] = 1.0;
         params["height"] = 1.0;
-        params["tile_type"] = 1.0;
     }
     void Draw(Surface* screen)
     {
-        if (params["tile_type"] == 1.0)
+        if (params["basic_tile"] == 1.0)
         {
             screen->Box(ptransformComponent->position.x,
                 ptransformComponent->position.y,
@@ -87,7 +86,7 @@ public:
                 ptransformComponent->position.y + params["height"],
                 color);
         }
-        if (params["tile_type"] == 2.0)
+        if (params["flag"] == 1.0)
         {
             screen->Flag(ptransformComponent->position.x,
                 ptransformComponent->position.y,
@@ -95,9 +94,25 @@ public:
                 ptransformComponent->position.y + params["height"],
                 color);
         }
-        if (params["tile_type"] == 3.0)
+        if (params["skull"] == 1.0)
         {
             screen->Skull(ptransformComponent->position.x,
+                ptransformComponent->position.y,
+                ptransformComponent->position.x + params["width"],
+                ptransformComponent->position.y + params["height"],
+                color);
+        }
+        if (params["accelerator_up"] == 1.0)
+        {
+            screen->AcceleratorUp(ptransformComponent->position.x,
+                ptransformComponent->position.y,
+                ptransformComponent->position.x + params["width"],
+                ptransformComponent->position.y + params["height"],
+                color);
+        }
+        if (params["accelerator_down"] == 1.0)
+        {
+            screen->AcceleratorDown(ptransformComponent->position.x,
                 ptransformComponent->position.y,
                 ptransformComponent->position.x + params["width"],
                 ptransformComponent->position.y + params["height"],

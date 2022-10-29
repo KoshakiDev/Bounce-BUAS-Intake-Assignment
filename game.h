@@ -11,6 +11,8 @@ class Game
 public:
 	void SetTarget( Surface* surface ) { screen = surface; }
 	void Init(); // equivalent of _ready() function
+	
+	void ResetPlayerPosition();
 	void ClearLevel();
 	void Shutdown(); 
 	void Tick( float delta ); // equivalent of physics_process(delta)
@@ -32,7 +34,8 @@ public:
 		groupPlayers,
 		groupColliders,
 		groupSkulls,
-		groupFlags
+		groupFlags,
+		groupAccelerators,
 	};
 	
 private:

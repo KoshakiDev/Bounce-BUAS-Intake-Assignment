@@ -14,6 +14,8 @@ public:
 	void AddTile(int xpos, int ypos, Pixel set_color);
 	void AddFlag(int xpos, int ypos, Pixel set_color);
 	void AddSkull(int xpos, int ypos, Pixel set_color);
+
+	void AddAccelerator(int xpos, int ypos, Pixel set_color);
 private:
 	float tileSize;
 

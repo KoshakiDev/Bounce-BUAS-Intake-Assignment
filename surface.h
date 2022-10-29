@@ -82,7 +82,10 @@ public:
 
 	void Skull(float x1, float y1, float x2, float y2, Pixel color);
 
-
+	void AcceleratorUp(float x1, float y1, float x2, float y2, Pixel color);
+	void AcceleratorDown(float x1, float y1, float x2, float y2, Pixel color);
+	void AcceleratorLeft(float x1, float y1, float x2, float y2, Pixel color);
+	void AcceleratorRight(float x1, float y1, float x2, float y2, Pixel color);
 	//#######
 
 	void Box(float x1, float y1, float x2, float y2, Pixel color );

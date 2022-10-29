@@ -39,10 +39,38 @@ void Map::LoadMap(string path, int sizeX, int sizeY, Pixel set_color)
 			{
 				level_beginning = Vector2D(x * tileSize * 1.5, y * tileSize * 1.5);
 			}
+			if (type == 5)
+			{
+				AddAccelerator(x * tileSize, y * tileSize, set_color);
+			}
 			mapFile.ignore();
 		}
 	}
 	mapFile.close();
+}
+
+void Map::AddAccelerator(int xpos, int ypos, Pixel set_color)
+{
+	auto& tile(manager.addObject());
+
+	tile.addComponent<TransformComponent>(xpos, ypos);
+	tile.addComponent<ShapeComponent>(t_rectangle);
+	
+	//Up and Down
+	tile.addComponent<AcceleratorComponent>(Vector2D(0, -0.0001));
+	
+	//Left and Right
+	//tile.addComponent<AcceleratorComponent>(Vector2D(0.0002, 0));
+
+	tile.getComponent<ShapeComponent>().pShape->color = set_color;
+	tile.getComponent<ShapeComponent>().pShape->params["width"] = tileSize;
+	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
+	
+	tile.getComponent<ShapeComponent>().pShape->params["accelerator_up"] = 1.0;
+
+	//tile.getComponent<ShapeComponent>().pShape->params["accelerator_down"] = 1.0;
+
+	tile.addGroup(Game::groupAccelerators);
 }
 
 
@@ -55,7 +83,7 @@ void Map::AddTile(int xpos, int ypos, Pixel set_color)
 	tile.getComponent<ShapeComponent>().pShape->color = set_color;
 	tile.getComponent<ShapeComponent>().pShape->params["width"] = tileSize;
 	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
-	tile.getComponent<ShapeComponent>().pShape->params["tile_type"] = 1.0;
+	tile.getComponent<ShapeComponent>().pShape->params["basic_tile"] = 1.0;
 
 
 	tile.addGroup(Game::groupMap);
@@ -70,7 +98,7 @@ void Map::AddFlag(int xpos, int ypos, Pixel set_color)
 	tile.getComponent<ShapeComponent>().pShape->color = set_color;
 	tile.getComponent<ShapeComponent>().pShape->params["width"] = tileSize;
 	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
-	tile.getComponent<ShapeComponent>().pShape->params["tile_type"] = 2.0;
+	tile.getComponent<ShapeComponent>().pShape->params["flag"] = 1.0;
 
 	tile.addGroup(Game::groupFlags);
 }
@@ -84,7 +112,7 @@ void Map::AddSkull(int xpos, int ypos, Pixel set_color)
 	tile.getComponent<ShapeComponent>().pShape->color = set_color;
 	tile.getComponent<ShapeComponent>().pShape->params["width"] = tileSize;
 	tile.getComponent<ShapeComponent>().pShape->params["height"] = tileSize;
-	tile.getComponent<ShapeComponent>().pShape->params["tile_type"] = 3.0;
+	tile.getComponent<ShapeComponent>().pShape->params["skull"] = 1.0;
 
 	tile.addGroup(Game::groupSkulls);
 }

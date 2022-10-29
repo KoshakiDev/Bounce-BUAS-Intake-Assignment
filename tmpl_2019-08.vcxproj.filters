@@ -9,7 +9,7 @@
       <Filter>template code</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Source files\Tile</Filter>
+      <Filter>Source files\Map</Filter>
     </ClCompile>
     <ClCompile Include="ObjectComponentSystem.cpp">
       <Filter>Source files\Components\OCS</Filter>
@@ -26,9 +26,6 @@
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
     </ClInclude>
-    <ClInclude Include="KinematicsComponent.h">
-      <Filter>Source files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Source files\Components\Colliders</Filter>
     </ClInclude>
@@ -39,7 +36,7 @@
       <Filter>Source files\Components\Shape</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>Source files\Tile</Filter>
+      <Filter>Source files\Map</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>Source files\Components\Transform</Filter>
@@ -50,6 +47,15 @@
     <ClInclude Include="FutureTransformComponent.h">
       <Filter>Source files\Components\Transform</Filter>
     </ClInclude>
+    <ClInclude Include="KinematicsComponent.h">
+      <Filter>Source files\Components\Kinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingTileComponent.h">
+      <Filter>Source files\Components\Kinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="AcceleratorComponent.h">
+      <Filter>Source files\Components\Kinematics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
@@ -57,24 +63,6 @@
     </Filter>
     <Filter Include="Source files">
       <UniqueIdentifier>{80f2aa73-783d-4ef2-ac4d-88f991db3a0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source files\Tile">
-      <UniqueIdentifier>{c99c51e8-881c-4c97-a5a1-dfbd29251117}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source files\Tile\BaseTile">
-      <UniqueIdentifier>{e4ad8d1a-ec33-4380-a7ad-46a149f26630}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source files\Tile\Spike">
-      <UniqueIdentifier>{f77ee675-0db0-4796-a83c-4e63fe376812}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source files\Tile\Ground">
-      <UniqueIdentifier>{59e28e1a-5424-48ee-b10b-ffe3f4e6a5ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source files\Tile\Booster">
-      <UniqueIdentifier>{65e84784-08b6-4e5e-9431-e20076216a49}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source files\Tile\FinishLine">
-      <UniqueIdentifier>{d7c612d3-8432-431a-8290-513e476a3cf7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source files\Components">
       <UniqueIdentifier>{8eb79223-2cd5-4589-95ea-b5d3ab29f00b}</UniqueIdentifier>
@@ -91,7 +79,13 @@
     <Filter Include="Source files\Components\Transform">
       <UniqueIdentifier>{c1a8fb97-612b-4abc-9bfe-6a205a9748ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Tile\Maps">
+    <Filter Include="Source files\Components\Kinematics">
+      <UniqueIdentifier>{71ccd8b5-f1cc-4462-a105-fd2e3163361c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Map">
+      <UniqueIdentifier>{c99c51e8-881c-4c97-a5a1-dfbd29251117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Map\Maps">
       <UniqueIdentifier>{86742fc6-8fba-4826-a2b8-f6e502c8f10e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -100,27 +94,27 @@
       <Filter>template code</Filter>
     </Text>
     <Text Include="default.map">
-      <Filter>Source files\Tile\Maps</Filter>
+      <Filter>Source files\Map\Maps</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="1.map">
-      <Filter>Source files\Tile\Maps</Filter>
+      <Filter>Source files\Map\Maps</Filter>
     </None>
     <None Include="2.map">
-      <Filter>Source files\Tile\Maps</Filter>
+      <Filter>Source files\Map\Maps</Filter>
     </None>
     <None Include="3.map">
-      <Filter>Source files\Tile\Maps</Filter>
+      <Filter>Source files\Map\Maps</Filter>
     </None>
     <None Include="4.map">
-      <Filter>Source files\Tile\Maps</Filter>
+      <Filter>Source files\Map\Maps</Filter>
     </None>
     <None Include="5.map">
-      <Filter>Source files\Tile\Maps</Filter>
+      <Filter>Source files\Map\Maps</Filter>
     </None>
     <None Include="win.map">
-      <Filter>Source files\Tile\Maps</Filter>
+      <Filter>Source files\Map\Maps</Filter>
     </None>
   </ItemGroup>
 </Project>
