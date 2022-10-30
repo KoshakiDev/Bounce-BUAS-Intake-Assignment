@@ -1,5 +1,0 @@
-Used references:
-http://lazyfoo.net/SDL_tutorials/
-https://www.youtube.com/playlist?list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx
-
-Game idea was based roughly on an old Nokia game called "Bounce Tales".
