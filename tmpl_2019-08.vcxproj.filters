@@ -104,16 +104,31 @@
     <None Include="2.map">
       <Filter>Source files\Map\Maps</Filter>
     </None>
-    <None Include="3.map">
-      <Filter>Source files\Map\Maps</Filter>
-    </None>
-    <None Include="4.map">
-      <Filter>Source files\Map\Maps</Filter>
-    </None>
-    <None Include="5.map">
-      <Filter>Source files\Map\Maps</Filter>
-    </None>
     <None Include="win.map">
+      <Filter>Source files\Map\Maps</Filter>
+    </None>
+    <None Include="tutorial_flag_d.map">
+      <Filter>Source files\Map\Maps</Filter>
+    </None>
+    <None Include="tutorial_skull.map">
+      <Filter>Source files\Map\Maps</Filter>
+    </None>
+    <None Include="tutorial_accelerator.map">
+      <Filter>Source files\Map\Maps</Filter>
+    </None>
+    <None Include="tutorial_moving_tile.map">
+      <Filter>Source files\Map\Maps</Filter>
+    </None>
+    <None Include="tutorial_flag_a.map">
+      <Filter>Source files\Map\Maps</Filter>
+    </None>
+    <None Include="tutorial_balloon.map">
+      <Filter>Source files\Map\Maps</Filter>
+    </None>
+    <None Include="tutorial_rock.map">
+      <Filter>Source files\Map\Maps</Filter>
+    </None>
+    <None Include="3.map">
       <Filter>Source files\Map\Maps</Filter>
     </None>
   </ItemGroup>

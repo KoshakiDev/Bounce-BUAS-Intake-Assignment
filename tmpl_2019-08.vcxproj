@@ -253,8 +253,13 @@
     <None Include="1.map" />
     <None Include="2.map" />
     <None Include="3.map" />
-    <None Include="4.map" />
-    <None Include="5.map" />
+    <None Include="tutorial_accelerator.map" />
+    <None Include="tutorial_balloon.map" />
+    <None Include="tutorial_flag_d.map" />
+    <None Include="tutorial_flag_a.map" />
+    <None Include="tutorial_moving_tile.map" />
+    <None Include="tutorial_rock.map" />
+    <None Include="tutorial_skull.map" />
     <None Include="win.map" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

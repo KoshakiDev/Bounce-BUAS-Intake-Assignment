@@ -45,13 +45,17 @@ auto& flags(manager.getGroup(Game::groupFlags));
 auto& accelerators(manager.getGroup(Game::groupAccelerators));
 
 
-string path[7] = {
-	"default.map",
+string path[15] = {
+	"tutorial_flag_a.map",
+	"tutorial_flag_d.map",
+	"tutorial_skull.map",
+	"tutorial_accelerator.map",
+	"tutorial_rock.map",
+	"tutorial_balloon.map",
+	"tutorial_moving_tile.map",
 	"1.map",
 	"2.map",
 	"3.map",
-	"4.map",
-	"5.map",
 	"win.map"
 };
 Vector2D level_beginning = Vector2D(0, 0);
@@ -95,6 +99,10 @@ namespace Tmpl8
 			t->destroy();
 		}
 		for (auto& t : skulls)
+		{
+			t->destroy();
+		}
+		for (auto& t : accelerators)
 		{
 			t->destroy();
 		}
@@ -215,8 +223,6 @@ namespace Tmpl8
 			{
 				player.getComponent<KinematicsComponent>().velocity.y = Clamp(player.getComponent<KinematicsComponent>().velocity.y + t->getComponent<AcceleratorComponent>().acceleration.y * delta, -player.getComponent<KinematicsComponent>().max_speed, player.getComponent<KinematicsComponent>().max_speed);
 				player.getComponent<KinematicsComponent>().velocity.x = Clamp(player.getComponent<KinematicsComponent>().velocity.x + t->getComponent<AcceleratorComponent>().acceleration.x * delta, -player.getComponent<KinematicsComponent>().max_speed, player.getComponent<KinematicsComponent>().max_speed);
-
-				;
 
 			}
 		}

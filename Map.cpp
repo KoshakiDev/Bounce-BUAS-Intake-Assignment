@@ -35,7 +35,7 @@ void Map::LoadMap(string path, int sizeX, int sizeY, Pixel set_color)
 			}
 			if (c == '@')
 			{
-				level_beginning = Vector2D(x * tileSize, y * tileSize);
+				level_beginning = Vector2D(x * tileSize + tileSize * 0.5, y * tileSize + tileSize * 0.5);
 			}
 			if (c == '^')
 			{
