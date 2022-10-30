@@ -4,6 +4,12 @@
 #include <map>
 #include <any>
 
+/*
+Purpose:
+- Contain the geometrical information about the object (circle or rectangle)
+- Draw the visual representation of the object
+*/
+
 extern Pixel moldy_white, moldy_black;
 
 enum ShapeType {t_circle, t_rectangle};
@@ -15,12 +21,7 @@ public:
     Pixel color = moldy_black;
     
     TransformComponent* ptransformComponent;
-    //Vector2D position;
-    
-    /*
-    NOTE: I tried to use any, but turns out it is literally useless. I just decided to keep only floats
-    in there (I also figured that there is no purpose to store a vector2d there; it can be stored as pointx and pointy)
-    */
+   
     unordered_map<string, float> params;
     unordered_map<string, bool> material_type;
     
@@ -36,7 +37,6 @@ public:
     Circle()
     {
         type = t_circle;
-        //position = Vector2D(0, 0);
         params["radius"] = float(1.0);
         material_type["ball"] = true;
         material_type["balloon"] = false;
@@ -45,26 +45,29 @@ public:
     
     void Draw(Surface* screen)
     {
-        /**/
         if (material_type["balloon"])
         {
-            screen->Balloon(ptransformComponent->position.x, ptransformComponent->position.y, params["radius"], color);
+            screen->Balloon(
+                ptransformComponent->position.x, 
+                ptransformComponent->position.y, 
+                params["radius"], 
+                color);
         }
         if (material_type["ball"])
         {
-            screen->Ball(ptransformComponent->position.x, ptransformComponent->position.y, params["radius"], color);
+            screen->Ball(
+                ptransformComponent->position.x, 
+                ptransformComponent->position.y, 
+                params["radius"], 
+                color);
         }
         if (material_type["rock"])
         {
-            screen->Rock(ptransformComponent->position.x, ptransformComponent->position.y, params["radius"], color);
+            screen->Rock(
+                ptransformComponent->position.x, 
+                ptransformComponent->position.y, 
+                params["radius"], color);
         }
-        /**
-        screen->ApproximateCircle(
-            ptransformComponent->position.x, 
-            ptransformComponent->position.y, 
-            params["radius"], 
-            color);
-        /**/
     }
 };
 

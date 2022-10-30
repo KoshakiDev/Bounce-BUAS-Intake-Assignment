@@ -11,6 +11,12 @@
 #include <SDL.h>
 
 
+/*
+The Object Component System was inspired by "Let's Make Games" Entity Component System
+https://www.youtube.com/watch?v=XsvI8Sng6dk
+*/
+
+
 using namespace std;
 using namespace Tmpl8;
 

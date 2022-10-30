@@ -15,11 +15,16 @@ public:
 	void ResetPlayerPosition();
 	void ClearLevel();
 	void Shutdown(); 
+
 	void Tick( float delta ); // equivalent of physics_process(delta)
-	
 	void Draw( Surface* screen );
 
-	//Input-related things
+	//Checking functions
+	void CheckTileCollision( float delta );
+	void CheckSkullCollision( float delta );
+	void CheckAcceleratorCollision( float delta );
+	void CheckFlagCollision( float delta );
+	//Input
 	
 	virtual void MouseUp(int button);
 	virtual void MouseDown(int button);

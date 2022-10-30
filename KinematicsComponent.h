@@ -4,6 +4,12 @@
 #define GRAVITY 0.0001
 #define FRICTION -0.0001
 
+/*
+Purpose:
+- Move the object (player) around using velocity and acceleration
+
+Used by the player.
+*/
 
 class KinematicsComponent : public Component
 {
@@ -43,6 +49,7 @@ public:
 	}
 	void Tick(float delta)
 	{
+		// Activates friction
 		if (abs(velocity.x) > 0)
 		{
 			if (velocity.x < 0)
@@ -54,6 +61,7 @@ public:
 				velocity.x = Clamp(velocity.x + acceleration.x * delta, float(0.0), max_speed);
 			}
 		}
+		// Activates gravity
 		velocity.y = Clamp(velocity.y + acceleration.y * delta, -max_speed, max_speed);
 		
 		ptransformComponent->position = ptransformComponent->position + velocity * delta;
@@ -94,10 +102,5 @@ public:
 		}
 		clamp(velocity.x, -max_speed, max_speed);
 		clamp(velocity.y, -max_speed, max_speed);
-	}
-
-	void KeyDown(int key)
-	{
-		
 	}
 };

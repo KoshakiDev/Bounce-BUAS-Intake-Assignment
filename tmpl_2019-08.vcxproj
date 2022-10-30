@@ -241,7 +241,6 @@
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="FutureTransformComponent.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="AcceleratorComponent.h" />
   </ItemGroup>

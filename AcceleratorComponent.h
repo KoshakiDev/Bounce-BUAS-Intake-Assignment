@@ -1,6 +1,12 @@
 #pragma once
 #include "Components.h"
 
+/*
+Purpose:
+- Contains the acceleration 
+
+Used by Accelerator tiles.
+*/
 
 class AcceleratorComponent : public Component
 {

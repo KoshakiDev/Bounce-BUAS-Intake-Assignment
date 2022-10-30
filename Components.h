@@ -1,12 +1,11 @@
 #pragma once
 /*
-This file contains all the existing components
-It does not do anything other than providing a link back to them
+Purpose:
+- Contain all existing components as one header
 */
 #include "template.h"
 #include "ObjectComponentSystem.h"
 #include "TransformComponent.h"
-#include "FutureTransformComponent.h"
 #include "KinematicsComponent.h"
 #include "MovingTileComponent.h"
 #include "AcceleratorComponent.h"

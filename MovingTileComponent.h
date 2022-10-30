@@ -1,6 +1,12 @@
 #pragma once
 #include "Components.h"
 
+/*
+Purpose:
+- Receives 2 positions to oscillate between
+
+Used by moving tiles
+*/
 
 class MovingTileComponent : public Component
 {
@@ -45,17 +51,5 @@ public:
 			ptransformComponent->position = final_position_2;
 		}
 		ptransformComponent->position = ptransformComponent->position + velocity * delta;
-	}
-	void Draw(Surface* screen) {}
-
-	void MouseMove(int x, int y) {}
-
-	void KeyUp(int key)
-	{
-	}
-
-	void KeyDown(int key)
-	{
-
 	}
 };

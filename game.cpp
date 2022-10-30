@@ -35,13 +35,14 @@ Map* tilemap;
 
 Pixel background_color = moldy_white;
 
+
+
+// Getting references for each object category respectively
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
-
 auto& skulls(manager.getGroup(Game::groupSkulls));
 auto& flags(manager.getGroup(Game::groupFlags));
-
 auto& accelerators(manager.getGroup(Game::groupAccelerators));
 
 
@@ -107,8 +108,7 @@ namespace Tmpl8
 			t->destroy();
 		}
 		current_level++;
-		cout << "current level :" << current_level << endl;
-
+		
 		if (background_color == moldy_white)
 		{
 			tilemap->LoadMap(path[current_level], 25, 20, moldy_black);
@@ -130,15 +130,8 @@ namespace Tmpl8
 	// Main application tick function
 	// -----------------------------------------------------------
 
-
-	void Game::Tick(float delta)
+	void Game::CheckTileCollision(float delta)
 	{
-		if (isnan(player.getComponent<TransformComponent>().position.x) || isnan(player.getComponent<TransformComponent>().position.y))
-		{
-			ResetPlayerPosition();
-		}
-		manager.refresh();
-		manager.Tick(delta);
 		for (auto& t : tiles)
 		{
 			Vector2D penetration_normal = Vector2D(-1, -1);
@@ -176,7 +169,11 @@ namespace Tmpl8
 				player.getComponent<TransformComponent>().Translate(penetration_normal * (penetration_depth + 0.0001f));
 			}
 		}
-		
+
+	}
+
+	void Game::CheckSkullCollision(float delta)
+	{
 		for (auto& t : skulls)
 		{
 			Vector2D penetration_normal = Vector2D(-1, -1);
@@ -192,23 +189,9 @@ namespace Tmpl8
 				ResetPlayerPosition();
 			}
 		}
-
-		for (auto& t : flags)
-		{
-			Vector2D penetration_normal = Vector2D(-1, -1);
-			float penetration_depth = 0;
-
-			if (Collision::Check(
-				player.getComponent<ShapeComponent>().pShape,
-				t->getComponent<ShapeComponent>().pShape,
-				penetration_normal,
-				penetration_depth)
-				)
-			{
-				ClearLevel();
-			}
-		}
-
+	}
+	void Game::CheckAcceleratorCollision(float delta) 
+	{
 		for (auto& t : accelerators)
 		{
 			Vector2D penetration_normal = Vector2D(-1, -1);
@@ -226,14 +209,41 @@ namespace Tmpl8
 
 			}
 		}
+	}
 
+	void Game::CheckFlagCollision(float delta)
+	{
+		for (auto& t : flags)
+		{
+			Vector2D penetration_normal = Vector2D(-1, -1);
+			float penetration_depth = 0;
 
-		/*
-		Well, the trick there is to not let the circle intersect with the box in the first place. 
-		When you move you check if there's something at your new position, and if not, you move. 
-		Not the other way around where you move and then check : )
-		*/
+			if (Collision::Check(
+				player.getComponent<ShapeComponent>().pShape,
+				t->getComponent<ShapeComponent>().pShape,
+				penetration_normal,
+				penetration_depth)
+				)
+			{
+				ClearLevel();
+			}
+		}
+	}
 
+	void Game::Tick(float delta)
+	{
+		if (isnan(player.getComponent<TransformComponent>().position.x) || isnan(player.getComponent<TransformComponent>().position.y))
+		{
+			ResetPlayerPosition();
+		}
+		manager.refresh();
+		manager.Tick(delta);
+		
+		CheckTileCollision(delta);
+		CheckSkullCollision(delta);
+		CheckAcceleratorCollision(delta);
+		CheckFlagCollision(delta);
+		
 		Draw(screen);
 	}
 
@@ -241,8 +251,6 @@ namespace Tmpl8
 	{
 		screen->Clear(background_color);
 		manager.Draw(screen);
-		//const char name = "level %i";
-		//screen->Print(name, 50, 50, red);
 	}
 
 	void Game::MouseUp(int button)

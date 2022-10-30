@@ -3,6 +3,14 @@
 #include <fstream>
 #define TILE_SIZE 32
 
+
+
+/*
+Purpose:
+- Load level from a file
+- Create level layout using tiles
+*/
+
 extern Manager manager;
 extern Vector2D level_beginning;
 
