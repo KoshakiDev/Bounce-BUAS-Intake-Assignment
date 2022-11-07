@@ -1,6 +1,8 @@
 # "Bounce" BUAS Intake Assignment
 Programming assignment for BUAS intake based on theme "Bounce".
 
+[Video Demonstration](https://www.youtube.com/watch?v=5jz0MC_jjaQ)
+
 ## Game Description
 
 You are a dodgeball which can turn into a rock and a balloon. Dodgeballs bounce. Rocks falls fast. Balloons fly. Avoid spikes and reach the finish line. Game idea is roughly based on "Bounce Tales" for Nokia.
