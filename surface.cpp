@@ -205,6 +205,7 @@ void Surface::Point(float x1, float y1, Pixel color)
 	Line(x1, y1, x1 - root2, y1 - root2, color);
 }
 
+
 void Surface::ApproximateCircle(float x1, float y1, float radius, Pixel color)
 {
 	float root2 = 1.41421356237 / 2.0;

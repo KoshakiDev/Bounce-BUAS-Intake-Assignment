@@ -12,5 +12,7 @@ Purpose:
 #include "ShapeComponent.h"
 #include "Collision.h"
 
-#include "Map.h"
+#include "LevelLoader.h"
+
+#include "ObjectCreator.h"
 

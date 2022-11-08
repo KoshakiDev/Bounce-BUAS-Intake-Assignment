@@ -29,9 +29,7 @@ Pixel yellow = rgb(255, 255, 0);
 Pixel green = rgb(0, 255, 0);
 Pixel blue = rgb(0, 0, 255);
 
-Object& player = manager.addObject();
-
-Map* tilemap;
+LevelLoader* tilemap;
 
 Pixel background_color = moldy_white;
 
@@ -59,7 +57,6 @@ string path[15] = {
 	"3.map",
 	"win.map"
 };
-Vector2D level_beginning = Vector2D(0, 0);
 int current_level = -1;
 
 namespace Tmpl8
@@ -69,28 +66,16 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 	void Game::Init()
 	{
-		//Creating the player
-
-		player.addComponent<TransformComponent>(0, 0);
-		player.addComponent<KinematicsComponent>(0.1, 0.5);
-		player.addComponent<ShapeComponent>(t_circle);
-		player.getComponent<ShapeComponent>().pShape->params["radius"] = TILE_SIZE / 2;
-		player.getComponent<ShapeComponent>().pShape->color = moldy_black;
-
-		tilemap = new Map(TILE_SIZE);
-
-		ClearLevel();
-	}
-	
-	void Game::ResetPlayerPosition()
-	{
-		player.getComponent<TransformComponent>().position = level_beginning;
-		player.getComponent<KinematicsComponent>().velocity = Vector2D(0, 0);
-
+		tilemap = new LevelLoader(TILE_SIZE);
+		NextLevel();
 	}
 
 	void Game::ClearLevel()
 	{
+		for (auto& t : players)
+		{
+			t->destroy();
+		}
 		for (auto& t : tiles)
 		{
 			t->destroy();
@@ -107,8 +92,10 @@ namespace Tmpl8
 		{
 			t->destroy();
 		}
-		current_level++;
-		
+	}
+
+	void Game::LoadLevel()
+	{
 		if (background_color == moldy_white)
 		{
 			tilemap->LoadMap(path[current_level], 25, 20, moldy_black);
@@ -117,7 +104,19 @@ namespace Tmpl8
 		{
 			tilemap->LoadMap(path[current_level], 25, 20, moldy_white);
 		}
-		ResetPlayerPosition();
+	}
+
+	void Game::NextLevel()
+	{
+		ClearLevel();
+		current_level++;
+		LoadLevel();
+	}
+
+	void Game::RestartLevel()
+	{
+		ClearLevel();
+		LoadLevel();
 	}
 
 	// -----------------------------------------------------------
@@ -125,6 +124,7 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 	void Game::Shutdown()
 	{
+		ClearLevel();
 	}
 	// -----------------------------------------------------------
 	// Main application tick function
@@ -132,41 +132,44 @@ namespace Tmpl8
 
 	void Game::CheckTileCollision(float delta)
 	{
-		for (auto& t : tiles)
+		for (auto& player : players)
 		{
-			Vector2D penetration_normal = Vector2D(-1, -1);
-			float penetration_depth = 0;
-
-			if (Collision::Check(
-				player.getComponent<ShapeComponent>().pShape,
-				t->getComponent<ShapeComponent>().pShape,
-				penetration_normal,
-				penetration_depth)
-				)
+			for (auto& t : tiles)
 			{
-				/*
-				// Make the ball slide on the surface
-				Vector2D velocity_length = player.getComponent<KinematicsComponent>().velocity.length();
-				Vector2D velocity_normalized = player.getComponent<KinematicsComponent>().velocity.normalized();
-				float dot_product = velocity_normalized.dot(penetration_normal);
-				Vector2D undesired_motion = penetration_normal * dot_product;
-				Vector2D desired_motion = velocity_normalized - undesired_motion;
-				player.getComponent<KinematicsComponent>().velocity = desired_motion * velocity_length;
-				/**/
+				Vector2D penetration_normal = Vector2D(-1, -1);
+				float penetration_depth = 0;
 
-				// This changes the velocity trajectory
-				if (penetration_normal.x != 0)
+				if (Collision::Check(
+					player->getComponent<ShapeComponent>().pShape,
+					t->getComponent<ShapeComponent>().pShape,
+					penetration_normal,
+					penetration_depth)
+					)
 				{
-					player.getComponent<KinematicsComponent>().velocity.x *= -1 * abs(penetration_normal.x);
-				}
-				else if (penetration_normal.y != 0)
-				{
-					player.getComponent<KinematicsComponent>().velocity.y *= -1 * abs(penetration_normal.y);
-				}
-				player.getComponent<KinematicsComponent>().velocity *= player.getComponent<KinematicsComponent>().bounce_coefficient;
+					/*
+					// Make the ball slide on the surface
+					Vector2D velocity_length = player.getComponent<KinematicsComponent>().velocity.length();
+					Vector2D velocity_normalized = player.getComponent<KinematicsComponent>().velocity.normalized();
+					float dot_product = velocity_normalized.dot(penetration_normal);
+					Vector2D undesired_motion = penetration_normal * dot_product;
+					Vector2D desired_motion = velocity_normalized - undesired_motion;
+					player.getComponent<KinematicsComponent>().velocity = desired_motion * velocity_length;
+					/**/
 
-				// Remove penetration (penetration epsilon added to handle infinitely small penetration):
-				player.getComponent<TransformComponent>().Translate(penetration_normal * (penetration_depth + 0.0001f));
+					// This changes the velocity trajectory
+					if (penetration_normal.x != 0)
+					{
+						player->getComponent<KinematicsComponent>().velocity.x *= -1 * abs(penetration_normal.x);
+					}
+					else if (penetration_normal.y != 0)
+					{
+						player->getComponent<KinematicsComponent>().velocity.y *= -1 * abs(penetration_normal.y);
+					}
+					player->getComponent<KinematicsComponent>().velocity *= player->getComponent<KinematicsComponent>().bounce_coefficient;
+
+					// Remove penetration (penetration epsilon added to handle infinitely small penetration):
+					player->getComponent<TransformComponent>().Translate(penetration_normal * (penetration_depth + 0.0001f));
+				}
 			}
 		}
 
@@ -174,76 +177,94 @@ namespace Tmpl8
 
 	void Game::CheckSkullCollision(float delta)
 	{
-		for (auto& t : skulls)
+		bool is_dead = false;
+		for (auto& player : players)
 		{
-			Vector2D penetration_normal = Vector2D(-1, -1);
-			float penetration_depth = 0;
-
-			if (Collision::Check(
-				player.getComponent<ShapeComponent>().pShape,
-				t->getComponent<ShapeComponent>().pShape,
-				penetration_normal,
-				penetration_depth)
-				)
+			for (auto& t : skulls)
 			{
-				ResetPlayerPosition();
+				Vector2D penetration_normal = Vector2D(-1, -1);
+				float penetration_depth = 0;
+
+				if (Collision::Check(
+					player->getComponent<ShapeComponent>().pShape,
+					t->getComponent<ShapeComponent>().pShape,
+					penetration_normal,
+					penetration_depth)
+					)
+				{
+					is_dead = true;
+				}
 			}
+		}
+		if (is_dead)
+		{
+			RestartLevel();
 		}
 	}
 	void Game::CheckAcceleratorCollision(float delta) 
 	{
-		for (auto& t : accelerators)
+		for (auto& player : players)
 		{
-			Vector2D penetration_normal = Vector2D(-1, -1);
-			float penetration_depth = 0;
-
-			if (Collision::Check(
-				player.getComponent<ShapeComponent>().pShape,
-				t->getComponent<ShapeComponent>().pShape,
-				penetration_normal,
-				penetration_depth)
-				)
+			for (auto& t : accelerators)
 			{
-				player.getComponent<KinematicsComponent>().velocity.y = Clamp(player.getComponent<KinematicsComponent>().velocity.y + t->getComponent<AcceleratorComponent>().acceleration.y * delta, -player.getComponent<KinematicsComponent>().max_speed, player.getComponent<KinematicsComponent>().max_speed);
-				player.getComponent<KinematicsComponent>().velocity.x = Clamp(player.getComponent<KinematicsComponent>().velocity.x + t->getComponent<AcceleratorComponent>().acceleration.x * delta, -player.getComponent<KinematicsComponent>().max_speed, player.getComponent<KinematicsComponent>().max_speed);
+				Vector2D penetration_normal = Vector2D(-1, -1);
+				float penetration_depth = 0;
 
+				if (Collision::Check(
+					player->getComponent<ShapeComponent>().pShape,
+					t->getComponent<ShapeComponent>().pShape,
+					penetration_normal,
+					penetration_depth)
+					)
+				{
+					player->getComponent<KinematicsComponent>().velocity.y = Clamp(player->getComponent<KinematicsComponent>().velocity.y + t->getComponent<AcceleratorComponent>().acceleration.y * delta, -player->getComponent<KinematicsComponent>().max_speed, player->getComponent<KinematicsComponent>().max_speed);
+					player->getComponent<KinematicsComponent>().velocity.x = Clamp(player->getComponent<KinematicsComponent>().velocity.x + t->getComponent<AcceleratorComponent>().acceleration.x * delta, -player->getComponent<KinematicsComponent>().max_speed, player->getComponent<KinematicsComponent>().max_speed);
+
+				}
 			}
 		}
 	}
 
 	void Game::CheckFlagCollision(float delta)
 	{
-		for (auto& t : flags)
+		for (auto& player : players)
 		{
-			Vector2D penetration_normal = Vector2D(-1, -1);
-			float penetration_depth = 0;
-
-			if (Collision::Check(
-				player.getComponent<ShapeComponent>().pShape,
-				t->getComponent<ShapeComponent>().pShape,
-				penetration_normal,
-				penetration_depth)
-				)
+			for (auto& t : flags)
 			{
-				ClearLevel();
+				Vector2D penetration_normal = Vector2D(-1, -1);
+				float penetration_depth = 0;
+
+				if (Collision::Check(
+					player->getComponent<ShapeComponent>().pShape,
+					t->getComponent<ShapeComponent>().pShape,
+					penetration_normal,
+					penetration_depth)
+					)
+				{
+					NextLevel();
+				}
 			}
 		}
 	}
 
 	void Game::Tick(float delta)
 	{
-		if (isnan(player.getComponent<TransformComponent>().position.x) || isnan(player.getComponent<TransformComponent>().position.y))
-		{
-			ResetPlayerPosition();
-		}
 		manager.refresh();
+		for (auto& player : players)
+		{
+			if (isnan(player->getComponent<TransformComponent>().position.x) || isnan(player->getComponent<TransformComponent>().position.y))
+			{
+				RestartLevel();
+			}
+		}
+		
 		manager.Tick(delta);
 		
 		CheckTileCollision(delta);
-		CheckSkullCollision(delta);
 		CheckAcceleratorCollision(delta);
 		CheckFlagCollision(delta);
-		
+		CheckSkullCollision(delta);
+
 		Draw(screen);
 	}
 

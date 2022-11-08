@@ -12,8 +12,12 @@ public:
 	void SetTarget( Surface* surface ) { screen = surface; }
 	void Init(); // equivalent of _ready() function
 	
-	void ResetPlayerPosition();
 	void ClearLevel();
+	void LoadLevel();
+	void RestartLevel();
+	void NextLevel();
+
+
 	void Shutdown(); 
 
 	void Tick( float delta ); // equivalent of physics_process(delta)

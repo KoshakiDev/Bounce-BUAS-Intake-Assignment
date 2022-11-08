@@ -23,6 +23,8 @@ public:
     TransformComponent* ptransformComponent;
    
     unordered_map<string, float> params;
+    
+    //ObjectType object_type;
     unordered_map<string, bool> material_type;
     
     static Shape* Create(ShapeType set_type);

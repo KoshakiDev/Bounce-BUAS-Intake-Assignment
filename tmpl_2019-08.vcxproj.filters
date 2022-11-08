@@ -8,14 +8,23 @@
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source files\Map</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectComponentSystem.cpp">
       <Filter>Source files\Components\OCS</Filter>
     </ClCompile>
     <ClCompile Include="ShapeComponent.cpp">
       <Filter>Source files\Components\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source files\Components\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="KinematicsComponent.cpp">
+      <Filter>Source files\Components\Kinematics</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Source files\Map\LevelLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectCreator.cpp">
+      <Filter>Source files\Map\ObjectCreator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -35,17 +44,11 @@
     <ClInclude Include="ShapeComponent.h">
       <Filter>Source files\Components\Shape</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Source files\Map</Filter>
-    </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>Source files\Components\Transform</Filter>
     </ClInclude>
     <ClInclude Include="Components.h">
       <Filter>Source files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="FutureTransformComponent.h">
-      <Filter>Source files\Components\Transform</Filter>
     </ClInclude>
     <ClInclude Include="KinematicsComponent.h">
       <Filter>Source files\Components\Kinematics</Filter>
@@ -55,6 +58,12 @@
     </ClInclude>
     <ClInclude Include="AcceleratorComponent.h">
       <Filter>Source files\Components\Kinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>Source files\Map\LevelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectCreator.h">
+      <Filter>Source files\Map\ObjectCreator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +96,12 @@
     </Filter>
     <Filter Include="Source files\Map\Maps">
       <UniqueIdentifier>{86742fc6-8fba-4826-a2b8-f6e502c8f10e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Map\ObjectCreator">
+      <UniqueIdentifier>{efb3a7f5-812f-4ec5-a212-6ebb43a258ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Map\LevelLoader">
+      <UniqueIdentifier>{b7e7803b-bd04-4ee0-ae6b-c088315b147e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
