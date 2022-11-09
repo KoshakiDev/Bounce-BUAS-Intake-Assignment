@@ -1,8 +1,5 @@
 #pragma once
 #include "Components.h"
-#include <unordered_map>
-#include <map>
-#include <any>
 
 /*
 Purpose:
@@ -10,160 +7,22 @@ Purpose:
 - Draw the visual representation of the object
 */
 
-extern Pixel moldy_white, moldy_black;
 
-enum ShapeType {t_circle, t_rectangle};
-
-class Shape
-{
-public:
-    ShapeType type;
-    Pixel color = moldy_black;
-    
-    TransformComponent* ptransformComponent;
-   
-    unordered_map<string, float> params;
-    
-    //ObjectType object_type;
-    unordered_map<string, bool> material_type;
-    
-    static Shape* Create(ShapeType set_type);
-    virtual void Init() {}
-    virtual void Tick(float delta) {}
-    virtual void Draw(Surface* screen) {}
-};
-
-class Circle : public Shape
-{
-public:
-    Circle()
-    {
-        type = t_circle;
-        params["radius"] = float(1.0);
-        material_type["ball"] = true;
-        material_type["balloon"] = false;
-        material_type["rock"] = false;
-    }
-    
-    void Draw(Surface* screen)
-    {
-        if (material_type["balloon"])
-        {
-            screen->Balloon(
-                ptransformComponent->position.x, 
-                ptransformComponent->position.y, 
-                params["radius"], 
-                color);
-        }
-        if (material_type["ball"])
-        {
-            screen->Ball(
-                ptransformComponent->position.x, 
-                ptransformComponent->position.y, 
-                params["radius"], 
-                color);
-        }
-        if (material_type["rock"])
-        {
-            screen->Rock(
-                ptransformComponent->position.x, 
-                ptransformComponent->position.y, 
-                params["radius"], color);
-        }
-    }
-};
-
-class Rectangle : public Shape
-{
-public:
-    Rectangle()
-    {
-        type = t_rectangle;
-        params["width"] = 1.0;
-        params["height"] = 1.0;
-    }
-    void Draw(Surface* screen)
-    {
-        if (material_type["basic_tile"])
-        {
-            screen->Box(ptransformComponent->position.x,
-                ptransformComponent->position.y,
-                ptransformComponent->position.x + params["width"],
-                ptransformComponent->position.y + params["height"],
-                color);
-        }
-        if (material_type["flag"])
-        {
-            screen->Flag(ptransformComponent->position.x,
-                ptransformComponent->position.y,
-                ptransformComponent->position.x + params["width"],
-                ptransformComponent->position.y + params["height"],
-                color);
-        }
-        if (material_type["skull"])
-        {
-            screen->Skull(ptransformComponent->position.x,
-                ptransformComponent->position.y,
-                ptransformComponent->position.x + params["width"],
-                ptransformComponent->position.y + params["height"],
-                color);
-        }
-        if (material_type["accelerator_up"])
-        {
-            screen->AcceleratorUp(ptransformComponent->position.x,
-                ptransformComponent->position.y,
-                ptransformComponent->position.x + params["width"],
-                ptransformComponent->position.y + params["height"],
-                color);
-        }
-        if (material_type["accelerator_down"])
-        {
-            screen->AcceleratorDown(ptransformComponent->position.x,
-                ptransformComponent->position.y,
-                ptransformComponent->position.x + params["width"],
-                ptransformComponent->position.y + params["height"],
-                color);
-        }
-        if (material_type["accelerator_left"])
-        {
-            screen->AcceleratorLeft(ptransformComponent->position.x,
-                ptransformComponent->position.y,
-                ptransformComponent->position.x + params["width"],
-                ptransformComponent->position.y + params["height"],
-                color);
-        }
-        if (material_type["accelerator_right"])
-        {
-            screen->AcceleratorRight(ptransformComponent->position.x,
-                ptransformComponent->position.y,
-                ptransformComponent->position.x + params["width"],
-                ptransformComponent->position.y + params["height"],
-                color);
-        }
-    }
-};
-
+//class Shape;
 
 class ShapeComponent : public Component
 {
 public:
     ShapeComponent() {}
-    ShapeComponent(ShapeType type)
-    {
-        pShape = Shape::Create(type);
-    }
+    
+    ShapeComponent(ShapeType type);
+    
     Shape* pShape;
     TransformComponent* ptransformComponent;
 
-    void Init()
-    {
-        if (!owner->hasComponent<TransformComponent>())
-        {
-            owner->addComponent<TransformComponent>();
-        }
-        ptransformComponent = &owner->getComponent<TransformComponent>();
-        pShape->ptransformComponent = &owner->getComponent<TransformComponent>();
-    }
+
+    void Init();
+
     void Tick(float delta)
     {
         pShape->Tick(delta);
@@ -172,45 +31,26 @@ public:
     {
         pShape->Draw(screen);
     }
-
-    virtual ~ShapeComponent() {}
-
-
+    void MouseUp(int button) 
+    {
+        pShape->MouseUp(button);
+    }
+    void MouseDown(int button) 
+    {
+        pShape->MouseDown(button);
+    }
+    void MouseMove(int x, int y) 
+    {
+        pShape->MouseMove(x, y);
+    }
     void KeyUp(int key)
     {
-        if (key == SDL_SCANCODE_Z)
-        {
-            if (pShape->color == moldy_white)
-            {
-                pShape->color = moldy_black;
-            }
-            else if (pShape->color == moldy_black)
-            {
-                pShape->color = moldy_white;
-            }
-        }
-        /**/
-        if (key == SDL_SCANCODE_J) //Balloon
-        {
-            pShape->material_type["balloon"] = true;
-            pShape->material_type["ball"] = false;
-            pShape->material_type["rock"] = false;
-        }
-        if (key == SDL_SCANCODE_K) //Ball
-        {
-
-            pShape->material_type["balloon"] = false;
-            pShape->material_type["ball"] = true;
-            pShape->material_type["rock"] = false;
-        }
-        if (key == SDL_SCANCODE_L) //Rock
-        {
-            pShape->material_type["balloon"] = false;
-            pShape->material_type["ball"] = false;
-            pShape->material_type["rock"] = true;
-        }
-        /**/
+        pShape->KeyUp(key);   
     }
-    
+    void KeyDown(int key) 
+    {
+        pShape->KeyDown(key);
+    }
+    virtual ~ShapeComponent() {}  
 };
 

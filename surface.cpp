@@ -3,6 +3,7 @@
 
 #include "surface.h"
 #include "template.h"
+#include "Enums.h"
 #include <cassert>
 #include <cstring>
 #include "FreeImage.h"
@@ -188,6 +189,65 @@ void Surface::Line( float x1, float y1, float x2, float y2, Pixel c )
 void Surface::Plot( int x, int y, Pixel c )
 { 
 	if ((x >= 0) && (y >= 0) && (x < m_Width) && (y < m_Height)) m_Buffer[x + y * m_Pitch] = c;
+}
+
+void Surface::DrawCircleObject(ObjectType type, float x1, float y1, float radius, Pixel color)
+{
+	if (type == t_balloon)
+	{
+		Balloon(x1, y1, radius, color);
+	}
+	else if (type == t_ball)
+	{
+		Ball(x1, y1, radius, color);
+	}
+	else if (type == t_rock)
+	{
+		Rock(x1, y1, radius, color);
+	}
+	else
+	{
+		ApproximateCircle(x1, y1, radius, color);
+	}
+}
+
+void Surface::DrawRectangleObject(ObjectType type, float x1, float y1, float x2, float y2, Pixel color)
+{
+	if (type == t_basic || type == t_moveDown || type == t_moveUp || type == t_moveLeft || type == t_moveRight)
+	{
+		Box(x1, y1, x2, y2, color);
+	}
+	else if (type == t_flag)
+	{
+		Flag(x1, y1, x2, y2, color);
+	}
+	else if (type == t_skull)
+	{
+		Skull(x1, y1, x2, y2, color);
+	}
+	else if (type == t_boostUp)
+	{
+		AcceleratorUp(x1, y1, x2, y2, color);
+
+	}
+	else if (type == t_boostDown)
+	{
+		AcceleratorDown(x1, y1, x2, y2, color);
+
+	}
+	else if (type == t_boostLeft)
+	{
+		AcceleratorLeft(x1, y1, x2, y2, color);
+
+	}
+	else if (type == t_boostRight)
+	{
+		AcceleratorRight(x1, y1, x2, y2, color);
+	}
+	else
+	{
+		Box(x1, y1, x2, y2, color);
+	}
 }
 
 void Surface::Point(float x1, float y1, Pixel color)

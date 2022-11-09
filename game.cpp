@@ -8,30 +8,27 @@ using namespace std;
 
 Manager manager;
 
-/*
-The game does not have a "player". Instead, there are numerous components working together which form a "player".
-I started out with a "player.cpp", but then throughout development, the component system worked so well, it made
-the "player.cpp" redundant.
-*/
-
 
 int rgb(int red, int green, int blue)
 {
 	return (0 << ALPHA) + (red << RED) + (green << GREEN) + (blue << BLUE);
 }
 
-Pixel moldy_white = rgb(240, 246, 240);
-Pixel moldy_black = rgb(34, 35, 35);
+
+Pixel true_white = rgb(255, 255, 255);
+Pixel true_black = rgb(0, 0, 0);
+Pixel moldy_white = rgb(127, 127, 127);
+Pixel moldy_black = rgb(32, 32, 32);
 
 // debug colors
 Pixel red = rgb(255, 0, 0);
-Pixel yellow = rgb(255, 255, 0);
+Pixel yellow = rgb(245, 137, 0);
 Pixel green = rgb(0, 255, 0);
 Pixel blue = rgb(0, 0, 255);
 
 LevelLoader* tilemap;
 
-Pixel background_color = moldy_white;
+Pixel background_color = moldy_black;
 
 
 
@@ -217,8 +214,8 @@ namespace Tmpl8
 					penetration_depth)
 					)
 				{
-					player->getComponent<KinematicsComponent>().velocity.y = Clamp(player->getComponent<KinematicsComponent>().velocity.y + t->getComponent<AcceleratorComponent>().acceleration.y * delta, -player->getComponent<KinematicsComponent>().max_speed, player->getComponent<KinematicsComponent>().max_speed);
-					player->getComponent<KinematicsComponent>().velocity.x = Clamp(player->getComponent<KinematicsComponent>().velocity.x + t->getComponent<AcceleratorComponent>().acceleration.x * delta, -player->getComponent<KinematicsComponent>().max_speed, player->getComponent<KinematicsComponent>().max_speed);
+					player->getComponent<KinematicsComponent>().velocity.y = Clamp(player->getComponent<KinematicsComponent>().velocity.y + t->getComponent<KinematicsComponent>().acceleration.y * delta, -player->getComponent<KinematicsComponent>().max_speed, player->getComponent<KinematicsComponent>().max_speed);
+					player->getComponent<KinematicsComponent>().velocity.x = Clamp(player->getComponent<KinematicsComponent>().velocity.x + t->getComponent<KinematicsComponent>().acceleration.x * delta, -player->getComponent<KinematicsComponent>().max_speed, player->getComponent<KinematicsComponent>().max_speed);
 
 				}
 			}

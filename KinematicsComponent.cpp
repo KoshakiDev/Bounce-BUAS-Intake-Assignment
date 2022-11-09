@@ -1,7 +1,20 @@
 #include "Components.h"
 
+void KinematicsComponent::Init()
+{
+	if (!owner->hasComponent<TransformComponent>())
+	{
+		owner->addComponent<TransformComponent>();
+	}
+	ptransformComponent = &owner->getComponent<TransformComponent>();
+}
+
 void KinematicsComponent::Tick(float delta)
 {
+	if(freeze)
+	{
+		return;
+	}
 	// Activates friction
 	if (abs(velocity.x) > 0)
 	{

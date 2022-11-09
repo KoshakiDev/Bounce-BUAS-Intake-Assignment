@@ -6,24 +6,29 @@ Purpose:
 - Create level layout using tiles
 
 */
+extern Pixel moldy_white, moldy_black, red, yellow, green, true_white, true_black;
 
 extern Manager manager;
 
-void ObjectCreator::CreatePlayer(Object& player, float xpos, float ypos, Pixel set_color, float tile_size)
+void ObjectCreator::CreatePlayer(Object& player, float xpos, float ypos, Pixel set_color, float tile_size, ObjectType set_type)
 {
 	player.addComponent<TransformComponent>(xpos + 0.5 * tile_size, ypos + 0.5 * tile_size);
 	player.addComponent<KinematicsComponent>(0.1, 0.5);
 	player.addComponent<ShapeComponent>(t_circle);
-	player.getComponent<ShapeComponent>().pShape->color = set_color;
+	player.getComponent<ShapeComponent>().pShape->color = true_white;
+	player.getComponent<ShapeComponent>().pShape->object_type = set_type;
 	player.getComponent<ShapeComponent>().pShape->params["radius"] = tile_size / 2;
+	player.addComponent<PlayerComponent>();
+
 	player.addGroup(Game::groupPlayers);
 }
 
-void ObjectCreator::AddBasicComponents(Object& tile, float xpos, float ypos, Pixel set_color, float tile_size)
+void ObjectCreator::AddBasicComponents(Object& tile, float xpos, float ypos, Pixel set_color, float tile_size, ObjectType set_type)
 {
 	tile.addComponent<TransformComponent>(xpos, ypos);
 	tile.addComponent<ShapeComponent>(t_rectangle);
 	tile.getComponent<ShapeComponent>().pShape->color = set_color;
+	tile.getComponent<ShapeComponent>().pShape->object_type = set_type;
 	tile.getComponent<ShapeComponent>().pShape->params["width"] = tile_size;
 	tile.getComponent<ShapeComponent>().pShape->params["height"] = tile_size;
 }
@@ -34,63 +39,72 @@ ObjectType ObjectCreator::DecodeSign(char c)
 	{
 		return t_basic;
 	}
-	if (c == 'F')
+	else if (c == 'F')
 	{
 		return t_flag;
 	}
-	if (c == 'X')
+	else if (c == 'X')
 	{
 		return t_skull;
 	}
-	if (c == '@')
+	else if (c == '@')
 	{
 		return t_ball;
 	}
-	if (c == '^')
+	else if (c == '^')
 	{
 		return t_boostUp;
 	}
-	if (c == 'v')
+	else if (c == 'v')
 	{
 		return t_boostDown;
 	}
-	if (c == '<')
+	else if (c == '<')
 	{
 		return t_boostLeft;
 	}
-	if (c == '>')
+	else if (c == '>')
 	{
 		return t_boostRight;
 	}
-	if (c == 'U')
+	else if (c == 'U')
 	{
 		return t_moveUp;
 	}
-	if (c == 'D')
+	else if (c == 'D')
 	{
 		return t_moveDown;
 	}
-	if (c == 'L')
+	else if (c == 'L')
 	{
 		return t_moveLeft;
 	}
-	if (c == 'R')
+	else if (c == 'R')
 	{
 		return t_moveRight;
+	}
+	else
+	{
+		return t_nothing;
 	}
 }
 
 
 void ObjectCreator::Create(ObjectType type, float xpos, float ypos, Pixel set_color, float tile_size)
 {
+	if (type == t_nothing)
+	{
+		return;
+	}
 	auto& tile(manager.addObject());
+	
 	if (type == t_ball)
 	{
-		CreatePlayer(tile, xpos, ypos, set_color, tile_size);
+		CreatePlayer(tile, xpos, ypos, set_color, tile_size, type);
 		return;
 	}
 
-	AddBasicComponents(tile, xpos, ypos, set_color, tile_size);
+	AddBasicComponents(tile, xpos, ypos, set_color, tile_size, type);
 
 	if (type == t_basic)
 		Basic(tile);
@@ -118,19 +132,17 @@ void ObjectCreator::Create(ObjectType type, float xpos, float ypos, Pixel set_co
 
 void ObjectCreator::Basic(Object& tile)
 {
-	tile.getComponent<ShapeComponent>().pShape->material_type["basic_tile"] = true;
 	tile.addGroup(Game::groupMap);
 }
 
 void ObjectCreator::Flag(Object& tile)
 {
-	tile.getComponent<ShapeComponent>().pShape->material_type["flag"] = true;
+	tile.getComponent<ShapeComponent>().pShape->color = true_white;
 	tile.addGroup(Game::groupFlags);
 }
 
 void ObjectCreator::Skull(Object& tile)
 {
-	tile.getComponent<ShapeComponent>().pShape->material_type["skull"] = true;
 	tile.addGroup(Game::groupSkulls);
 }
 
@@ -178,37 +190,35 @@ void ObjectCreator::MoveRight(Object& tile)
 	Move(tile, offset_vector, velocity);
 }
 
-void ObjectCreator::Boost(Object& tile, Vector2D acceleration)
+void ObjectCreator::Boost(Object& tile, Vector2D set_acceleration)
 {
-	tile.addComponent<AcceleratorComponent>(acceleration);
+	tile.addComponent<KinematicsComponent>();
+	tile.getComponent<KinematicsComponent>().freeze = true;
+	tile.getComponent<KinematicsComponent>().acceleration = set_acceleration;
+	//tile.addComponent<AcceleratorComponent>(acceleration);
 	tile.addGroup(Game::groupAccelerators);
 }
 
 void ObjectCreator::BoostUp(Object& tile)
 {
 	Vector2D acceleration = Vector2D(0, -0.0001);
-	tile.getComponent<ShapeComponent>().pShape->material_type["accelerator_up"] = true;
 	Boost(tile, acceleration);
 }
 
 void ObjectCreator::BoostDown(Object& tile)
 {
 	Vector2D acceleration = Vector2D(0, 0.0001);
-	tile.getComponent<ShapeComponent>().pShape->material_type["accelerator_down"] = true;
 	Boost(tile, acceleration);
 }
 
 void ObjectCreator::BoostLeft(Object& tile)
 {
 	Vector2D acceleration = Vector2D(-0.0002, 0);
-	tile.getComponent<ShapeComponent>().pShape->material_type["accelerator_left"] = true;
-
 	Boost(tile, acceleration);
 }
 
 void ObjectCreator::BoostRight(Object& tile)
 {
 	Vector2D acceleration = Vector2D(0.0002, 0);
-	tile.getComponent<ShapeComponent>().pShape->material_type["accelerator_right"] = true;
 	Boost(tile, acceleration);
 }

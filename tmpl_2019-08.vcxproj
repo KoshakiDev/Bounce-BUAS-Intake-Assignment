@@ -227,6 +227,8 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="KinematicsComponent.cpp" />
     <ClCompile Include="ObjectComponentSystem.cpp" />
+    <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="Shape.cpp" />
     <ClCompile Include="ShapeComponent.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="surface.cpp" />
@@ -234,19 +236,23 @@
     <ClCompile Include="ObjectCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Components.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="KinematicsComponent.h" />
     <ClInclude Include="MovingTileComponent.h" />
     <ClInclude Include="ObjectComponentSystem.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="Shape.h" />
     <ClInclude Include="ShapeComponent.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="ObjectCreator.h" />
     <ClInclude Include="TransformComponent.h" />
-    <ClInclude Include="AcceleratorComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="default.map" />

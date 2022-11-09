@@ -1,10 +1,16 @@
 #include "Components.h"
 
-Shape* Shape::Create(ShapeType type)
+ShapeComponent::ShapeComponent(ShapeType type)
 {
-    if (type == t_circle)
-        return new Circle();
-    else if (type == t_rectangle)
-        return new Rectangle();
-    else return NULL;
+    ShapeComponent::pShape = Shape::Create(type);
+}
+
+void ShapeComponent::Init()
+{
+    if (!owner->hasComponent<TransformComponent>())
+    {
+        owner->addComponent<TransformComponent>();
+    }
+    ptransformComponent = &owner->getComponent<TransformComponent>();
+    pShape->ptransformComponent = &owner->getComponent<TransformComponent>();
 }

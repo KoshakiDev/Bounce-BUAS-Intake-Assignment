@@ -1,22 +1,7 @@
 #pragma once
 #include "Components.h"
 
-enum ObjectType {
-	t_ball,
-	t_balloon,
-	t_rock,
-	t_basic, 
-	t_flag, 
-	t_skull, 
-	t_boostUp,
-	t_boostDown,
-	t_boostRight,
-	t_boostLeft,
-	t_moveUp,
-	t_moveDown,
-	t_moveRight,
-	t_moveLeft
-};
+
 
 class ObjectCreator
 {
@@ -28,9 +13,9 @@ public:
 
 	static void Create(ObjectType type, float xpos, float ypos, Pixel set_color, float tile_size);
 
-	static void CreatePlayer(Object& player, float xpos, float ypos, Pixel set_color, float tile_size);
+	static void CreatePlayer(Object& player, float xpos, float ypos, Pixel set_color, float tile_size, ObjectType set_type);
 
-	static void AddBasicComponents(Object& tile, float xpos, float ypos, Pixel set_color, float tile_size);
+	static void AddBasicComponents(Object& tile, float xpos, float ypos, Pixel set_color, float tile_size, ObjectType set_type);
 
 	static void Basic(Object& tile);
 	static void Flag(Object& tile);

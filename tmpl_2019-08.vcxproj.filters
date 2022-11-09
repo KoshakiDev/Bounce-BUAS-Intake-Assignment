@@ -9,22 +9,28 @@
       <Filter>template code</Filter>
     </ClCompile>
     <ClCompile Include="ObjectComponentSystem.cpp">
-      <Filter>Source files\Components\OCS</Filter>
+      <Filter>source\Components\OCS</Filter>
     </ClCompile>
     <ClCompile Include="ShapeComponent.cpp">
-      <Filter>Source files\Components\Shape</Filter>
+      <Filter>source\Components\Shape</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>Source files\Components\Colliders</Filter>
+      <Filter>source\Components\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="KinematicsComponent.cpp">
-      <Filter>Source files\Components\Kinematics</Filter>
+      <Filter>source\Components\Kinematics</Filter>
     </ClCompile>
     <ClCompile Include="LevelLoader.cpp">
-      <Filter>Source files\Map\LevelLoader</Filter>
+      <Filter>source\LevelLoader</Filter>
     </ClCompile>
     <ClCompile Include="ObjectCreator.cpp">
-      <Filter>Source files\Map\ObjectCreator</Filter>
+      <Filter>source\ObjectCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>source\Components\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>source\Components\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -36,72 +42,87 @@
       <Filter>template code</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
-      <Filter>Source files\Components\Colliders</Filter>
+      <Filter>source\Components\Colliders</Filter>
     </ClInclude>
     <ClInclude Include="ObjectComponentSystem.h">
-      <Filter>Source files\Components\OCS</Filter>
+      <Filter>source\Components\OCS</Filter>
     </ClInclude>
     <ClInclude Include="ShapeComponent.h">
-      <Filter>Source files\Components\Shape</Filter>
+      <Filter>source\Components\Shape</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
-      <Filter>Source files\Components\Transform</Filter>
+      <Filter>source\Components\Transform</Filter>
     </ClInclude>
     <ClInclude Include="Components.h">
-      <Filter>Source files\Components</Filter>
+      <Filter>source\Components</Filter>
     </ClInclude>
     <ClInclude Include="KinematicsComponent.h">
-      <Filter>Source files\Components\Kinematics</Filter>
+      <Filter>source\Components\Kinematics</Filter>
     </ClInclude>
     <ClInclude Include="MovingTileComponent.h">
-      <Filter>Source files\Components\Kinematics</Filter>
-    </ClInclude>
-    <ClInclude Include="AcceleratorComponent.h">
-      <Filter>Source files\Components\Kinematics</Filter>
+      <Filter>source\Components\Kinematics</Filter>
     </ClInclude>
     <ClInclude Include="LevelLoader.h">
-      <Filter>Source files\Map\LevelLoader</Filter>
+      <Filter>source\LevelLoader</Filter>
     </ClInclude>
     <ClInclude Include="ObjectCreator.h">
-      <Filter>Source files\Map\ObjectCreator</Filter>
+      <Filter>source\ObjectCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>source\Components\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>source\Components\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>source\Components\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>source\Components\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
       <UniqueIdentifier>{bf32dd6e-4be7-4889-8ac6-49e7ee163c40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files">
+    <Filter Include="source">
       <UniqueIdentifier>{80f2aa73-783d-4ef2-ac4d-88f991db3a0a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Components">
+    <Filter Include="source\Components">
       <UniqueIdentifier>{8eb79223-2cd5-4589-95ea-b5d3ab29f00b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Components\Colliders">
+    <Filter Include="source\Components\Colliders">
       <UniqueIdentifier>{e86f2cbd-29f4-4d1c-a958-12529b409045}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Components\OCS">
+    <Filter Include="source\Components\OCS">
       <UniqueIdentifier>{453b3a18-e3a9-484c-9b89-416bacb14da6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Components\Shape">
+    <Filter Include="source\Components\Shape">
       <UniqueIdentifier>{f5aa3616-77c4-4d8f-8f3e-5bd7538effae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Components\Transform">
+    <Filter Include="source\Components\Transform">
       <UniqueIdentifier>{c1a8fb97-612b-4abc-9bfe-6a205a9748ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Components\Kinematics">
+    <Filter Include="source\Components\Kinematics">
       <UniqueIdentifier>{71ccd8b5-f1cc-4462-a105-fd2e3163361c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Map">
-      <UniqueIdentifier>{c99c51e8-881c-4c97-a5a1-dfbd29251117}</UniqueIdentifier>
+    <Filter Include="source\LevelLoader">
+      <UniqueIdentifier>{b7e7803b-bd04-4ee0-ae6b-c088315b147e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Map\Maps">
-      <UniqueIdentifier>{86742fc6-8fba-4826-a2b8-f6e502c8f10e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source files\Map\ObjectCreator">
+    <Filter Include="source\ObjectCreator">
       <UniqueIdentifier>{efb3a7f5-812f-4ec5-a212-6ebb43a258ec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source files\Map\LevelLoader">
-      <UniqueIdentifier>{b7e7803b-bd04-4ee0-ae6b-c088315b147e}</UniqueIdentifier>
+    <Filter Include="assets">
+      <UniqueIdentifier>{870a808b-fd3f-4a0a-a0e2-726e401ee87a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\levels">
+      <UniqueIdentifier>{86742fc6-8fba-4826-a2b8-f6e502c8f10e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Components\Controller">
+      <UniqueIdentifier>{764dd085-9b39-42cb-84b5-c81d3557c4ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,42 +130,42 @@
       <Filter>template code</Filter>
     </Text>
     <Text Include="default.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="1.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
     <None Include="2.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
     <None Include="win.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
     <None Include="tutorial_flag_d.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
     <None Include="tutorial_skull.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
     <None Include="tutorial_accelerator.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
     <None Include="tutorial_moving_tile.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
     <None Include="tutorial_flag_a.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
     <None Include="tutorial_balloon.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
     <None Include="tutorial_rock.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
     <None Include="3.map">
-      <Filter>Source files\Map\Maps</Filter>
+      <Filter>assets\levels</Filter>
     </None>
   </ItemGroup>
 </Project>
