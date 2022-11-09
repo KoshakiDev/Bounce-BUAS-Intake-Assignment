@@ -226,6 +226,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="KinematicsComponent.cpp" />
+    <ClCompile Include="MovingTileComponent.cpp" />
     <ClCompile Include="ObjectComponentSystem.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="Shape.cpp" />

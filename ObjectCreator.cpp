@@ -195,7 +195,6 @@ void ObjectCreator::Boost(Object& tile, Vector2D set_acceleration)
 	tile.addComponent<KinematicsComponent>();
 	tile.getComponent<KinematicsComponent>().freeze = true;
 	tile.getComponent<KinematicsComponent>().acceleration = set_acceleration;
-	//tile.addComponent<AcceleratorComponent>(acceleration);
 	tile.addGroup(Game::groupAccelerators);
 }
 

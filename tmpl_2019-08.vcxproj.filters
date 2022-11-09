@@ -32,6 +32,9 @@
     <ClCompile Include="PlayerComponent.cpp">
       <Filter>source\Components\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="MovingTileComponent.cpp">
+      <Filter>source\Components\Kinematics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />

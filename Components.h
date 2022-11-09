@@ -10,8 +10,6 @@ NOTE: the order that you include the headers DOES matter. If one header uses ano
 #include "template.h"
 #include "ObjectComponentSystem.h"
 
-
-
 #include "TransformComponent.h"
 #include "KinematicsComponent.h"
 #include "MovingTileComponent.h"
