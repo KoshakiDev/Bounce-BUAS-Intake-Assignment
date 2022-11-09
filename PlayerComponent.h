@@ -12,6 +12,7 @@ public:
     PlayerComponent() {}
     ~PlayerComponent() {}
 
+    
     TransformComponent* ptransformComponent;
     ShapeComponent* pShapeComponent;
     KinematicsComponent* pKinematicsComponent;

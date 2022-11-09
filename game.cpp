@@ -56,6 +56,9 @@ string path[15] = {
 };
 int current_level = -1;
 
+bool is_first_contact = true;
+bool has_collided = false;
+
 namespace Tmpl8
 {
 	// -----------------------------------------------------------
@@ -129,6 +132,7 @@ namespace Tmpl8
 
 	void Game::CheckTileCollision(float delta)
 	{
+		has_collided = false;
 		for (auto& player : players)
 		{
 			for (auto& t : tiles)
@@ -166,10 +170,19 @@ namespace Tmpl8
 
 					// Remove penetration (penetration epsilon added to handle infinitely small penetration):
 					player->getComponent<TransformComponent>().Translate(penetration_normal * (penetration_depth + 0.0001f));
+					has_collided = true;
 				}
 			}
 		}
-
+		if (has_collided && is_first_contact)
+		{
+			_beep(523 * 2, 10);
+			is_first_contact = false;
+		}
+		if (!has_collided)
+		{
+			is_first_contact = true;
+		}
 	}
 
 	void Game::CheckSkullCollision(float delta)
@@ -195,6 +208,7 @@ namespace Tmpl8
 		}
 		if (is_dead)
 		{
+			_beep(523 / 10, 150);
 			RestartLevel();
 		}
 	}
@@ -216,7 +230,6 @@ namespace Tmpl8
 				{
 					player->getComponent<KinematicsComponent>().velocity.y = Clamp(player->getComponent<KinematicsComponent>().velocity.y + t->getComponent<KinematicsComponent>().acceleration.y * delta, -player->getComponent<KinematicsComponent>().max_speed, player->getComponent<KinematicsComponent>().max_speed);
 					player->getComponent<KinematicsComponent>().velocity.x = Clamp(player->getComponent<KinematicsComponent>().velocity.x + t->getComponent<KinematicsComponent>().acceleration.x * delta, -player->getComponent<KinematicsComponent>().max_speed, player->getComponent<KinematicsComponent>().max_speed);
-
 				}
 			}
 		}
@@ -238,6 +251,7 @@ namespace Tmpl8
 					penetration_depth)
 					)
 				{
+					_beep(523 * 5, 150);
 					NextLevel();
 				}
 			}
