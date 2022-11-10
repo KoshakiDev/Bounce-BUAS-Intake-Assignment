@@ -22,7 +22,7 @@ void KinematicsComponent::Tick(float delta)
 		{
 			velocity.x = Clamp(velocity.x - acceleration.x * delta, -max_speed, float(0.0));
 		}
-		if (velocity.x > 0)
+		else if (velocity.x > 0)
 		{
 			velocity.x = Clamp(velocity.x + acceleration.x * delta, float(0.0), max_speed);
 		}

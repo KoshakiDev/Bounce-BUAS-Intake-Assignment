@@ -16,3 +16,6 @@ enum ObjectType {
 	t_moveRight,
 	t_moveLeft
 };
+
+
+// add a MAP['#'] = t_basic

@@ -14,14 +14,8 @@ void Shape::KeyUp(int key)
 {
     if (key == SDL_SCANCODE_Z)
     {
-        if (color == moldy_white)
-        {
-            color = moldy_black;
-        }
-        else if (color == moldy_black)
-        {
-            color = moldy_white;
-        }
+        color = (color == moldy_white) ? moldy_black : 
+            (color == moldy_black) ? moldy_white : color;
     }
     
 }

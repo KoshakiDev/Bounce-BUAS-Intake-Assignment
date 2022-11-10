@@ -228,8 +228,16 @@ namespace Tmpl8
 					penetration_depth)
 					)
 				{
-					player->getComponent<KinematicsComponent>().velocity.y = Clamp(player->getComponent<KinematicsComponent>().velocity.y + t->getComponent<KinematicsComponent>().acceleration.y * delta, -player->getComponent<KinematicsComponent>().max_speed, player->getComponent<KinematicsComponent>().max_speed);
-					player->getComponent<KinematicsComponent>().velocity.x = Clamp(player->getComponent<KinematicsComponent>().velocity.x + t->getComponent<KinematicsComponent>().acceleration.x * delta, -player->getComponent<KinematicsComponent>().max_speed, player->getComponent<KinematicsComponent>().max_speed);
+					player->getComponent<KinematicsComponent>().velocity.y = Clamp(
+						player->getComponent<KinematicsComponent>().velocity.y + 
+						t->getComponent<KinematicsComponent>().acceleration.y * delta, 
+						-player->getComponent<KinematicsComponent>().max_speed, 
+						player->getComponent<KinematicsComponent>().max_speed);
+					player->getComponent<KinematicsComponent>().velocity.x = Clamp(
+						player->getComponent<KinematicsComponent>().velocity.x + 
+						t->getComponent<KinematicsComponent>().acceleration.x * delta, 
+						-player->getComponent<KinematicsComponent>().max_speed, 
+						player->getComponent<KinematicsComponent>().max_speed);
 				}
 			}
 		}
@@ -263,7 +271,8 @@ namespace Tmpl8
 		manager.refresh();
 		for (auto& player : players)
 		{
-			if (isnan(player->getComponent<TransformComponent>().position.x) || isnan(player->getComponent<TransformComponent>().position.y))
+			if (isnan(player->getComponent<TransformComponent>().position.x) || 
+				isnan(player->getComponent<TransformComponent>().position.y))
 			{
 				RestartLevel();
 			}
@@ -302,14 +311,8 @@ namespace Tmpl8
 		manager.KeyUp(key);
 		if (key == SDL_SCANCODE_Z)
 		{
-			if (background_color == moldy_white)
-			{
-				background_color = moldy_black;
-			}
-			else if (background_color == moldy_black)
-			{
-				background_color = moldy_white;
-			}
+			background_color = (background_color == moldy_white) ? moldy_black : 
+				(background_color == moldy_black) ? moldy_white : background_color;
 		}
 	}
 	void Game::KeyDown(int key)

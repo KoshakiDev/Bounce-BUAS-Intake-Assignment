@@ -1,5 +1,8 @@
 #include "PlayerComponent.h"
 
+#define ROCK_COEFFICIENT 2
+#define BALLOON_COEFFICIENT -0.1
+
 void PlayerComponent::Init()
 {
     ptransformComponent = &owner->getComponent<TransformComponent>();
@@ -24,7 +27,10 @@ void PlayerComponent::KeyUp(int key)
     //Remember that Y is flipped
     if (key == SDL_SCANCODE_D)
     {
-        pKinematicsComponent->velocity.x = clamp(pKinematicsComponent->velocity.x + (pKinematicsComponent->speed), -pKinematicsComponent->max_speed, pKinematicsComponent->max_speed);
+        pKinematicsComponent->velocity.x = clamp(
+            pKinematicsComponent->velocity.x + (pKinematicsComponent->speed), 
+            -pKinematicsComponent->max_speed, 
+            pKinematicsComponent->max_speed);
     }
     if (key == SDL_SCANCODE_A)
     {
@@ -38,7 +44,7 @@ void PlayerComponent::KeyUp(int key)
 
     if (key == SDL_SCANCODE_J) //Balloon
     {
-        pKinematicsComponent->acceleration = Vector2D(FRICTION, -GRAVITY / 10);
+        pKinematicsComponent->acceleration = Vector2D(FRICTION, GRAVITY * BALLOON_COEFFICIENT);
         pKinematicsComponent->bounce_coefficient = 0.2;
         pShapeComponent->pShape->object_type = t_balloon;
     }
@@ -50,7 +56,7 @@ void PlayerComponent::KeyUp(int key)
     }
     if (key == SDL_SCANCODE_L) //Rock
     {
-        pKinematicsComponent->acceleration = Vector2D(FRICTION, GRAVITY * 2);
+        pKinematicsComponent->acceleration = Vector2D(FRICTION, GRAVITY * ROCK_COEFFICIENT);
         pKinematicsComponent->bounce_coefficient = 0.0;
         pShapeComponent->pShape->object_type = t_rock;
     }

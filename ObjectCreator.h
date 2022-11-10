@@ -6,6 +6,7 @@
 class ObjectCreator
 {
 public:
+
 	ObjectCreator() {}
 	~ObjectCreator() {}
 

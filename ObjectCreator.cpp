@@ -33,55 +33,26 @@ void ObjectCreator::AddBasicComponents(Object& tile, float xpos, float ypos, Pix
 	tile.getComponent<ShapeComponent>().pShape->params["height"] = tile_size;
 }
 
+
 ObjectType ObjectCreator::DecodeSign(char c)
 {
-	if (c == '#')
+	unordered_map<char, ObjectType> object_map;
+	object_map['#'] = t_basic;
+	object_map['F'] = t_flag;
+	object_map['X'] = t_skull;
+	object_map['@'] = t_ball;
+	object_map['^'] = t_boostUp;
+	object_map['v'] = t_boostDown;
+	object_map['<'] = t_boostLeft;
+	object_map['>'] = t_boostRight;
+	object_map['U'] = t_moveUp;
+	object_map['D'] = t_moveDown;
+	object_map['L'] = t_moveLeft;
+	object_map['R'] = t_moveRight;
+
+	if (object_map.count(c))
 	{
-		return t_basic;
-	}
-	else if (c == 'F')
-	{
-		return t_flag;
-	}
-	else if (c == 'X')
-	{
-		return t_skull;
-	}
-	else if (c == '@')
-	{
-		return t_ball;
-	}
-	else if (c == '^')
-	{
-		return t_boostUp;
-	}
-	else if (c == 'v')
-	{
-		return t_boostDown;
-	}
-	else if (c == '<')
-	{
-		return t_boostLeft;
-	}
-	else if (c == '>')
-	{
-		return t_boostRight;
-	}
-	else if (c == 'U')
-	{
-		return t_moveUp;
-	}
-	else if (c == 'D')
-	{
-		return t_moveDown;
-	}
-	else if (c == 'L')
-	{
-		return t_moveLeft;
-	}
-	else if (c == 'R')
-	{
-		return t_moveRight;
+		return object_map[c];
 	}
 	else
 	{
