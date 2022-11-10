@@ -41,7 +41,8 @@ auto& flags(manager.getGroup(Game::groupFlags));
 auto& accelerators(manager.getGroup(Game::groupAccelerators));
 
 
-string path[15] = {
+string path[16] = {
+	"default.map",
 	"tutorial_flag_a.map",
 	"tutorial_flag_d.map",
 	"tutorial_skull.map",
@@ -245,6 +246,7 @@ namespace Tmpl8
 
 	void Game::CheckFlagCollision(float delta)
 	{
+		bool touched_flag = false;
 		for (auto& player : players)
 		{
 			for (auto& t : flags)
@@ -259,10 +261,14 @@ namespace Tmpl8
 					penetration_depth)
 					)
 				{
-					_beep(523 * 5, 150);
-					NextLevel();
+					touched_flag = true;
 				}
 			}
+		}
+		if (touched_flag)
+		{
+			_beep(523 * 5, 150);
+			NextLevel();
 		}
 	}
 
