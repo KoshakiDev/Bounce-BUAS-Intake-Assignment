@@ -6,30 +6,23 @@
 #include <bitset>
 #include <array>
 #include <cassert>
-
 #include "surface.h"
-
 #include <SDL.h>
-
 
 /*
 The Object Component System was inspired by Vittorio Romeo
 https://www.youtube.com/watch?v=QAmtgvwHInM
 */
 
-
 using namespace std;
 using namespace Tmpl8;
-
 
 // Forward-declaration of Component, Object, and Manager
 class Component;
 class Object; 
 class Manager;
 
-/*
-We define a typedef for the component ID type:
-*/
+// Typedef for the componentID and Group type:
 using ComponentID = std::size_t;
 using Group = std::size_t;
 
