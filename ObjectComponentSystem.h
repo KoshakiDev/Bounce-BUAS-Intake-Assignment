@@ -51,17 +51,12 @@ template <typename T> inline ComponentID getComponentTypeID() noexcept
 {
 	/*
 	This function returns a unique ComponentID based on the passed type
-	 
-	Every time we call this function with a specific type `T`,
-    we are actually calling an instantiation of this template,
-    with its own unique static `typeID` variable.
-
-    Upon calling this function for the first time with a specific
-    type `T1`, `typeID` will be initialized with an unique ID.
-    Subsequent calls with the same type `T1` will return the same ID.
 	
-	We use a `static_assert` to make sure this function
-    is only called with types that inherit from `Component`.
+	We assure that the passed type inherits from 'Component'.
+
+	First call with a passed type 'T1' will initialize `typeID` with an unique ID
+
+	Subsequent calls with the same passed type `T1` will return the same ID.
 	*/
 	static_assert (std::is_base_of<Component, T>::value, "");
 	static ComponentID typeID = getNewComponentTypeID();
@@ -77,22 +72,14 @@ using GroupBitset = std::bitset<maxGroups>;
 using ComponentArray = std::array<Component*, maxComponents>;
 
 /*
-Assumptions:
-1. An entity can only contain only one instance of a certain component type.
-2. Every component type has an ID integer number (first component type will have ID 0, and the other component types will have ID 1, 2, 3, ..., N)
-
-With these assumptions,
-We create a sequence of bits (and a linear array) that helps us check
-whether or not an entity has a certain component type.
-
-Component bitset (Holds whether an entity has a certain component):
+Component Bitset (Holds whether an entity has a certain component):
 	[ 0 0 0 0 0 0 0 1 0 0 1 ]
 					|     |
 					|	  \___ Component Type #0
 					|
 					\___ Component Type #3
 
-Component array (Holds reference to a certain component):
+Component Array (Holds reference to a certain component):
 	[0] 	= (Component Type #0)*
 	[1] 	= nullptr
 	[2] 	= nullptr
@@ -106,21 +93,8 @@ Component array (Holds reference to a certain component):
 class Component
 {
 public:
-	/*
-	Defining a base `Component` class. Game components will inherit from this class.
-	
-	We will use a pointer to store the parent entity/object as "owner".
-	*/
 	Object* owner;
-	/*
-	Usually a game component will have:
-		* Some data
-		* Update behavior
-		* Drawing behavior
-
-	Therefore we define two virtual methods that
-	will be overridden by game component types.
-	*/
+	
 	virtual void Init() {}
 	virtual void Tick(float delta) {}
 	virtual void Draw(Surface* screen) {}
@@ -131,18 +105,11 @@ public:
 	virtual void KeyUp(int key) {}
 	virtual void KeyDown(int key) {}
 	
-	/*
-	As we'll be using this class polymorphically, it requires a virtual destructor.
-	*/
 	virtual ~Component() {}
 };
 
 class Object 
 {
-/*
-Object is a container for components. 
-It has methods to add, update, and draw components.
-*/
 public:
 	Object(Manager& mManager) : manager(mManager) {}
 	
@@ -176,10 +143,7 @@ public:
 		for (auto& c : components) c->KeyDown(key);
 	}
 
-	/*
-	Methods to control the lifetime of the entity.
-	*/
-
+	// Methods to control the lifetime of the entity.
 	bool isActive() const { return active; }
 	void destroy() { active = false; }
 
@@ -205,27 +169,22 @@ public:
 	{
 		groupBitset[mGroup] = false;
 		/*
-		We won't notify the manager that a group has been
-        removed here, as it will automatically remove
+		Manager will automatically remove
         entities from the "wrong" group containers during
         refresh.
+		We won't notify the manager that a group has been
+        removed here. 
 		*/
 	}
 
-	/*
-	To check if this entity has a component, we simply query the bitset.
-	We check if a certain entity has a component with a "bitwise and"
-	*/
-
-	template <typename T> bool hasComponent() const
+	template <typename T> 
+	bool hasComponent() const
 	{
+		//To check if this entity has a component, we simply query the bitset.
 		return componentBitset[getComponentTypeID<T>()];
 	}
 
 	/*
-	This method adds components to our entity.
-    We'll take advantage of C++11 variadic templates and emplacement to directly construct our components in place.
-    
 	`T` is the component type. 
 	`TArgs` is a parameter pack of types used to construct the component.
 	*/
@@ -233,54 +192,23 @@ public:
 	template <typename T, typename... TArgs>
 	T& addComponent(TArgs&&... mArgs)
 	{
-		/*
-		Before adding a component, 
-		we make sure it doesn't already exist by using an assertion
-		*/
+		// Assure a component doesn't already exist
 		assert(!hasComponent<T>());
-		/*
-		First, allocate memory for the component of type `T`, 
-		by forwarding the passed arguments to the Component T's constructor.
-		*/
+		// Construct the component 'T' with the passed arguments 
 		T* c(new T(std::forward<TArgs>(mArgs)...));
-
-		/*
-		We set the component's entity to the current instance.
-		*/
+		// Set the component's owner to the current instance.
 		c->owner = this;
-
-		/*
-		To add (emplace) the reference to the component to our component container,
-		We will wrap the raw pointer into a smart one.
-		
-		Keeping a reference also helps us make sure we do not leak any memory 
-		by releasing it later when we no longer need it
-		*/
-
+		// Wrap the raw pointer into a smart one. This creates reference to the object.
 		std::unique_ptr<Component> uPtr{ c };
 
-		/*
-		Now we'll add the smart pointer to our component container.
-        (`std::move` is required, as `std::unique_ptr` cannot be copied)
-		*/
-
+		// Add the smart pointer to our component container.
 		components.emplace_back(std::move(uPtr));
 
-		/*
-		When we add a component of type `T`, we add it to the bitset and to the array.
-		*/
+		// Add the 'T' component to the bitset and to the array.
 		componentArray[getComponentTypeID<T>()] = c;
 		componentBitset[getComponentTypeID<T>()] = true;
 
-		/*
-		We can now call `Component::Init()`
-		*/
 		c->Init();
-
-		/*
-		...and we will return a reference to the newly added
-		component, in case the user wants to do something with it.
-		*/
 		return *c;
 	}
 
@@ -315,7 +243,8 @@ private:
 
 
 /*
-If `Entity` is an aggregate of components, `Manager` is an aggregate of entities. 
+`Entity` is an aggregate of components, 
+`Manager` is an aggregate of entities. 
 Implementation is straightforward, and resembles the previous one
 
 Groups are implemented by giving a group bitset to every entity, 
@@ -375,8 +304,7 @@ public:
 
 		/*
 		We're going through all entities and erasing the "dead" ones.
-        This is known as the "erase-remove idiom".
-		*/
+        */
 
 		objects.erase(std::remove_if(std::begin(objects), std::end(objects),
 			[](const std::unique_ptr<Object>& mObject)
