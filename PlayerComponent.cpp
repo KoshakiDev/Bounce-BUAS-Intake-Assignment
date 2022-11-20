@@ -27,20 +27,20 @@ void PlayerComponent::KeyUp(int key)
     //Remember that Y is flipped
     if (key == SDL_SCANCODE_D)
     {
-        pKinematicsComponent->velocity.x = clamp(
+        pKinematicsComponent->velocity.x = Clamp(
             pKinematicsComponent->velocity.x + (pKinematicsComponent->speed), 
             -pKinematicsComponent->max_speed, 
             pKinematicsComponent->max_speed);
     }
     if (key == SDL_SCANCODE_A)
     {
-        pKinematicsComponent->velocity.x = clamp(
+        pKinematicsComponent->velocity.x = Clamp(
             pKinematicsComponent->velocity.x + (-pKinematicsComponent->speed), 
             -pKinematicsComponent->max_speed, 
             pKinematicsComponent->max_speed);
     }
-    clamp(pKinematicsComponent->velocity.x, -pKinematicsComponent->max_speed, pKinematicsComponent->max_speed);
-    clamp(pKinematicsComponent->velocity.y, -pKinematicsComponent->max_speed, pKinematicsComponent->max_speed);
+    Clamp(pKinematicsComponent->velocity.x, -pKinematicsComponent->max_speed, pKinematicsComponent->max_speed);
+    Clamp(pKinematicsComponent->velocity.y, -pKinematicsComponent->max_speed, pKinematicsComponent->max_speed);
 
     if (key == SDL_SCANCODE_J) //Balloon
     {

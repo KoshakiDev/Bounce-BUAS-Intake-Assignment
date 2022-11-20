@@ -252,9 +252,9 @@ void Surface::DrawRectangleObject(ObjectType type, float x1, float y1, float x2,
 
 void Surface::Point(float x1, float y1, Pixel color)
 {
-	float scale = 5.0;
-	float root2 = 1.41421356237 / 2.0 * scale;
-	float full1 = 1 * scale;
+	float scale = 5.0f;
+	float root2 = 1.41421356237f / 2.0f * scale;
+	float full1 = 1.0f * scale;
 	Line(x1, y1, x1        , y1 - full1, color);
 	Line(x1, y1, x1 + root2, y1 - root2, color);
 	Line(x1, y1, x1 + full1, y1        , color);
@@ -293,18 +293,18 @@ void Surface::Ball(float x1, float y1, float radius, Pixel color)
 }
 void Surface::Balloon(float x1, float y1, float radius, Pixel color)
 {
-	float half1 = 0.5;
-	float root2 = 1.41421356237 / 2.0;
+	float half1 = 0.5f;
+	float root2 = 1.41421356237f / 2.0f;
 	ApproximateCircle(x1, y1, radius, color);
-	ApproximateCircle(x1 - radius * root2 * half1, y1 - radius * root2 * half1, radius * 0.25, color);
-	Box(x1 - radius * 0.125, y1 + radius, x1 + radius * 0.125, y1 + 1.25 * radius, color);
-	Line(x1, y1 + 1.25 * radius, x1, y1 + 1.75 * radius, color);
+	ApproximateCircle(x1 - radius * root2 * half1, y1 - radius * root2 * half1, radius * 0.25f, color);
+	Box(x1 - radius * 0.125f, y1 + radius, x1 + radius * 0.125f, y1 + 1.25f * radius, color);
+	Line(x1, y1 + 1.25f * radius, x1, y1 + 1.75f * radius, color);
 }
 void Surface::Rock(float x1, float y1, float radius, Pixel color)
 {
 	ApproximateCircle(x1, y1, radius, color);
-	float scale = radius * 0.75;
-	float root2 = 1.41421356237 / 2.0 * scale;
+	float scale = radius * 0.75f;
+	float root2 = 1.41421356237f / 2.0f * scale;
 	float full1 = 1 * scale;
 	Line(x1, y1, x1        , y1 - full1, color);
 	Line(x1, y1, x1 + root2, y1 - root2, color);
@@ -330,20 +330,20 @@ void Surface::Skull(float x1, float y1, float x2, float y2, Pixel c)
 {
 	float lengthX = x2 - x1;
 	float lengthY = y2 - y1;
-	ApproximateCircle(x1 + lengthX / 4.0, y1 + lengthY / 2, lengthX / 8, c);
-	ApproximateCircle(x1 + (lengthX * 3.0 / 4.0), y1 + lengthY / 2, lengthX / 8, c);
+	ApproximateCircle(x1 + lengthX / 4.0f, y1 + lengthY / 2.0f, lengthX / 8.0f, c);
+	ApproximateCircle(x1 + (lengthX * 3.0f / 4.0f), y1 + lengthY / 2.0f, lengthX / 8.0f, c);
 
 	Line(x1, y1, x2, y1, c);
-	Line(x2, y1, x2, y1 + (lengthY * 3.0 / 4.0), c);
-	Line(x1, y1, x1, y1 + (lengthY * 3.0 / 4.0), c);
-	Line(x1, y1 + (lengthY * 3.0 / 4.0), x2, y1 + (lengthY * 3.0 / 4.0), c);
-	Line(x1 + lengthX / 4.0, y2, x1 + (lengthX * 3.0 / 4.0), y2, c);
+	Line(x2, y1, x2, y1 + (lengthY * 3.0f / 4.0f), c);
+	Line(x1, y1, x1, y1 + (lengthY * 3.0f / 4.0f), c);
+	Line(x1, y1 + (lengthY * 3.0f / 4.0f), x2, y1 + (lengthY * 3.0f / 4.0f), c);
+	Line(x1 + lengthX / 4.0f, y2, x1 + (lengthX * 3.0f / 4.0f), y2, c);
 
-	Line(x1 + lengthX / 4.0, y2 - lengthY / 8, x1 + (lengthX * 3.0 / 4.0), y2 - lengthY / 8, c);
+	Line(x1 + lengthX / 4.0f, y2 - lengthY / 8.0f, x1 + (lengthX * 3.0f / 4.0f), y2 - lengthY / 8.0f, c);
 
 
 	for (float i = 2; i <= 6; i++)
-		Line(x1 + i * lengthX / 8.0, y1 + (lengthY * 3.0 / 4.0), x1 + i * lengthX / 8.0, y2, c);
+		Line(x1 + i * lengthX / 8.0f, y1 + (lengthY * 3.0f / 4.0f), x1 + i * lengthX / 8.0f, y2, c);
 }
 
 void Surface::AcceleratorUp(float x1, float y1, float x2, float y2, Pixel color)
